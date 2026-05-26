@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator jsonSchema {
+  provider = "prisma-json-schema-generator"
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String @id @default(uuid())
+  username     String @unique
+  passwordHash String
+  role         Role   @default(VIEWER)
+}
+
+enum Role {
+  ADMIN
+  OPERATOR
+  VIEWER
+}
+
+model Die {
+  id        String   @id @default(uuid())
+  dieId     String   @unique
+  size      String
+  sizeValue Float    @default(0.0)
+  casing    String
+  details   String?
+  createdAt DateTime @default(now())
+  setId     String?
+  set       Set?     @relation(fields: [setId], references: [id])
+
+  @@index([sizeValue])
+  @@index([setId])
+}
+
+model Set {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  description String?
+  machineId   String?
+  machine     Machine?  @relation(fields: [machineId], references: [id])
+  dies        Die[]
+
+  @@index([machineId])
+}
+
+model Machine {
+  id       String @id @default(uuid())
+  name     String @unique
+  location String?
+  sets     Set[]
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  actorId   String
+  actorName String
+  action    String
+  target    String
+  details   String
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+}

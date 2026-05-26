@@ -1,0 +1,49 @@
+# Configures containerized deployment for Express Backend (5000) & Nginx Frontend (80).
+# @concept Docker Deployment (GEMINI.md section 3)
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: dms-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=file:/app/data/prod.db
+      - PORT=5000
+      - JWT_SECRET=${JWT_SECRET}
+    volumes:
+      - dms-db:/app/data
+    networks:
+      - dms-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=http://localhost:5000/api
+    container_name: dms-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - dms-network
+
+volumes:
+  dms-db:
+    driver: local
+
+networks:
+  dms-network:
+    driver: bridge

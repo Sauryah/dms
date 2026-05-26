@@ -1,0 +1,54 @@
+# Development Docker Compose for Hot Reloading
+# Run with: docker compose -f docker-compose.dev.yml up --build
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+      target: dev
+    container_name: diemanager-backend-dev
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=file:/app/data/dev.db
+      - PORT=5000
+      - JWT_SECRET=secret123
+      - NODE_ENV=development
+    volumes:
+      # Mount source code for hot reloading
+      - ./backend/src:/app/src
+      # Persistent volume for DB
+      - diemanager-dev-db:/app/data
+    # Apply migrations, then run the dev script with hot reloading.
+    command: ["sh", "-c", "npx prisma migrate deploy && npm run dev"]
+    networks:
+      - diemanager-dev-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: dev
+      args:
+        - VITE_API_URL=http://localhost:5000/api
+    container_name: diemanager-frontend-dev
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      # Mount source code for hot reloading
+      - ./frontend/src:/app/src
+    depends_on:
+      - backend
+    networks:
+      - diemanager-dev-network
+
+volumes:
+  diemanager-dev-db:
+    driver: local
+
+networks:
+  diemanager-dev-network:
+    driver: bridge

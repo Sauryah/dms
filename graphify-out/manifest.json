@@ -1,0 +1,392 @@
+{
+  "GEMINI.md": {
+    "mtime": 1779709501.5470903,
+    "ast_hash": "",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/prisma.config.ts": {
+    "mtime": 1779641114.0,
+    "ast_hash": "7682f7995b7b0b0bc835977e5c61c093",
+    "semantic_hash": "7682f7995b7b0b0bc835977e5c61c093"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/package.json": {
+    "mtime": 1779807542.5364132,
+    "ast_hash": "822b3ed7e0b8a756669be3a5f0ff5e92",
+    "semantic_hash": "822b3ed7e0b8a756669be3a5f0ff5e92"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/tsconfig.json": {
+    "mtime": 1779643384.0,
+    "ast_hash": "7957cf9d3cdaf053cc891751a983af7c",
+    "semantic_hash": "7957cf9d3cdaf053cc891751a983af7c"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/index.ts": {
+    "mtime": 1779639358.0,
+    "ast_hash": "566404f3801e707a1b38fd1eb4c0dadd",
+    "semantic_hash": "566404f3801e707a1b38fd1eb4c0dadd"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/app.ts": {
+    "mtime": 1779807548.236421,
+    "ast_hash": "b6adc0aa1ad77d3f9fd8fba0e5c3c713",
+    "semantic_hash": "b6adc0aa1ad77d3f9fd8fba0e5c3c713"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/controllers/authController.ts": {
+    "mtime": 1779746652.0,
+    "ast_hash": "234ac420eace027698dc2c4a2b1e3a86",
+    "semantic_hash": "234ac420eace027698dc2c4a2b1e3a86"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/controllers/setController.ts": {
+    "mtime": 1779725798.0,
+    "ast_hash": "877ad2e6a39995ad72b25ce6102d988f",
+    "semantic_hash": "877ad2e6a39995ad72b25ce6102d988f"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/controllers/machineController.ts": {
+    "mtime": 1779811780.244284,
+    "ast_hash": "bfa138d8e23b84bf5cd750f977d8399b",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/controllers/dieController.ts": {
+    "mtime": 1779811759.4472747,
+    "ast_hash": "7502e83d894b2701957559c8b5ee2998",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/controllers/auditController.ts": {
+    "mtime": 1779726964.0,
+    "ast_hash": "1f8e26ea39a1248ab108ba37508d7897",
+    "semantic_hash": "1f8e26ea39a1248ab108ba37508d7897"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/controllers/searchController.ts": {
+    "mtime": 1779668026.0,
+    "ast_hash": "edd31ef9b992173fc9ce1c327b9c3594",
+    "semantic_hash": "edd31ef9b992173fc9ce1c327b9c3594"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/routes/dieRoutes.ts": {
+    "mtime": 1779809349.0331464,
+    "ast_hash": "c0070c40bdfd24531d3c4342d62b5222",
+    "semantic_hash": "c0070c40bdfd24531d3c4342d62b5222"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/routes/authRoutes.ts": {
+    "mtime": 1779807563.4274423,
+    "ast_hash": "408bb168c616f30c98247f66402b0dd7",
+    "semantic_hash": "408bb168c616f30c98247f66402b0dd7"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/routes/searchRoutes.ts": {
+    "mtime": 1779644822.0,
+    "ast_hash": "f48de432a0a0ca917a291f702800c46c",
+    "semantic_hash": "f48de432a0a0ca917a291f702800c46c"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/routes/machineRoutes.ts": {
+    "mtime": 1779811748.6402698,
+    "ast_hash": "5d5f28c39fb602b8fdb7f6b8efe58fd6",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/routes/devRoutes.ts": {
+    "mtime": 1779807601.0814948,
+    "ast_hash": "9eca2e6afa9671418c24b06b131fbafc",
+    "semantic_hash": "9eca2e6afa9671418c24b06b131fbafc"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/routes/auditRoutes.ts": {
+    "mtime": 1779730962.0,
+    "ast_hash": "cdb83ebb4c4f241720d6559d5905d499",
+    "semantic_hash": "cdb83ebb4c4f241720d6559d5905d499"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/routes/setRoutes.ts": {
+    "mtime": 1779726942.0,
+    "ast_hash": "3e1b4693944d2d2bdbe059461773711b",
+    "semantic_hash": "3e1b4693944d2d2bdbe059461773711b"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/middleware/authMiddleware.ts": {
+    "mtime": 1779730928.0,
+    "ast_hash": "e0e9bcc441cdd5fdb71a4edbb43c9130",
+    "semantic_hash": "e0e9bcc441cdd5fdb71a4edbb43c9130"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/middleware/validationMiddleware.ts": {
+    "mtime": 1779727066.0,
+    "ast_hash": "4d682a6192e9a3446a9719e974cd887f",
+    "semantic_hash": "4d682a6192e9a3446a9719e974cd887f"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/middleware/prismaErrorHandler.ts": {
+    "mtime": 1779660238.0,
+    "ast_hash": "be1101efcd8aa182d488639c8719fbc5",
+    "semantic_hash": "be1101efcd8aa182d488639c8719fbc5"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/lib/swagger.ts": {
+    "mtime": 1779813493.7177894,
+    "ast_hash": "0100cef5ec69c27f54e3343348374fda",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/lib/auditLogger.ts": {
+    "mtime": 1779725770.0,
+    "ast_hash": "48838ff56fbc20c3b5598cc9ac867a3a",
+    "semantic_hash": "48838ff56fbc20c3b5598cc9ac867a3a"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/lib/prisma.ts": {
+    "mtime": 1779807507.070364,
+    "ast_hash": "ba16bf8ef940096cfcd11c9534f031ac",
+    "semantic_hash": "ba16bf8ef940096cfcd11c9534f031ac"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/lib/config.ts": {
+    "mtime": 1779730904.0,
+    "ast_hash": "11dbd1192dadf2e61c5287947aa87cc5",
+    "semantic_hash": "11dbd1192dadf2e61c5287947aa87cc5"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/lib/schemas.ts": {
+    "mtime": 1779730938.0,
+    "ast_hash": "6933da40799c18b39869b6246647d2d7",
+    "semantic_hash": "6933da40799c18b39869b6246647d2d7"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/prisma/populateSizeValue.ts": {
+    "mtime": 1779660284.0,
+    "ast_hash": "4b273f61598380f3ac85d9af7c3f85de",
+    "semantic_hash": "4b273f61598380f3ac85d9af7c3f85de"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/prisma/formatExistingDies.ts": {
+    "mtime": 1779723676.0,
+    "ast_hash": "b3b8ec1cba4f02af0642692cbb96d5a9",
+    "semantic_hash": "b3b8ec1cba4f02af0642692cbb96d5a9"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/prisma/seed.ts": {
+    "mtime": 1779732936.0,
+    "ast_hash": "0b32c2873081f5bab3e38b134611323c",
+    "semantic_hash": "0b32c2873081f5bab3e38b134611323c"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/prisma/seed.js": {
+    "mtime": 1779654822.0,
+    "ast_hash": "67f434e48bff80ea2083bbaefb10cea9",
+    "semantic_hash": "67f434e48bff80ea2083bbaefb10cea9"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/prisma/migrations/20260525102258_update_relations/migration.sql": {
+    "mtime": 1779659578.0,
+    "ast_hash": "e3499318c75a45ba500a1b3f505f5394",
+    "semantic_hash": "e3499318c75a45ba500a1b3f505f5394"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/prisma/migrations/20260525044535_init/migration.sql": {
+    "mtime": 1779639334.0,
+    "ast_hash": "583ddf7bfd0093ccf9b94d9bc5941ccd",
+    "semantic_hash": "583ddf7bfd0093ccf9b94d9bc5941ccd"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/prisma/migrations/20260525103351_add_size_value/migration.sql": {
+    "mtime": 1779660230.0,
+    "ast_hash": "a904fdf33fb5abdcd630089e33b10c58",
+    "semantic_hash": "a904fdf33fb5abdcd630089e33b10c58"
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/prisma/json-schema/json-schema.json": {
+    "mtime": 1779747318.0,
+    "ast_hash": "fe4a1efc6dbe59c35ed38d415a01e038",
+    "semantic_hash": "fe4a1efc6dbe59c35ed38d415a01e038"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/vite.config.ts": {
+    "mtime": 1779640932.0,
+    "ast_hash": "88439104b3c207f17d33ef3160e3b080",
+    "semantic_hash": "88439104b3c207f17d33ef3160e3b080"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/tsconfig.app.json": {
+    "mtime": 1779640930.0,
+    "ast_hash": "136630b5accce1ca50663df229534a26",
+    "semantic_hash": "136630b5accce1ca50663df229534a26"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/tsconfig.json": {
+    "mtime": 1779640930.0,
+    "ast_hash": "a3d39fa780ebff65444de257f291ce6c",
+    "semantic_hash": "a3d39fa780ebff65444de257f291ce6c"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/eslint.config.js": {
+    "mtime": 1779640930.0,
+    "ast_hash": "0355276bc79439afe3c53e3a2470ca1e",
+    "semantic_hash": "0355276bc79439afe3c53e3a2470ca1e"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/package.json": {
+    "mtime": 1779640966.0,
+    "ast_hash": "e91cf0eb557be294e08ee5fc39210843",
+    "semantic_hash": "e91cf0eb557be294e08ee5fc39210843"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/tsconfig.node.json": {
+    "mtime": 1779640930.0,
+    "ast_hash": "70bdd0a673bcfc0e828080b306e7c680",
+    "semantic_hash": "70bdd0a673bcfc0e828080b306e7c680"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/main.tsx": {
+    "mtime": 1779640932.0,
+    "ast_hash": "787e5a07efeb2bf6209d5937195f2f68",
+    "semantic_hash": "787e5a07efeb2bf6209d5937195f2f68"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/App.tsx": {
+    "mtime": 1779809987.6914015,
+    "ast_hash": "489a980ae097ab7528038bcbf802096c",
+    "semantic_hash": "489a980ae097ab7528038bcbf802096c"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/context/AuthContext.tsx": {
+    "mtime": 1779732042.0,
+    "ast_hash": "5b90d4050d5a6d1d50d5405d68cec1aa",
+    "semantic_hash": "5b90d4050d5a6d1d50d5405d68cec1aa"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/context/ToastContext.tsx": {
+    "mtime": 1779748940.0,
+    "ast_hash": "443be5bcdfd00808e52053c757be8186",
+    "semantic_hash": "443be5bcdfd00808e52053c757be8186"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/components/Skeleton.tsx": {
+    "mtime": 1779747560.0,
+    "ast_hash": "a28e0b8a96e3a20b15858ffdcea54d33",
+    "semantic_hash": "a28e0b8a96e3a20b15858ffdcea54d33"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/components/SegmentedControl.tsx": {
+    "mtime": 1779737972.0,
+    "ast_hash": "708efa4d144b0f51a820a7a10cae6f63",
+    "semantic_hash": "708efa4d144b0f51a820a7a10cae6f63"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/components/Fleet3DGraph.tsx": {
+    "mtime": 1779808573.3705614,
+    "ast_hash": "19ef1cfb71a8a5f7d470db97f6afb8b0",
+    "semantic_hash": "19ef1cfb71a8a5f7d470db97f6afb8b0"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/components/Breadcrumbs.tsx": {
+    "mtime": 1779737964.0,
+    "ast_hash": "bc92e6d3bdb58e2066639ae75088ffb7",
+    "semantic_hash": "bc92e6d3bdb58e2066639ae75088ffb7"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/components/Topbar.tsx": {
+    "mtime": 1779644490.0,
+    "ast_hash": "3dec53e0a3b0a201454bfde049d7ff2c",
+    "semantic_hash": "3dec53e0a3b0a201454bfde049d7ff2c"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/components/Codebase3DGraph.tsx": {
+    "mtime": 1779808552.9055972,
+    "ast_hash": "c0d931c3e9237337f61dc33f467a596e",
+    "semantic_hash": "c0d931c3e9237337f61dc33f467a596e"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/components/ActivityFeed.tsx": {
+    "mtime": 1779729170.0,
+    "ast_hash": "50dfcac761ef85e920032e8f5efb0126",
+    "semantic_hash": "50dfcac761ef85e920032e8f5efb0126"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/components/Sidebar.tsx": {
+    "mtime": 1779813504.9576483,
+    "ast_hash": "e24eafcaf77db143f6751237c8f08757",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/pages/SettingsPage.tsx": {
+    "mtime": 1779813014.9822714,
+    "ast_hash": "01273da5ad44ee4828ebb8317d0435d0",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/pages/MachineDetails.tsx": {
+    "mtime": 1779812808.8800824,
+    "ast_hash": "223a432289a21ea9067704dbbc55cc48",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/pages/CodebaseGraphPage.tsx": {
+    "mtime": 1779807693.1256227,
+    "ast_hash": "a2ed6c2f6269c00fb065dbc2db495f32",
+    "semantic_hash": "a2ed6c2f6269c00fb065dbc2db495f32"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/pages/LoginPage.tsx": {
+    "mtime": 1779813517.4781697,
+    "ast_hash": "693fc23ec52a457a37f5a61160420a54",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/pages/SetDetails.tsx": {
+    "mtime": 1779812905.1861615,
+    "ast_hash": "ee02b04e9f9760ac8df00c69dca2cfe2",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/pages/Dashboard.tsx": {
+    "mtime": 1779812060.4694672,
+    "ast_hash": "bcb3d28f0b77cd9270c5778138d3fc39",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/pages/DiesPage.tsx": {
+    "mtime": 1779812943.0971937,
+    "ast_hash": "8818a45e21046c24d82f104dc1b0d10c",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/pages/SetsPage.tsx": {
+    "mtime": 1779812708.5189998,
+    "ast_hash": "a17480d52bc4573895798d53951e0325",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/pages/FleetGraphPage.tsx": {
+    "mtime": 1779812074.2274785,
+    "ast_hash": "0c371e47929b8a2b6a51643354df506a",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/pages/SearchPage.tsx": {
+    "mtime": 1779812972.989226,
+    "ast_hash": "88ba3159598cdae421c15d85dfa6a34b",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/services/api.ts": {
+    "mtime": 1779730992.0,
+    "ast_hash": "7a2525b56073c06b70302b5a3d029aeb",
+    "semantic_hash": "7a2525b56073c06b70302b5a3d029aeb"
+  },
+  "/home/sahil/Desktop/Projects/dms/docker-compose.dev.yml": {
+    "mtime": 1779805370.1565435,
+    "ast_hash": "f72160fe33d0e5f3fd233b35058daa3e",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/docker-compose.yml": {
+    "mtime": 1779813544.252844,
+    "ast_hash": "c388496df27ed61e49557b7a824e4ec2",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/GEMINI.md": {
+    "mtime": 1779813446.7497044,
+    "ast_hash": "2087d88a7c1bf1e7e54243d57bfa7067",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/requirements.txt": {
+    "mtime": 1779804601.8459947,
+    "ast_hash": "5cb5a743fdc927f17c5d1745bd08ba39",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/README.md": {
+    "mtime": 1779640930.0,
+    "ast_hash": "f6e3faf55d738cf2affe1b44195f27cf",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/index.html": {
+    "mtime": 1779640932.0,
+    "ast_hash": "33bd262affcefea92f1509cda449a19c",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/public/favicon.svg": {
+    "mtime": 1779640932.0,
+    "ast_hash": "7e840862161341271697daa99a40d76b",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/public/icons.svg": {
+    "mtime": 1779640932.0,
+    "ast_hash": "3b4fcfcf393eca4d264dca4a4663bc37",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/assets/react.svg": {
+    "mtime": 1779640932.0,
+    "ast_hash": "f0402b67b6ce880f65666bb49e841696",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/assets/hero.png": {
+    "mtime": 1779640930.0,
+    "ast_hash": "aead493361b27e7510691c5d7072dfc1",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/assets/vite.svg": {
+    "mtime": 1779640932.0,
+    "ast_hash": "9960a24288958394ac50e57ff638b036",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/src/middleware/rateLimiter.ts": {
+    "mtime": 1779807554.3374298,
+    "ast_hash": "a4a669e53f09f202411310060985072a",
+    "semantic_hash": "a4a669e53f09f202411310060985072a"
+  },
+  "/home/sahil/Desktop/Projects/dms/frontend/src/components/ErrorBoundary.tsx": {
+    "mtime": 1779807771.5727317,
+    "ast_hash": "3dc1d42107f7cad8360da0bee1a23a18",
+    "semantic_hash": "3dc1d42107f7cad8360da0bee1a23a18"
+  },
+  "/home/sahil/Desktop/Projects/dms/README.md": {
+    "mtime": 1779813426.737766,
+    "ast_hash": "8faae9af687acc716fd0d1602f6a32ca",
+    "semantic_hash": ""
+  }
+}

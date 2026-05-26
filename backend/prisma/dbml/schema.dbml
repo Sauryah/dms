@@ -1,0 +1,60 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table User {
+  id String [pk]
+  username String [unique, not null]
+  passwordHash String [not null]
+  role Role [not null, default: 'VIEWER']
+}
+
+Table Die {
+  id String [pk]
+  dieId String [unique, not null]
+  size String [not null]
+  sizeValue Float [not null, default: 0]
+  casing String [not null]
+  details String
+  createdAt DateTime [default: `now()`, not null]
+  setId String
+  set Set
+}
+
+Table Set {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  machineId String
+  machine Machine
+  dies Die [not null]
+}
+
+Table Machine {
+  id String [pk]
+  name String [unique, not null]
+  location String
+  sets Set [not null]
+}
+
+Table AuditLog {
+  id String [pk]
+  actorId String [not null]
+  actorName String [not null]
+  action String [not null]
+  target String [not null]
+  details String [not null]
+  ipAddress String
+  userAgent String
+  createdAt DateTime [default: `now()`, not null]
+}
+
+Enum Role {
+  ADMIN
+  OPERATOR
+  VIEWER
+}
+
+Ref: Die.setId > Set.id
+
+Ref: Set.machineId > Machine.id

@@ -1,0 +1,182 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "passwordHash": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string",
+          "default": "VIEWER",
+          "enum": [
+            "ADMIN",
+            "OPERATOR",
+            "VIEWER"
+          ]
+        }
+      }
+    },
+    "Die": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "dieId": {
+          "type": "string"
+        },
+        "size": {
+          "type": "string"
+        },
+        "sizeValue": {
+          "type": "number",
+          "default": 0
+        },
+        "casing": {
+          "type": "string"
+        },
+        "details": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "set": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Set"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "Set": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "machine": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Machine"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Die"
+          }
+        }
+      }
+    },
+    "Machine": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "location": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Set"
+          }
+        }
+      }
+    },
+    "AuditLog": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "actorId": {
+          "type": "string"
+        },
+        "actorName": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "details": {
+          "type": "string"
+        },
+        "ipAddress": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "userAgent": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "user": {
+      "$ref": "#/definitions/User"
+    },
+    "die": {
+      "$ref": "#/definitions/Die"
+    },
+    "set": {
+      "$ref": "#/definitions/Set"
+    },
+    "machine": {
+      "$ref": "#/definitions/Machine"
+    },
+    "auditLog": {
+      "$ref": "#/definitions/AuditLog"
+    }
+  }
+}

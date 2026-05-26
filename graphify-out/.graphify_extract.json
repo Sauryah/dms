@@ -1,0 +1,2132 @@
+{
+  "nodes": [
+    {
+      "id": "backend_prisma_config_ts",
+      "label": "prisma.config.ts",
+      "file_type": "code",
+      "source_file": "backend\\prisma.config.ts",
+      "source_location": "L1",
+      "community": 19,
+      "norm_label": "prisma.config.ts"
+    },
+    {
+      "id": "backend_prisma_populatesizevalue_ts",
+      "label": "populateSizeValue.ts",
+      "file_type": "code",
+      "source_file": "backend\\prisma\\populateSizeValue.ts",
+      "source_location": "L1",
+      "community": 10,
+      "norm_label": "populatesizevalue.ts"
+    },
+    {
+      "id": "populatesizevalue_parsesizetofloat",
+      "label": "parseSizeToFloat()",
+      "file_type": "code",
+      "source_file": "backend\\prisma\\populateSizeValue.ts",
+      "source_location": "L5",
+      "community": 10,
+      "norm_label": "parsesizetofloat()"
+    },
+    {
+      "id": "populatesizevalue_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "backend\\prisma\\populateSizeValue.ts",
+      "source_location": "L14",
+      "community": 10,
+      "norm_label": "main()"
+    },
+    {
+      "id": "backend_prisma_seed_js",
+      "label": "seed.js",
+      "file_type": "code",
+      "source_file": "backend\\prisma\\seed.js",
+      "source_location": "L1",
+      "community": 11,
+      "norm_label": "seed.js"
+    },
+    {
+      "id": "seed_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "backend\\prisma\\seed.ts",
+      "source_location": "L9",
+      "community": 11,
+      "norm_label": "main()"
+    },
+    {
+      "id": "backend_prisma_seed_ts",
+      "label": "seed.ts",
+      "file_type": "code",
+      "source_file": "backend\\prisma\\seed.ts",
+      "source_location": "L1",
+      "community": 11,
+      "norm_label": "seed.ts"
+    },
+    {
+      "id": "backend_src_app_ts",
+      "label": "app.ts",
+      "file_type": "code",
+      "source_file": "backend\\src\\app.ts",
+      "source_location": "L1",
+      "community": 20,
+      "norm_label": "app.ts"
+    },
+    {
+      "id": "backend_src_index_ts",
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "backend\\src\\index.ts",
+      "source_location": "L1",
+      "community": 21,
+      "norm_label": "index.ts"
+    },
+    {
+      "id": "backend_src_controllers_authcontroller_ts",
+      "label": "authController.ts",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\authController.ts",
+      "source_location": "L1",
+      "community": 2,
+      "norm_label": "authcontroller.ts"
+    },
+    {
+      "id": "authcontroller_register",
+      "label": "register()",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\authController.ts",
+      "source_location": "L8",
+      "community": 2,
+      "norm_label": "register()"
+    },
+    {
+      "id": "authcontroller_login",
+      "label": "login()",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\authController.ts",
+      "source_location": "L51",
+      "community": 2,
+      "norm_label": "login()"
+    },
+    {
+      "id": "authcontroller_getusers",
+      "label": "getUsers()",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\authController.ts",
+      "source_location": "L80",
+      "community": 2,
+      "norm_label": "getusers()"
+    },
+    {
+      "id": "authcontroller_deleteuser",
+      "label": "deleteUser()",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\authController.ts",
+      "source_location": "L95",
+      "community": 2,
+      "norm_label": "deleteuser()"
+    },
+    {
+      "id": "d_project_mmmmm_backend_src_controllers_diecontroller_ts",
+      "label": "dieController.ts",
+      "file_type": "code",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\dieController.ts",
+      "source_location": "L1",
+      "community": 1,
+      "norm_label": "diecontroller.ts"
+    },
+    {
+      "id": "diecontroller_parsesizetofloat",
+      "label": "parseSizeToFloat()",
+      "file_type": "code",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\dieController.ts",
+      "source_location": "L12",
+      "community": 1,
+      "norm_label": "parsesizetofloat()"
+    },
+    {
+      "id": "diecontroller_getdies",
+      "label": "getDies()",
+      "file_type": "code",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\dieController.ts",
+      "source_location": "L21",
+      "community": 1,
+      "norm_label": "getdies()"
+    },
+    {
+      "id": "diecontroller_getdiebyid",
+      "label": "getDieById()",
+      "file_type": "code",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\dieController.ts",
+      "source_location": "L34",
+      "community": 1,
+      "norm_label": "getdiebyid()"
+    },
+    {
+      "id": "diecontroller_createdie",
+      "label": "createDie()",
+      "file_type": "code",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\dieController.ts",
+      "source_location": "L52",
+      "community": 1,
+      "norm_label": "createdie()"
+    },
+    {
+      "id": "diecontroller_updatedie",
+      "label": "updateDie()",
+      "file_type": "code",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\dieController.ts",
+      "source_location": "L65",
+      "community": 1,
+      "norm_label": "updatedie()"
+    },
+    {
+      "id": "diecontroller_deletedie",
+      "label": "deleteDie()",
+      "file_type": "code",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\dieController.ts",
+      "source_location": "L80",
+      "community": 1,
+      "norm_label": "deletedie()"
+    },
+    {
+      "id": "diecontroller_importdies",
+      "label": "importDies()",
+      "file_type": "code",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\dieController.ts",
+      "source_location": "L99",
+      "community": 1,
+      "norm_label": "importdies()"
+    },
+    {
+      "id": "backend_src_controllers_machinecontroller_ts",
+      "label": "machineController.ts",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\machineController.ts",
+      "source_location": "L1",
+      "community": 3,
+      "norm_label": "machinecontroller.ts"
+    },
+    {
+      "id": "machinecontroller_getmachines",
+      "label": "getMachines()",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\machineController.ts",
+      "source_location": "L4",
+      "community": 3,
+      "norm_label": "getmachines()"
+    },
+    {
+      "id": "machinecontroller_getmachinebyid",
+      "label": "getMachineById()",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\machineController.ts",
+      "source_location": "L17",
+      "community": 3,
+      "norm_label": "getmachinebyid()"
+    },
+    {
+      "id": "machinecontroller_createmachine",
+      "label": "createMachine()",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\machineController.ts",
+      "source_location": "L39",
+      "community": 3,
+      "norm_label": "createmachine()"
+    },
+    {
+      "id": "machinecontroller_updatemachine",
+      "label": "updateMachine()",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\machineController.ts",
+      "source_location": "L51",
+      "community": 3,
+      "norm_label": "updatemachine()"
+    },
+    {
+      "id": "machinecontroller_deletemachine",
+      "label": "deleteMachine()",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\machineController.ts",
+      "source_location": "L65",
+      "community": 3,
+      "norm_label": "deletemachine()"
+    },
+    {
+      "id": "machinecontroller_assignsettomachine",
+      "label": "assignSetToMachine()",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\machineController.ts",
+      "source_location": "L77",
+      "community": 3,
+      "norm_label": "assignsettomachine()"
+    },
+    {
+      "id": "d_project_mmmmm_backend_src_controllers_searchcontroller_ts",
+      "label": "searchController.ts",
+      "file_type": "code",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\searchController.ts",
+      "source_location": "L1",
+      "community": 16,
+      "norm_label": "searchcontroller.ts"
+    },
+    {
+      "id": "searchcontroller_universalsearch",
+      "label": "universalSearch()",
+      "file_type": "code",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\searchController.ts",
+      "source_location": "L11",
+      "community": 16,
+      "norm_label": "universalsearch()"
+    },
+    {
+      "id": "backend_src_controllers_setcontroller_ts",
+      "label": "setController.ts",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\setController.ts",
+      "source_location": "L1",
+      "community": 4,
+      "norm_label": "setcontroller.ts"
+    },
+    {
+      "id": "setcontroller_getsets",
+      "label": "getSets()",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\setController.ts",
+      "source_location": "L4",
+      "community": 4,
+      "norm_label": "getsets()"
+    },
+    {
+      "id": "setcontroller_getsetbyid",
+      "label": "getSetById()",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\setController.ts",
+      "source_location": "L18",
+      "community": 4,
+      "norm_label": "getsetbyid()"
+    },
+    {
+      "id": "setcontroller_createset",
+      "label": "createSet()",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\setController.ts",
+      "source_location": "L37",
+      "community": 4,
+      "norm_label": "createset()"
+    },
+    {
+      "id": "setcontroller_updateset",
+      "label": "updateSet()",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\setController.ts",
+      "source_location": "L49",
+      "community": 4,
+      "norm_label": "updateset()"
+    },
+    {
+      "id": "setcontroller_deleteset",
+      "label": "deleteSet()",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\setController.ts",
+      "source_location": "L63",
+      "community": 4,
+      "norm_label": "deleteset()"
+    },
+    {
+      "id": "setcontroller_assigndietoset",
+      "label": "assignDieToSet()",
+      "file_type": "code",
+      "source_file": "backend\\src\\controllers\\setController.ts",
+      "source_location": "L75",
+      "community": 4,
+      "norm_label": "assigndietoset()"
+    },
+    {
+      "id": "backend_src_lib_prisma_ts",
+      "label": "prisma.ts",
+      "file_type": "code",
+      "source_file": "backend\\src\\lib\\prisma.ts",
+      "source_location": "L1",
+      "community": 22,
+      "norm_label": "prisma.ts"
+    },
+    {
+      "id": "backend_src_middleware_authmiddleware_ts",
+      "label": "authMiddleware.ts",
+      "file_type": "code",
+      "source_file": "backend\\src\\middleware\\authMiddleware.ts",
+      "source_location": "L1",
+      "community": 12,
+      "norm_label": "authmiddleware.ts"
+    },
+    {
+      "id": "authmiddleware_authenticate",
+      "label": "authenticate()",
+      "file_type": "code",
+      "source_file": "backend\\src\\middleware\\authMiddleware.ts",
+      "source_location": "L14",
+      "community": 12,
+      "norm_label": "authenticate()"
+    },
+    {
+      "id": "authmiddleware_authorize",
+      "label": "authorize()",
+      "file_type": "code",
+      "source_file": "backend\\src\\middleware\\authMiddleware.ts",
+      "source_location": "L30",
+      "community": 12,
+      "norm_label": "authorize()"
+    },
+    {
+      "id": "backend_src_middleware_prismaerrorhandler_ts",
+      "label": "prismaErrorHandler.ts",
+      "file_type": "code",
+      "source_file": "backend\\src\\middleware\\prismaErrorHandler.ts",
+      "source_location": "L1",
+      "community": 17,
+      "norm_label": "prismaerrorhandler.ts"
+    },
+    {
+      "id": "prismaerrorhandler_prismaerrorhandler",
+      "label": "prismaErrorHandler()",
+      "file_type": "code",
+      "source_file": "backend\\src\\middleware\\prismaErrorHandler.ts",
+      "source_location": "L4",
+      "community": 17,
+      "norm_label": "prismaerrorhandler()"
+    },
+    {
+      "id": "backend_src_routes_authroutes_ts",
+      "label": "authRoutes.ts",
+      "file_type": "code",
+      "source_file": "backend\\src\\routes\\authRoutes.ts",
+      "source_location": "L1",
+      "community": 23,
+      "norm_label": "authroutes.ts"
+    },
+    {
+      "id": "backend_src_routes_dieroutes_ts",
+      "label": "dieRoutes.ts",
+      "file_type": "code",
+      "source_file": "backend\\src\\routes\\dieRoutes.ts",
+      "source_location": "L1",
+      "community": 24,
+      "norm_label": "dieroutes.ts"
+    },
+    {
+      "id": "backend_src_routes_machineroutes_ts",
+      "label": "machineRoutes.ts",
+      "file_type": "code",
+      "source_file": "backend\\src\\routes\\machineRoutes.ts",
+      "source_location": "L1",
+      "community": 25,
+      "norm_label": "machineroutes.ts"
+    },
+    {
+      "id": "backend_src_routes_searchroutes_ts",
+      "label": "searchRoutes.ts",
+      "file_type": "code",
+      "source_file": "backend\\src\\routes\\searchRoutes.ts",
+      "source_location": "L1",
+      "community": 26,
+      "norm_label": "searchroutes.ts"
+    },
+    {
+      "id": "backend_src_routes_setroutes_ts",
+      "label": "setRoutes.ts",
+      "file_type": "code",
+      "source_file": "backend\\src\\routes\\setRoutes.ts",
+      "source_location": "L1",
+      "community": 27,
+      "norm_label": "setroutes.ts"
+    },
+    {
+      "id": "frontend_eslint_config_js",
+      "label": "eslint.config.js",
+      "file_type": "code",
+      "source_file": "frontend\\eslint.config.js",
+      "source_location": "L1",
+      "community": 28,
+      "norm_label": "eslint.config.js"
+    },
+    {
+      "id": "frontend_vite_config_ts",
+      "label": "vite.config.ts",
+      "file_type": "code",
+      "source_file": "frontend\\vite.config.ts",
+      "source_location": "L1",
+      "community": 29,
+      "norm_label": "vite.config.ts"
+    },
+    {
+      "id": "frontend_src_app_tsx",
+      "label": "App.tsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\App.tsx",
+      "source_location": "L1",
+      "community": 6,
+      "norm_label": "app.tsx"
+    },
+    {
+      "id": "app_protectedlayout",
+      "label": "ProtectedLayout()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\App.tsx",
+      "source_location": "L16",
+      "community": 6,
+      "norm_label": "protectedlayout()"
+    },
+    {
+      "id": "app_app",
+      "label": "App()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\App.tsx",
+      "source_location": "L36",
+      "community": 6,
+      "norm_label": "app()"
+    },
+    {
+      "id": "frontend_src_main_tsx",
+      "label": "main.tsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\main.tsx",
+      "source_location": "L1",
+      "community": 6,
+      "norm_label": "main.tsx"
+    },
+    {
+      "id": "d_project_mmmmm_frontend_src_components_sidebar_tsx",
+      "label": "Sidebar.tsx",
+      "file_type": "code",
+      "source_file": "D:\\PROJECT\\mmmmm\\frontend\\src\\components\\Sidebar.tsx",
+      "source_location": "L1",
+      "community": 30,
+      "norm_label": "sidebar.tsx"
+    },
+    {
+      "id": "frontend_src_components_topbar_tsx",
+      "label": "Topbar.tsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\components\\Topbar.tsx",
+      "source_location": "L1",
+      "community": 31,
+      "norm_label": "topbar.tsx"
+    },
+    {
+      "id": "frontend_src_context_authcontext_tsx",
+      "label": "AuthContext.tsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\context\\AuthContext.tsx",
+      "source_location": "L1",
+      "community": 6,
+      "norm_label": "authcontext.tsx"
+    },
+    {
+      "id": "authcontext_useauth",
+      "label": "useAuth()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\context\\AuthContext.tsx",
+      "source_location": "L85",
+      "community": 6,
+      "norm_label": "useauth()"
+    },
+    {
+      "id": "d_project_mmmmm_frontend_src_pages_dashboard_tsx",
+      "label": "Dashboard.tsx",
+      "file_type": "code",
+      "source_file": "D:\\PROJECT\\mmmmm\\frontend\\src\\pages\\Dashboard.tsx",
+      "source_location": "L1",
+      "community": 13,
+      "norm_label": "dashboard.tsx"
+    },
+    {
+      "id": "dashboard_fetchdata",
+      "label": "fetchData()",
+      "file_type": "code",
+      "source_file": "D:\\PROJECT\\mmmmm\\frontend\\src\\pages\\Dashboard.tsx",
+      "source_location": "L34",
+      "community": 13,
+      "norm_label": "fetchdata()"
+    },
+    {
+      "id": "dashboard_handlecreatemachine",
+      "label": "handleCreateMachine()",
+      "file_type": "code",
+      "source_file": "D:\\PROJECT\\mmmmm\\frontend\\src\\pages\\Dashboard.tsx",
+      "source_location": "L59",
+      "community": 13,
+      "norm_label": "handlecreatemachine()"
+    },
+    {
+      "id": "frontend_src_pages_diespage_tsx",
+      "label": "DiesPage.tsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\DiesPage.tsx",
+      "source_location": "L1",
+      "community": 5,
+      "norm_label": "diespage.tsx"
+    },
+    {
+      "id": "diespage_fetchdies",
+      "label": "fetchDies()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\DiesPage.tsx",
+      "source_location": "L29",
+      "community": 5,
+      "norm_label": "fetchdies()"
+    },
+    {
+      "id": "diespage_handlesubmit",
+      "label": "handleSubmit()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\DiesPage.tsx",
+      "source_location": "L45",
+      "community": 5,
+      "norm_label": "handlesubmit()"
+    },
+    {
+      "id": "diespage_handleimport",
+      "label": "handleImport()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\DiesPage.tsx",
+      "source_location": "L61",
+      "community": 5,
+      "norm_label": "handleimport()"
+    },
+    {
+      "id": "diespage_handledelete",
+      "label": "handleDelete()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\DiesPage.tsx",
+      "source_location": "L83",
+      "community": 5,
+      "norm_label": "handledelete()"
+    },
+    {
+      "id": "diespage_openeditmodal",
+      "label": "openEditModal()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\DiesPage.tsx",
+      "source_location": "L94",
+      "community": 5,
+      "norm_label": "openeditmodal()"
+    },
+    {
+      "id": "diespage_resetform",
+      "label": "resetForm()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\DiesPage.tsx",
+      "source_location": "L100",
+      "community": 5,
+      "norm_label": "resetform()"
+    },
+    {
+      "id": "frontend_src_pages_loginpage_tsx",
+      "label": "LoginPage.tsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\LoginPage.tsx",
+      "source_location": "L1",
+      "community": 2,
+      "norm_label": "loginpage.tsx"
+    },
+    {
+      "id": "loginpage_handlesubmit",
+      "label": "handleSubmit()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\LoginPage.tsx",
+      "source_location": "L21",
+      "community": 2,
+      "norm_label": "handlesubmit()"
+    },
+    {
+      "id": "frontend_src_pages_machinedetails_tsx",
+      "label": "MachineDetails.tsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\MachineDetails.tsx",
+      "source_location": "L1",
+      "community": 7,
+      "norm_label": "machinedetails.tsx"
+    },
+    {
+      "id": "machinedetails_fetchmachine",
+      "label": "fetchMachine()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\MachineDetails.tsx",
+      "source_location": "L37",
+      "community": 7,
+      "norm_label": "fetchmachine()"
+    },
+    {
+      "id": "machinedetails_fetchavailablesets",
+      "label": "fetchAvailableSets()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\MachineDetails.tsx",
+      "source_location": "L49",
+      "community": 7,
+      "norm_label": "fetchavailablesets()"
+    },
+    {
+      "id": "machinedetails_handleupdate",
+      "label": "handleUpdate()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\MachineDetails.tsx",
+      "source_location": "L63",
+      "community": 7,
+      "norm_label": "handleupdate()"
+    },
+    {
+      "id": "machinedetails_handledelete",
+      "label": "handleDelete()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\MachineDetails.tsx",
+      "source_location": "L74",
+      "community": 7,
+      "norm_label": "handledelete()"
+    },
+    {
+      "id": "machinedetails_handleassignset",
+      "label": "handleAssignSet()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\MachineDetails.tsx",
+      "source_location": "L85",
+      "community": 7,
+      "norm_label": "handleassignset()"
+    },
+    {
+      "id": "frontend_src_pages_searchpage_tsx",
+      "label": "SearchPage.tsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\SearchPage.tsx",
+      "source_location": "L1",
+      "community": 18,
+      "norm_label": "searchpage.tsx"
+    },
+    {
+      "id": "searchpage_handlesearch",
+      "label": "handleSearch()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\SearchPage.tsx",
+      "source_location": "L14",
+      "community": 18,
+      "norm_label": "handlesearch()"
+    },
+    {
+      "id": "frontend_src_pages_setdetails_tsx",
+      "label": "SetDetails.tsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\SetDetails.tsx",
+      "source_location": "L1",
+      "community": 8,
+      "norm_label": "setdetails.tsx"
+    },
+    {
+      "id": "setdetails_fetchset",
+      "label": "fetchSet()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\SetDetails.tsx",
+      "source_location": "L42",
+      "community": 8,
+      "norm_label": "fetchset()"
+    },
+    {
+      "id": "setdetails_fetchavailabledies",
+      "label": "fetchAvailableDies()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\SetDetails.tsx",
+      "source_location": "L54",
+      "community": 8,
+      "norm_label": "fetchavailabledies()"
+    },
+    {
+      "id": "setdetails_handleupdate",
+      "label": "handleUpdate()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\SetDetails.tsx",
+      "source_location": "L68",
+      "community": 8,
+      "norm_label": "handleupdate()"
+    },
+    {
+      "id": "setdetails_handledelete",
+      "label": "handleDelete()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\SetDetails.tsx",
+      "source_location": "L79",
+      "community": 8,
+      "norm_label": "handledelete()"
+    },
+    {
+      "id": "setdetails_handleassigndie",
+      "label": "handleAssignDie()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\SetDetails.tsx",
+      "source_location": "L90",
+      "community": 8,
+      "norm_label": "handleassigndie()"
+    },
+    {
+      "id": "frontend_src_pages_setspage_tsx",
+      "label": "SetsPage.tsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\SetsPage.tsx",
+      "source_location": "L1",
+      "community": 14,
+      "norm_label": "setspage.tsx"
+    },
+    {
+      "id": "setspage_fetchsets",
+      "label": "fetchSets()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\SetsPage.tsx",
+      "source_location": "L27",
+      "community": 14,
+      "norm_label": "fetchsets()"
+    },
+    {
+      "id": "setspage_handlecreateset",
+      "label": "handleCreateSet()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\SetsPage.tsx",
+      "source_location": "L43",
+      "community": 14,
+      "norm_label": "handlecreateset()"
+    },
+    {
+      "id": "frontend_src_pages_settingspage_tsx",
+      "label": "SettingsPage.tsx",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\SettingsPage.tsx",
+      "source_location": "L1",
+      "community": 9,
+      "norm_label": "settingspage.tsx"
+    },
+    {
+      "id": "settingspage_fetchusers",
+      "label": "fetchUsers()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\SettingsPage.tsx",
+      "source_location": "L23",
+      "community": 9,
+      "norm_label": "fetchusers()"
+    },
+    {
+      "id": "settingspage_handlesubmit",
+      "label": "handleSubmit()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\SettingsPage.tsx",
+      "source_location": "L40",
+      "community": 9,
+      "norm_label": "handlesubmit()"
+    },
+    {
+      "id": "settingspage_handledeleteuser",
+      "label": "handleDeleteUser()",
+      "file_type": "code",
+      "source_file": "frontend\\src\\pages\\SettingsPage.tsx",
+      "source_location": "L55",
+      "community": 9,
+      "norm_label": "handledeleteuser()"
+    },
+    {
+      "id": "frontend_src_services_api_ts",
+      "label": "api.ts",
+      "file_type": "code",
+      "source_file": "frontend\\src\\services\\api.ts",
+      "source_location": "L1",
+      "community": 32,
+      "norm_label": "api.ts"
+    },
+    {
+      "id": "gemini_diemanager",
+      "label": "DieManager Project",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": {
+        "start_line": 1,
+        "end_line": 3
+      },
+      "community": 0,
+      "norm_label": "diemanager project"
+    },
+    {
+      "id": "gemini_machine",
+      "label": "Machine Entity",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": {
+        "start_line": 6,
+        "end_line": 15
+      },
+      "community": 0,
+      "norm_label": "machine entity"
+    },
+    {
+      "id": "gemini_set",
+      "label": "Set Entity",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": {
+        "start_line": 6,
+        "end_line": 16
+      },
+      "community": 0,
+      "norm_label": "set entity"
+    },
+    {
+      "id": "gemini_die",
+      "label": "Die Entity",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": {
+        "start_line": 6,
+        "end_line": 17
+      },
+      "community": 0,
+      "norm_label": "die entity"
+    },
+    {
+      "id": "gemini_universal_search",
+      "label": "Universal Search",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": {
+        "start_line": 21,
+        "end_line": 24
+      },
+      "community": 0,
+      "norm_label": "universal search"
+    },
+    {
+      "id": "gemini_excel_bulk_import",
+      "label": "Excel Bulk Import",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": {
+        "start_line": 26,
+        "end_line": 32
+      },
+      "community": 0,
+      "norm_label": "excel bulk import"
+    },
+    {
+      "id": "gemini_docker_deployment",
+      "label": "Docker Deployment",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": {
+        "start_line": 36,
+        "end_line": 42
+      },
+      "community": 33,
+      "norm_label": "docker deployment"
+    },
+    {
+      "id": "gemini_rationale_range_search",
+      "label": "Rationale for Range Search",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": {
+        "start_line": 23,
+        "end_line": 23
+      },
+      "community": 0,
+      "norm_label": "rationale for range search"
+    },
+    {
+      "id": "gemini_hierarchy_navigation",
+      "label": "Hierarchy-First Navigation",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": {
+        "start_line": 54,
+        "end_line": 54
+      },
+      "community": 0,
+      "norm_label": "hierarchy-first navigation"
+    },
+    {
+      "id": "run_guide_env_setup",
+      "label": "Environment Setup",
+      "file_type": "document",
+      "source_file": "RUN_GUIDE.md",
+      "source_location": {
+        "start_line": 8,
+        "end_line": 20
+      },
+      "community": 0,
+      "norm_label": "environment setup"
+    },
+    {
+      "id": "readme_tech_stack",
+      "label": "Frontend Tech Stack",
+      "file_type": "document",
+      "source_file": "frontend/README.md",
+      "source_location": {
+        "start_line": 1,
+        "end_line": 1
+      },
+      "community": 34,
+      "norm_label": "frontend tech stack"
+    },
+    {
+      "id": "favicon_file",
+      "label": "favicon.svg",
+      "file_type": "image",
+      "source_file": "frontend/public/favicon.svg",
+      "description": "Vector graphic used as the application's favicon.",
+      "design_elements": "Stylized zigzag or bolt-like geometric shape, purple color palette, high-gamut (Display-P3) colors, Gaussian blur filters for glow effects, and alpha masking.",
+      "purpose": "Visual identifier for the DieManager application in browser tabs and bookmarks.",
+      "community": 35,
+      "norm_label": "favicon.svg"
+    },
+    {
+      "id": "frontend/public/icons.svg",
+      "label": "Icons SVG",
+      "file_type": "image",
+      "source_file": "frontend/public/icons.svg",
+      "community": 36,
+      "norm_label": "icons svg"
+    },
+    {
+      "id": "bluesky-icon",
+      "label": "Bluesky Icon",
+      "file_type": "image",
+      "source_file": "frontend/public/icons.svg",
+      "community": 37,
+      "norm_label": "bluesky icon"
+    },
+    {
+      "id": "discord-icon",
+      "label": "Discord Icon",
+      "file_type": "image",
+      "source_file": "frontend/public/icons.svg",
+      "community": 38,
+      "norm_label": "discord icon"
+    },
+    {
+      "id": "documentation-icon",
+      "label": "Documentation Icon",
+      "file_type": "image",
+      "source_file": "frontend/public/icons.svg",
+      "community": 39,
+      "norm_label": "documentation icon"
+    },
+    {
+      "id": "github-icon",
+      "label": "GitHub Icon",
+      "file_type": "image",
+      "source_file": "frontend/public/icons.svg",
+      "community": 40,
+      "norm_label": "github icon"
+    },
+    {
+      "id": "social-icon",
+      "label": "Social Icon",
+      "file_type": "image",
+      "source_file": "frontend/public/icons.svg",
+      "community": 41,
+      "norm_label": "social icon"
+    },
+    {
+      "id": "x-icon",
+      "label": "X Icon",
+      "file_type": "image",
+      "source_file": "frontend/public/icons.svg",
+      "community": 42,
+      "norm_label": "x icon"
+    },
+    {
+      "id": "frontend/src/assets/hero.png",
+      "label": "Hero Image",
+      "file_type": "image",
+      "source_file": "frontend/src/assets/hero.png",
+      "description": "An isometric illustration showing two stacked rounded rectangular slabs. The top slab is a thin wireframe, while the bottom slab is solid with a purple glowing texture on its sides. Dashed vertical lines connect the corners of the two slabs.",
+      "community": 15,
+      "norm_label": "hero image"
+    },
+    {
+      "id": "hero_top_layer",
+      "label": "Top Layer (Wireframe)",
+      "file_type": "image",
+      "source_file": "frontend/src/assets/hero.png",
+      "community": 15,
+      "norm_label": "top layer (wireframe)"
+    },
+    {
+      "id": "hero_bottom_layer",
+      "label": "Bottom Layer (Solid)",
+      "file_type": "image",
+      "source_file": "frontend/src/assets/hero.png",
+      "community": 15,
+      "norm_label": "bottom layer (solid)"
+    },
+    {
+      "id": "frontend/src/assets/react.svg",
+      "label": "React Logo",
+      "file_type": "image",
+      "source_file": "frontend/src/assets/react.svg",
+      "community": 43,
+      "norm_label": "react logo"
+    },
+    {
+      "id": "vite_svg",
+      "label": "Vite Logo",
+      "file_type": "image",
+      "source_file": "frontend/src/assets/vite.svg",
+      "community": 44,
+      "norm_label": "vite logo"
+    }
+  ],
+  "edges": [
+    {
+      "source": "backend_prisma_populatesizevalue_ts",
+      "target": "populatesizevalue_parsesizetofloat",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\prisma\\populateSizeValue.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_src": "backend_prisma_populatesizevalue_ts",
+      "_tgt": "populatesizevalue_parsesizetofloat",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_prisma_populatesizevalue_ts",
+      "target": "populatesizevalue_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\prisma\\populateSizeValue.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_src": "backend_prisma_populatesizevalue_ts",
+      "_tgt": "populatesizevalue_main",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "populatesizevalue_parsesizetofloat",
+      "target": "populatesizevalue_main",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\prisma\\populateSizeValue.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_src": "populatesizevalue_parsesizetofloat",
+      "_tgt": "populatesizevalue_main",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_prisma_seed_js",
+      "target": "seed_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\prisma\\seed.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_src": "backend_prisma_seed_js",
+      "_tgt": "seed_main",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "seed_main",
+      "target": "backend_prisma_seed_ts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\prisma\\seed.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_src": "seed_main",
+      "_tgt": "backend_prisma_seed_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_controllers_authcontroller_ts",
+      "target": "authcontroller_register",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\controllers\\authController.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_src": "backend_src_controllers_authcontroller_ts",
+      "_tgt": "authcontroller_register",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_controllers_authcontroller_ts",
+      "target": "authcontroller_login",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\controllers\\authController.ts",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_src": "backend_src_controllers_authcontroller_ts",
+      "_tgt": "authcontroller_login",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_controllers_authcontroller_ts",
+      "target": "authcontroller_getusers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\controllers\\authController.ts",
+      "source_location": "L80",
+      "weight": 1.0,
+      "_src": "backend_src_controllers_authcontroller_ts",
+      "_tgt": "authcontroller_getusers",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_controllers_authcontroller_ts",
+      "target": "authcontroller_deleteuser",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\controllers\\authController.ts",
+      "source_location": "L95",
+      "weight": 1.0,
+      "_src": "backend_src_controllers_authcontroller_ts",
+      "_tgt": "authcontroller_deleteuser",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "authcontroller_login",
+      "target": "loginpage_handlesubmit",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "frontend\\src\\pages\\LoginPage.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "_src": "authcontroller_login",
+      "_tgt": "loginpage_handlesubmit"
+    },
+    {
+      "source": "d_project_mmmmm_backend_src_controllers_diecontroller_ts",
+      "target": "diecontroller_parsesizetofloat",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\dieController.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_src": "d_project_mmmmm_backend_src_controllers_diecontroller_ts",
+      "_tgt": "diecontroller_parsesizetofloat",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "d_project_mmmmm_backend_src_controllers_diecontroller_ts",
+      "target": "diecontroller_getdies",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\dieController.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_src": "d_project_mmmmm_backend_src_controllers_diecontroller_ts",
+      "_tgt": "diecontroller_getdies",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "d_project_mmmmm_backend_src_controllers_diecontroller_ts",
+      "target": "diecontroller_getdiebyid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\dieController.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "_src": "d_project_mmmmm_backend_src_controllers_diecontroller_ts",
+      "_tgt": "diecontroller_getdiebyid",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "d_project_mmmmm_backend_src_controllers_diecontroller_ts",
+      "target": "diecontroller_createdie",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\dieController.ts",
+      "source_location": "L52",
+      "weight": 1.0,
+      "_src": "d_project_mmmmm_backend_src_controllers_diecontroller_ts",
+      "_tgt": "diecontroller_createdie",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "d_project_mmmmm_backend_src_controllers_diecontroller_ts",
+      "target": "diecontroller_updatedie",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\dieController.ts",
+      "source_location": "L65",
+      "weight": 1.0,
+      "_src": "d_project_mmmmm_backend_src_controllers_diecontroller_ts",
+      "_tgt": "diecontroller_updatedie",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "d_project_mmmmm_backend_src_controllers_diecontroller_ts",
+      "target": "diecontroller_deletedie",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\dieController.ts",
+      "source_location": "L80",
+      "weight": 1.0,
+      "_src": "d_project_mmmmm_backend_src_controllers_diecontroller_ts",
+      "_tgt": "diecontroller_deletedie",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "d_project_mmmmm_backend_src_controllers_diecontroller_ts",
+      "target": "diecontroller_importdies",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\dieController.ts",
+      "source_location": "L99",
+      "weight": 1.0,
+      "_src": "d_project_mmmmm_backend_src_controllers_diecontroller_ts",
+      "_tgt": "diecontroller_importdies",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "diecontroller_parsesizetofloat",
+      "target": "diecontroller_createdie",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\dieController.ts",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_src": "diecontroller_createdie",
+      "_tgt": "diecontroller_parsesizetofloat",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "diecontroller_parsesizetofloat",
+      "target": "diecontroller_updatedie",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\dieController.ts",
+      "source_location": "L69",
+      "weight": 1.0,
+      "_src": "diecontroller_updatedie",
+      "_tgt": "diecontroller_parsesizetofloat",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "diecontroller_parsesizetofloat",
+      "target": "diecontroller_importdies",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\dieController.ts",
+      "source_location": "L127",
+      "weight": 1.0,
+      "_src": "diecontroller_importdies",
+      "_tgt": "diecontroller_parsesizetofloat",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_controllers_machinecontroller_ts",
+      "target": "machinecontroller_getmachines",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\controllers\\machineController.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_src": "backend_src_controllers_machinecontroller_ts",
+      "_tgt": "machinecontroller_getmachines",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_controllers_machinecontroller_ts",
+      "target": "machinecontroller_getmachinebyid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\controllers\\machineController.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_src": "backend_src_controllers_machinecontroller_ts",
+      "_tgt": "machinecontroller_getmachinebyid",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_controllers_machinecontroller_ts",
+      "target": "machinecontroller_createmachine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\controllers\\machineController.ts",
+      "source_location": "L39",
+      "weight": 1.0,
+      "_src": "backend_src_controllers_machinecontroller_ts",
+      "_tgt": "machinecontroller_createmachine",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_controllers_machinecontroller_ts",
+      "target": "machinecontroller_updatemachine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\controllers\\machineController.ts",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_src": "backend_src_controllers_machinecontroller_ts",
+      "_tgt": "machinecontroller_updatemachine",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_controllers_machinecontroller_ts",
+      "target": "machinecontroller_deletemachine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\controllers\\machineController.ts",
+      "source_location": "L65",
+      "weight": 1.0,
+      "_src": "backend_src_controllers_machinecontroller_ts",
+      "_tgt": "machinecontroller_deletemachine",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_controllers_machinecontroller_ts",
+      "target": "machinecontroller_assignsettomachine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\controllers\\machineController.ts",
+      "source_location": "L77",
+      "weight": 1.0,
+      "_src": "backend_src_controllers_machinecontroller_ts",
+      "_tgt": "machinecontroller_assignsettomachine",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "d_project_mmmmm_backend_src_controllers_searchcontroller_ts",
+      "target": "searchcontroller_universalsearch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECT\\mmmmm\\backend\\src\\controllers\\searchController.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_src": "d_project_mmmmm_backend_src_controllers_searchcontroller_ts",
+      "_tgt": "searchcontroller_universalsearch",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_controllers_setcontroller_ts",
+      "target": "setcontroller_getsets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\controllers\\setController.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_src": "backend_src_controllers_setcontroller_ts",
+      "_tgt": "setcontroller_getsets",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_controllers_setcontroller_ts",
+      "target": "setcontroller_getsetbyid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\controllers\\setController.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_src": "backend_src_controllers_setcontroller_ts",
+      "_tgt": "setcontroller_getsetbyid",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_controllers_setcontroller_ts",
+      "target": "setcontroller_createset",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\controllers\\setController.ts",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_src": "backend_src_controllers_setcontroller_ts",
+      "_tgt": "setcontroller_createset",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_controllers_setcontroller_ts",
+      "target": "setcontroller_updateset",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\controllers\\setController.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "_src": "backend_src_controllers_setcontroller_ts",
+      "_tgt": "setcontroller_updateset",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_controllers_setcontroller_ts",
+      "target": "setcontroller_deleteset",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\controllers\\setController.ts",
+      "source_location": "L63",
+      "weight": 1.0,
+      "_src": "backend_src_controllers_setcontroller_ts",
+      "_tgt": "setcontroller_deleteset",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_controllers_setcontroller_ts",
+      "target": "setcontroller_assigndietoset",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\controllers\\setController.ts",
+      "source_location": "L75",
+      "weight": 1.0,
+      "_src": "backend_src_controllers_setcontroller_ts",
+      "_tgt": "setcontroller_assigndietoset",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_middleware_authmiddleware_ts",
+      "target": "authmiddleware_authenticate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\middleware\\authMiddleware.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_src": "backend_src_middleware_authmiddleware_ts",
+      "_tgt": "authmiddleware_authenticate",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_middleware_authmiddleware_ts",
+      "target": "authmiddleware_authorize",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\middleware\\authMiddleware.ts",
+      "source_location": "L30",
+      "weight": 1.0,
+      "_src": "backend_src_middleware_authmiddleware_ts",
+      "_tgt": "authmiddleware_authorize",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "backend_src_middleware_prismaerrorhandler_ts",
+      "target": "prismaerrorhandler_prismaerrorhandler",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend\\src\\middleware\\prismaErrorHandler.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_src": "backend_src_middleware_prismaerrorhandler_ts",
+      "_tgt": "prismaerrorhandler_prismaerrorhandler",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_app_tsx",
+      "target": "app_protectedlayout",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\App.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_src": "frontend_src_app_tsx",
+      "_tgt": "app_protectedlayout",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_app_tsx",
+      "target": "app_app",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\App.tsx",
+      "source_location": "L36",
+      "weight": 1.0,
+      "_src": "frontend_src_app_tsx",
+      "_tgt": "app_app",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_app_tsx",
+      "target": "frontend_src_main_tsx",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\main.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_src": "frontend_src_app_tsx",
+      "_tgt": "frontend_src_main_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "app_protectedlayout",
+      "target": "authcontext_useauth",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "frontend\\src\\App.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_src": "app_protectedlayout",
+      "_tgt": "authcontext_useauth"
+    },
+    {
+      "source": "frontend_src_context_authcontext_tsx",
+      "target": "authcontext_useauth",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\context\\AuthContext.tsx",
+      "source_location": "L85",
+      "weight": 1.0,
+      "_src": "frontend_src_context_authcontext_tsx",
+      "_tgt": "authcontext_useauth",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "d_project_mmmmm_frontend_src_pages_dashboard_tsx",
+      "target": "dashboard_fetchdata",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECT\\mmmmm\\frontend\\src\\pages\\Dashboard.tsx",
+      "source_location": "L34",
+      "weight": 1.0,
+      "_src": "d_project_mmmmm_frontend_src_pages_dashboard_tsx",
+      "_tgt": "dashboard_fetchdata",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "d_project_mmmmm_frontend_src_pages_dashboard_tsx",
+      "target": "dashboard_handlecreatemachine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECT\\mmmmm\\frontend\\src\\pages\\Dashboard.tsx",
+      "source_location": "L59",
+      "weight": 1.0,
+      "_src": "d_project_mmmmm_frontend_src_pages_dashboard_tsx",
+      "_tgt": "dashboard_handlecreatemachine",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "dashboard_fetchdata",
+      "target": "dashboard_handlecreatemachine",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "D:\\PROJECT\\mmmmm\\frontend\\src\\pages\\Dashboard.tsx",
+      "source_location": "L66",
+      "weight": 1.0,
+      "_src": "dashboard_handlecreatemachine",
+      "_tgt": "dashboard_fetchdata",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_diespage_tsx",
+      "target": "diespage_fetchdies",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\DiesPage.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_diespage_tsx",
+      "_tgt": "diespage_fetchdies",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_diespage_tsx",
+      "target": "diespage_handlesubmit",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\DiesPage.tsx",
+      "source_location": "L45",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_diespage_tsx",
+      "_tgt": "diespage_handlesubmit",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_diespage_tsx",
+      "target": "diespage_handleimport",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\DiesPage.tsx",
+      "source_location": "L61",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_diespage_tsx",
+      "_tgt": "diespage_handleimport",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_diespage_tsx",
+      "target": "diespage_handledelete",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\DiesPage.tsx",
+      "source_location": "L83",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_diespage_tsx",
+      "_tgt": "diespage_handledelete",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_diespage_tsx",
+      "target": "diespage_openeditmodal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\DiesPage.tsx",
+      "source_location": "L94",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_diespage_tsx",
+      "_tgt": "diespage_openeditmodal",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_diespage_tsx",
+      "target": "diespage_resetform",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\DiesPage.tsx",
+      "source_location": "L100",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_diespage_tsx",
+      "_tgt": "diespage_resetform",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "diespage_fetchdies",
+      "target": "diespage_handlesubmit",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\DiesPage.tsx",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_src": "diespage_fetchdies",
+      "_tgt": "diespage_handlesubmit",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "diespage_fetchdies",
+      "target": "diespage_handleimport",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\DiesPage.tsx",
+      "source_location": "L77",
+      "weight": 1.0,
+      "_src": "diespage_fetchdies",
+      "_tgt": "diespage_handleimport",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "diespage_fetchdies",
+      "target": "diespage_handledelete",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\DiesPage.tsx",
+      "source_location": "L87",
+      "weight": 1.0,
+      "_src": "diespage_fetchdies",
+      "_tgt": "diespage_handledelete",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "diespage_handlesubmit",
+      "target": "diespage_resetform",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\DiesPage.tsx",
+      "source_location": "L54",
+      "weight": 1.0,
+      "_src": "diespage_handlesubmit",
+      "_tgt": "diespage_resetform",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_loginpage_tsx",
+      "target": "loginpage_handlesubmit",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\LoginPage.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_loginpage_tsx",
+      "_tgt": "loginpage_handlesubmit",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_machinedetails_tsx",
+      "target": "machinedetails_fetchmachine",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\MachineDetails.tsx",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_machinedetails_tsx",
+      "_tgt": "machinedetails_fetchmachine",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_machinedetails_tsx",
+      "target": "machinedetails_fetchavailablesets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\MachineDetails.tsx",
+      "source_location": "L49",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_machinedetails_tsx",
+      "_tgt": "machinedetails_fetchavailablesets",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_machinedetails_tsx",
+      "target": "machinedetails_handleupdate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\MachineDetails.tsx",
+      "source_location": "L63",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_machinedetails_tsx",
+      "_tgt": "machinedetails_handleupdate",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_machinedetails_tsx",
+      "target": "machinedetails_handledelete",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\MachineDetails.tsx",
+      "source_location": "L74",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_machinedetails_tsx",
+      "_tgt": "machinedetails_handledelete",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_machinedetails_tsx",
+      "target": "machinedetails_handleassignset",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\MachineDetails.tsx",
+      "source_location": "L85",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_machinedetails_tsx",
+      "_tgt": "machinedetails_handleassignset",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "machinedetails_fetchmachine",
+      "target": "machinedetails_handleupdate",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\MachineDetails.tsx",
+      "source_location": "L68",
+      "weight": 1.0,
+      "_src": "machinedetails_fetchmachine",
+      "_tgt": "machinedetails_handleupdate",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "machinedetails_fetchmachine",
+      "target": "machinedetails_handleassignset",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\MachineDetails.tsx",
+      "source_location": "L92",
+      "weight": 1.0,
+      "_src": "machinedetails_fetchmachine",
+      "_tgt": "machinedetails_handleassignset",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_searchpage_tsx",
+      "target": "searchpage_handlesearch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\SearchPage.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_searchpage_tsx",
+      "_tgt": "searchpage_handlesearch",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_setdetails_tsx",
+      "target": "setdetails_fetchset",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\SetDetails.tsx",
+      "source_location": "L42",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_setdetails_tsx",
+      "_tgt": "setdetails_fetchset",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_setdetails_tsx",
+      "target": "setdetails_fetchavailabledies",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\SetDetails.tsx",
+      "source_location": "L54",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_setdetails_tsx",
+      "_tgt": "setdetails_fetchavailabledies",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_setdetails_tsx",
+      "target": "setdetails_handleupdate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\SetDetails.tsx",
+      "source_location": "L68",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_setdetails_tsx",
+      "_tgt": "setdetails_handleupdate",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_setdetails_tsx",
+      "target": "setdetails_handledelete",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\SetDetails.tsx",
+      "source_location": "L79",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_setdetails_tsx",
+      "_tgt": "setdetails_handledelete",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_setdetails_tsx",
+      "target": "setdetails_handleassigndie",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\SetDetails.tsx",
+      "source_location": "L90",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_setdetails_tsx",
+      "_tgt": "setdetails_handleassigndie",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "setdetails_fetchset",
+      "target": "setdetails_handleupdate",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\SetDetails.tsx",
+      "source_location": "L73",
+      "weight": 1.0,
+      "_src": "setdetails_fetchset",
+      "_tgt": "setdetails_handleupdate",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "setdetails_fetchset",
+      "target": "setdetails_handleassigndie",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\SetDetails.tsx",
+      "source_location": "L97",
+      "weight": 1.0,
+      "_src": "setdetails_fetchset",
+      "_tgt": "setdetails_handleassigndie",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_setspage_tsx",
+      "target": "setspage_fetchsets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\SetsPage.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_setspage_tsx",
+      "_tgt": "setspage_fetchsets",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_setspage_tsx",
+      "target": "setspage_handlecreateset",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\SetsPage.tsx",
+      "source_location": "L43",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_setspage_tsx",
+      "_tgt": "setspage_handlecreateset",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "setspage_fetchsets",
+      "target": "setspage_handlecreateset",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\SetsPage.tsx",
+      "source_location": "L50",
+      "weight": 1.0,
+      "_src": "setspage_fetchsets",
+      "_tgt": "setspage_handlecreateset",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_settingspage_tsx",
+      "target": "settingspage_fetchusers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\SettingsPage.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_settingspage_tsx",
+      "_tgt": "settingspage_fetchusers",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_settingspage_tsx",
+      "target": "settingspage_handlesubmit",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\SettingsPage.tsx",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_settingspage_tsx",
+      "_tgt": "settingspage_handlesubmit",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend_src_pages_settingspage_tsx",
+      "target": "settingspage_handledeleteuser",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\SettingsPage.tsx",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_src": "frontend_src_pages_settingspage_tsx",
+      "_tgt": "settingspage_handledeleteuser",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "settingspage_fetchusers",
+      "target": "settingspage_handlesubmit",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\SettingsPage.tsx",
+      "source_location": "L49",
+      "weight": 1.0,
+      "_src": "settingspage_fetchusers",
+      "_tgt": "settingspage_handlesubmit",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "settingspage_fetchusers",
+      "target": "settingspage_handledeleteuser",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend\\src\\pages\\SettingsPage.tsx",
+      "source_location": "L62",
+      "weight": 1.0,
+      "_src": "settingspage_fetchusers",
+      "_tgt": "settingspage_handledeleteuser",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "gemini_diemanager",
+      "target": "gemini_machine",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GEMINI.md",
+      "_src": "gemini_diemanager",
+      "_tgt": "gemini_machine"
+    },
+    {
+      "source": "gemini_diemanager",
+      "target": "run_guide_env_setup",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "RUN_GUIDE.md",
+      "_src": "gemini_diemanager",
+      "_tgt": "run_guide_env_setup"
+    },
+    {
+      "source": "gemini_machine",
+      "target": "gemini_set",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GEMINI.md",
+      "_src": "gemini_machine",
+      "_tgt": "gemini_set"
+    },
+    {
+      "source": "gemini_machine",
+      "target": "gemini_hierarchy_navigation",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "GEMINI.md",
+      "_src": "gemini_machine",
+      "_tgt": "gemini_hierarchy_navigation"
+    },
+    {
+      "source": "gemini_set",
+      "target": "gemini_die",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GEMINI.md",
+      "_src": "gemini_set",
+      "_tgt": "gemini_die"
+    },
+    {
+      "source": "gemini_die",
+      "target": "gemini_universal_search",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "GEMINI.md",
+      "_src": "gemini_die",
+      "_tgt": "gemini_universal_search"
+    },
+    {
+      "source": "gemini_die",
+      "target": "gemini_excel_bulk_import",
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GEMINI.md",
+      "_src": "gemini_die",
+      "_tgt": "gemini_excel_bulk_import"
+    },
+    {
+      "source": "gemini_universal_search",
+      "target": "gemini_rationale_range_search",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GEMINI.md",
+      "_src": "gemini_universal_search",
+      "_tgt": "gemini_rationale_range_search"
+    },
+    {
+      "source": "frontend/src/assets/hero.png",
+      "target": "hero_top_layer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/assets/hero.png",
+      "_src": "frontend/src/assets/hero.png",
+      "_tgt": "hero_top_layer",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "frontend/src/assets/hero.png",
+      "target": "hero_bottom_layer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/assets/hero.png",
+      "_src": "frontend/src/assets/hero.png",
+      "_tgt": "hero_bottom_layer",
+      "confidence_score": 1.0
+    },
+    {
+      "source": "hero_top_layer",
+      "target": "hero_bottom_layer",
+      "relation": "stacked_above",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/assets/hero.png",
+      "_src": "hero_top_layer",
+      "_tgt": "hero_bottom_layer",
+      "confidence_score": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

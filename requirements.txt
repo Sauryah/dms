@@ -1,0 +1,99 @@
+# ==============================================================================
+# DIEMANAGER APPLICATION REQUIREMENTS & DEPENDENCIES
+# ==============================================================================
+# This file outlines the system prerequisites, deployment environments, and
+# package dependencies for both the Frontend and Backend of the DieManager app.
+#
+# Generated: May 26, 2026
+# Project Architecture: React (Vite) Frontend + Express (Node.js) Backend + Prisma SQLite
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. SYSTEM & PLATFORM REQUIREMENTS
+# ------------------------------------------------------------------------------
+Operating System: Linux / macOS / Windows (Docker recommended)
+Docker Engine: >= 20.10.0
+Docker Compose: >= 2.0.0
+Node.js: >= 20.x (Recommended for local development)
+NPM: >= 10.x
+Database: SQLite 3
+
+# ------------------------------------------------------------------------------
+# 2. RUNTIME ENVIRONMENTS & PORTS
+# ------------------------------------------------------------------------------
+Frontend Port: 80 (Nginx Proxy)
+Backend Port: 5000 (Express API Server)
+Prisma SQLite Database Path:
+  - Development: backend/dev.db
+  - Container/Production: /app/data/prod.db (Persistent Volume: diemanager-db)
+
+# ------------------------------------------------------------------------------
+# 3. BACKEND DEPENDENCIES (backend/package.json)
+# ------------------------------------------------------------------------------
+[Backend Production Packages]
+@prisma/client: ^6.19.3
+bcryptjs: ^3.0.3
+cors: ^2.8.6
+dotenv: ^17.4.2
+express: ^5.2.1
+jsonwebtoken: ^9.0.3
+morgan: ^1.10.1
+multer: ^1.4.5-lts.1
+swagger-jsdoc: ^6.3.0
+swagger-ui-express: ^5.0.1
+ts-node: ^10.9.2
+xlsx: ^0.18.5
+zod: ^4.4.3
+
+[Backend Development Packages]
+@mermaid-js/mermaid-cli: ^11.15.0
+@types/bcryptjs: ^2.4.6
+@types/better-sqlite3: ^7.6.13
+@types/cors: ^2.8.19
+@types/express: ^5.0.6
+@types/jsonwebtoken: ^9.0.10
+@types/morgan: ^1.9.10
+@types/multer: ^1.4.12
+@types/node: ^25.9.1
+@types/swagger-jsdoc: ^6.0.4
+@types/swagger-ui-express: ^4.1.8
+is-thirteen: ^2.0.0
+nodemon: ^3.1.14
+prisma: ^6.19.3
+prisma-dbml-generator: ^0.12.0
+prisma-erd-generator: ^2.4.2
+prisma-json-schema-generator: ^5.1.5
+typescript: ^6.0.3
+
+# ------------------------------------------------------------------------------
+# 4. FRONTEND DEPENDENCIES (frontend/package.json)
+# ------------------------------------------------------------------------------
+[Frontend Production Packages]
+axios: ^1.16.1
+lucide-react: ^1.16.0
+react: ^19.2.6
+react-dom: ^19.2.6
+react-router-dom: ^7.15.1
+
+[Frontend Development Packages]
+@eslint/js: ^10.0.1
+@types/node: ^24.12.3
+@types/react: ^19.2.14
+@types/react-dom: ^19.2.3
+@vitejs/plugin-react: ^6.0.1
+eslint: ^10.3.0
+eslint-plugin-react-hooks: ^7.1.1
+eslint-plugin-react-refresh: ^0.5.2
+globals: ^17.6.0
+typescript: ~6.0.2
+typescript-eslint: ^8.59.2
+vite: ^8.0.12
+
+# ------------------------------------------------------------------------------
+# 5. CORE FEATURES CAPABILITIES
+# ------------------------------------------------------------------------------
+- Universal Search: Multi-entity keyword search across Machines, Sets, and Dies.
+- Range Search: Numeric parsing & filtration of string size attributes on Dies.
+- Excel Bulk Import: Automated parsing and data upserting of `.xlsx`/`.xls` dies sheet.
+- Audit Logging: Real-time action logs stored in SQLite database.
+- Swagger API Docs: Interactive OpenAPI v3 specifications generated on `/api-docs`.
