@@ -4126,10 +4126,73 @@
       "norm_label": "\ud83d\udee0 common commands"
     },
     {
-      "label": "\ud83c\udf10 LAN Access (Optional)",
+      "label": "\ud83d\udd04 Zero-Data-Loss Upgrades & Database Backups",
       "file_type": "document",
       "source_file": "README.md",
       "source_location": "L71",
+      "id": "dms_readme_zero_data_loss_upgrades_database_backups",
+      "community": 74,
+      "norm_label": "\ud83d\udd04 zero-data-loss upgrades & database backups"
+    },
+    {
+      "label": "1. How it works:",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L75",
+      "id": "dms_readme_1_how_it_works",
+      "community": 74,
+      "norm_label": "1. how it works:"
+    },
+    {
+      "label": "2. Standard Upgrade Steps:",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L79",
+      "id": "dms_readme_2_standard_upgrade_steps",
+      "community": 74,
+      "norm_label": "2. standard upgrade steps:"
+    },
+    {
+      "label": "code:bash (# Pull new changes)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L81",
+      "id": "dms_readme_codeblock_4",
+      "community": 74,
+      "norm_label": "code:bash (# pull new changes)"
+    },
+    {
+      "label": "3. Database Backup & Restore:",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L89",
+      "id": "dms_readme_3_database_backup_restore",
+      "community": 74,
+      "norm_label": "3. database backup & restore:"
+    },
+    {
+      "label": "code:bash (docker cp dms-backend:/app/data/prod.db ./prod_backup_$(date)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L93",
+      "id": "dms_readme_codeblock_5",
+      "community": 74,
+      "norm_label": "code:bash (docker cp dms-backend:/app/data/prod.db ./prod_backup_$(date)"
+    },
+    {
+      "label": "code:bash (# Restore the backup file back into the container)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L97",
+      "id": "dms_readme_codeblock_6",
+      "community": 74,
+      "norm_label": "code:bash (# restore the backup file back into the container)"
+    },
+    {
+      "label": "\ud83c\udf10 LAN Access (Optional)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L106",
       "id": "dms_readme_lan_access_optional",
       "community": 74,
       "norm_label": "\ud83c\udf10 lan access (optional)"
@@ -4138,7 +4201,7 @@
       "label": "\ud83c\udfa8 Premium Upgrades & Feature Walkthrough",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L79",
+      "source_location": "L114",
       "id": "dms_readme_premium_upgrades_feature_walkthrough",
       "community": 74,
       "norm_label": "\ud83c\udfa8 premium upgrades & feature walkthrough"
@@ -4421,15 +4484,6 @@
       "community": 74,
       "norm_label": "4. initialize the database (important)",
       "id": "dms_readme_4_initialize_the_database_important"
-    },
-    {
-      "label": "code:bash (# This creates the default 'admin' and 'viewer' accounts)",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": "L49",
-      "community": 74,
-      "norm_label": "code:bash (# this creates the default 'admin' and 'viewer' accounts)",
-      "id": "dms_readme_codeblock_4"
     },
     {
       "label": "5. Access the App",
@@ -13877,9 +13931,9 @@
       "source_file": "GEMINI.md",
       "source_location": "L54",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_gemini_3_operational_procedures",
-      "target": "dms_gemini_zero_data_loss_upgrades_persistence",
-      "confidence_score": 1.0
+      "target": "dms_gemini_zero_data_loss_upgrades_persistence"
     },
     {
       "relation": "contains",
@@ -13887,9 +13941,9 @@
       "source_file": "GEMINI.md",
       "source_location": "L68",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_gemini_3_operational_procedures",
-      "target": "dms_gemini_manual_database_backup_restore",
-      "confidence_score": 1.0
+      "target": "dms_gemini_manual_database_backup_restore"
     },
     {
       "relation": "contains",
@@ -13927,9 +13981,9 @@
       "source_file": "GEMINI.md",
       "source_location": "L60",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_gemini_zero_data_loss_upgrades_persistence",
-      "target": "dms_gemini_codeblock_3",
-      "confidence_score": 1.0
+      "target": "dms_gemini_codeblock_3"
     },
     {
       "relation": "contains",
@@ -13937,9 +13991,9 @@
       "source_file": "GEMINI.md",
       "source_location": "L72",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_gemini_manual_database_backup_restore",
-      "target": "dms_gemini_codeblock_4",
-      "confidence_score": 1.0
+      "target": "dms_gemini_codeblock_4"
     },
     {
       "relation": "contains",
@@ -13947,9 +14001,9 @@
       "source_file": "GEMINI.md",
       "source_location": "L76",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_gemini_manual_database_backup_restore",
-      "target": "dms_gemini_codeblock_5",
-      "confidence_score": 1.0
+      "target": "dms_gemini_codeblock_5"
     },
     {
       "relation": "contains",
@@ -14060,6 +14114,16 @@
       "confidence_score": 1.0,
       "source": "dms_readme_dms_die_management_system",
       "target": "dms_readme_common_commands"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "dms_readme_dms_die_management_system",
+      "target": "dms_readme_zero_data_loss_upgrades_database_backups",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14230,6 +14294,76 @@
       "confidence_score": 1.0,
       "source": "dms_readme_access_credentials",
       "target": "dms_readme_default_login"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "dms_readme_zero_data_loss_upgrades_database_backups",
+      "target": "dms_readme_1_how_it_works",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L79",
+      "weight": 1.0,
+      "source": "dms_readme_zero_data_loss_upgrades_database_backups",
+      "target": "dms_readme_2_standard_upgrade_steps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L89",
+      "weight": 1.0,
+      "source": "dms_readme_zero_data_loss_upgrades_database_backups",
+      "target": "dms_readme_3_database_backup_restore",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L81",
+      "weight": 1.0,
+      "source": "dms_readme_2_standard_upgrade_steps",
+      "target": "dms_readme_codeblock_4",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L49",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_readme_4_initialize_the_database_important",
+      "target": "dms_readme_codeblock_4"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "dms_readme_3_database_backup_restore",
+      "target": "dms_readme_codeblock_5",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "dms_readme_3_database_backup_restore",
+      "target": "dms_readme_codeblock_6",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14480,16 +14614,6 @@
       "confidence_score": 1.0,
       "source": "frontend_readme_expanding_the_eslint_configuration",
       "target": "frontend_readme_codeblock_2"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L49",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "dms_readme_4_initialize_the_database_important",
-      "target": "dms_readme_codeblock_4"
     },
     {
       "relation": "contains",

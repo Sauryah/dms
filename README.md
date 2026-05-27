@@ -103,6 +103,22 @@ For safety before pulling major updates, you can copy the live SQLite database d
 
 ---
 
+## 🗄️ Migrating to PostgreSQL (Optional)
+
+DMS is built on top of **Prisma ORM**, making it database-agnostic. If you need to migrate your production dataset from SQLite to PostgreSQL:
+
+1. **Change the Provider:** Update `backend/prisma/schema.prisma` to use `postgresql` instead of `sqlite`.
+2. **Update the Connection String:** Set the `DATABASE_URL` environment variable inside your `.env` file with your PostgreSQL connection parameters.
+3. **Run Migrations:** Execute `npx prisma generate` and `npx prisma migrate dev` to initialize your database tables in PostgreSQL.
+4. **Port Existing Data:** Use `pgloader` to copy data directly from the SQLite `prod.db` file to your PostgreSQL server without any data loss:
+   ```bash
+   pgloader sqlite:///app/data/prod.db postgresql://[USER]:[PASSWORD]@[HOST]:[PORT]/[DATABASE]
+   ```
+
+For the complete, step-by-step migration blueprint, refer to **[GEMINI.md](GEMINI.md)**.
+
+---
+
 ## 🌐 LAN Access (Optional)
 To access DMS from other computers on your local network:
 1. Find your computer's local IP (e.g., `192.168.1.10`).

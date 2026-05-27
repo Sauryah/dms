@@ -90,6 +90,34 @@ For safety, operators should periodically back up their database file:
 *   **Prisma Client:** Always regenerate the client after schema changes using `npx prisma generate`. In Docker, ensure the backend is rebuilt without cache to synchronize the client.
 *   **Authentication:** Uses JWT. Resetting the database or changing User IDs will invalidate existing browser sessions, requiring a re-login.
 
+### Database Migration Roadmap (SQLite ➔ PostgreSQL)
+DMS is designed with a database-agnostic architecture. Switching to a production-grade database like PostgreSQL can be done with minimal modifications:
+
+1. **Update Prisma Provider:**
+   Modify `backend/prisma/schema.prisma` to set the datasource provider:
+   ```prisma
+   datasource db {
+     provider = "postgresql"
+     url      = env("DATABASE_URL")
+   }
+   ```
+2. **Update Connection String:**
+   Update the `DATABASE_URL` parameter in the `.env` root configuration file:
+   ```env
+   DATABASE_URL="postgresql://[USER]:[PASSWORD]@[HOST]:[PORT]/[DATABASE]?schema=public"
+   ```
+3. **Execute Prisma Command Actions:**
+   Run the matching Prisma migration generator:
+   ```bash
+   npx prisma generate
+   npx prisma migrate dev --name init_postgres
+   ```
+4. **Data Porting (SQLite ➔ PostgreSQL):**
+   To safely load existing data from the SQLite database (`prod.db`) directly into PostgreSQL, use the `pgloader` utility tool:
+   ```bash
+   pgloader sqlite:///app/data/prod.db postgresql://[USER]:[PASSWORD]@[HOST]:[PORT]/[DATABASE]
+   ```
+
 ## 6. Developer Experience (DX)
 
 ### API Documentation

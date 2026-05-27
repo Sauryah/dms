@@ -1638,7 +1638,7 @@
       "source_file": "backend/prisma/json-schema/json-schema.json",
       "source_location": "L1",
       "id": "backend_prisma_json_schema_json_schema_json",
-      "community": 60,
+      "community": 61,
       "norm_label": "json-schema.json"
     },
     {
@@ -1647,7 +1647,7 @@
       "source_file": "backend/prisma/json-schema/json-schema.json",
       "source_location": "L2",
       "id": "json_schema_json_schema_schema",
-      "community": 60,
+      "community": 61,
       "norm_label": "$schema"
     },
     {
@@ -2070,7 +2070,7 @@
       "source_file": "backend/prisma/json-schema/json-schema.json",
       "source_location": "L101",
       "id": "json_schema_json_schema_definitions_machine",
-      "community": 61,
+      "community": 60,
       "norm_label": "machine"
     },
     {
@@ -2079,7 +2079,7 @@
       "source_file": "backend/prisma/json-schema/json-schema.json",
       "source_location": "L102",
       "id": "json_schema_json_schema_machine_type",
-      "community": 61,
+      "community": 60,
       "norm_label": "type"
     },
     {
@@ -2277,7 +2277,7 @@
       "source_file": "backend/prisma/json-schema/json-schema.json",
       "source_location": "L164",
       "id": "json_schema_json_schema_type",
-      "community": 2,
+      "community": 61,
       "norm_label": "type"
     },
     {
@@ -2286,7 +2286,7 @@
       "source_file": "backend/prisma/json-schema/json-schema.json",
       "source_location": "L165",
       "id": "json_schema_json_schema_properties",
-      "community": 60,
+      "community": 2,
       "norm_label": "properties"
     },
     {
@@ -3973,10 +3973,55 @@
       "norm_label": "5. development maintenance"
     },
     {
-      "label": "6. Developer Experience (DX)",
+      "label": "Database Migration Roadmap (SQLite \u2794 PostgreSQL)",
       "file_type": "document",
       "source_file": "GEMINI.md",
       "source_location": "L93",
+      "id": "dms_gemini_database_migration_roadmap_sqlite_postgresql",
+      "community": 16,
+      "norm_label": "database migration roadmap (sqlite \u2794 postgresql)"
+    },
+    {
+      "label": "code:prisma (datasource db {)",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": "L98",
+      "id": "dms_gemini_codeblock_6",
+      "community": 16,
+      "norm_label": "code:prisma (datasource db {)"
+    },
+    {
+      "label": "code:env (DATABASE_URL=\"postgresql://[USER]:[PASSWORD]@[HOST]:[PORT]/[)",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": "L106",
+      "id": "dms_gemini_codeblock_7",
+      "community": 16,
+      "norm_label": "code:env (database_url=\"postgresql://[user]:[password]@[host]:[port]/[)"
+    },
+    {
+      "label": "code:bash (npx prisma generate)",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": "L111",
+      "id": "dms_gemini_codeblock_8",
+      "community": 16,
+      "norm_label": "code:bash (npx prisma generate)"
+    },
+    {
+      "label": "code:bash (pgloader sqlite:///app/data/prod.db postgresql://[USER]:[PAS)",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": "L117",
+      "id": "dms_gemini_codeblock_9",
+      "community": 16,
+      "norm_label": "code:bash (pgloader sqlite:///app/data/prod.db postgresql://[user]:[pas)"
+    },
+    {
+      "label": "6. Developer Experience (DX)",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": "L121",
       "id": "dms_gemini_6_developer_experience_dx",
       "community": 16,
       "norm_label": "6. developer experience (dx)"
@@ -3985,7 +4030,7 @@
       "label": "API Documentation",
       "file_type": "document",
       "source_file": "GEMINI.md",
-      "source_location": "L95",
+      "source_location": "L123",
       "id": "dms_gemini_api_documentation",
       "community": 16,
       "norm_label": "api documentation"
@@ -3994,7 +4039,7 @@
       "label": "Schema Visualization",
       "file_type": "document",
       "source_file": "GEMINI.md",
-      "source_location": "L100",
+      "source_location": "L128",
       "id": "dms_gemini_schema_visualization",
       "community": 16,
       "norm_label": "schema visualization"
@@ -4003,7 +4048,7 @@
       "label": "Knowledge Graph",
       "file_type": "document",
       "source_file": "GEMINI.md",
-      "source_location": "L105",
+      "source_location": "L133",
       "id": "dms_gemini_knowledge_graph",
       "community": 16,
       "norm_label": "knowledge graph"
@@ -4189,10 +4234,28 @@
       "norm_label": "code:bash (# restore the backup file back into the container)"
     },
     {
-      "label": "\ud83c\udf10 LAN Access (Optional)",
+      "label": "\ud83d\uddc4\ufe0f Migrating to PostgreSQL (Optional)",
       "file_type": "document",
       "source_file": "README.md",
       "source_location": "L106",
+      "id": "dms_readme_migrating_to_postgresql_optional",
+      "community": 74,
+      "norm_label": "\ud83d\uddc4\ufe0f migrating to postgresql (optional)"
+    },
+    {
+      "label": "code:bash (pgloader sqlite:///app/data/prod.db postgresql://[USER]:[PAS)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L114",
+      "id": "dms_readme_codeblock_7",
+      "community": 74,
+      "norm_label": "code:bash (pgloader sqlite:///app/data/prod.db postgresql://[user]:[pas)"
+    },
+    {
+      "label": "\ud83c\udf10 LAN Access (Optional)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L122",
       "id": "dms_readme_lan_access_optional",
       "community": 74,
       "norm_label": "\ud83c\udf10 lan access (optional)"
@@ -4201,7 +4264,7 @@
       "label": "\ud83c\udfa8 Premium Upgrades & Feature Walkthrough",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L114",
+      "source_location": "L130",
       "id": "dms_readme_premium_upgrades_feature_walkthrough",
       "community": 74,
       "norm_label": "\ud83c\udfa8 premium upgrades & feature walkthrough"
@@ -14019,11 +14082,61 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "GEMINI.md",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "dms_gemini_5_development_maintenance",
+      "target": "dms_gemini_database_migration_roadmap_sqlite_postgresql",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "GEMINI.md",
       "source_location": "L59",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "dms_gemini_diemanager_project_overview_engineering_standards",
       "target": "dms_gemini_5_development_maintenance"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "GEMINI.md",
+      "source_location": "L98",
+      "weight": 1.0,
+      "source": "dms_gemini_database_migration_roadmap_sqlite_postgresql",
+      "target": "dms_gemini_codeblock_6",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "GEMINI.md",
+      "source_location": "L106",
+      "weight": 1.0,
+      "source": "dms_gemini_database_migration_roadmap_sqlite_postgresql",
+      "target": "dms_gemini_codeblock_7",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "GEMINI.md",
+      "source_location": "L111",
+      "weight": 1.0,
+      "source": "dms_gemini_database_migration_roadmap_sqlite_postgresql",
+      "target": "dms_gemini_codeblock_8",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "GEMINI.md",
+      "source_location": "L117",
+      "weight": 1.0,
+      "source": "dms_gemini_database_migration_roadmap_sqlite_postgresql",
+      "target": "dms_gemini_codeblock_9",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14121,8 +14234,18 @@
       "source_file": "README.md",
       "source_location": "L71",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_readme_dms_die_management_system",
-      "target": "dms_readme_zero_data_loss_upgrades_database_backups",
+      "target": "dms_readme_zero_data_loss_upgrades_database_backups"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L106",
+      "weight": 1.0,
+      "source": "dms_readme_dms_die_management_system",
+      "target": "dms_readme_migrating_to_postgresql_optional",
       "confidence_score": 1.0
     },
     {
@@ -14301,9 +14424,9 @@
       "source_file": "README.md",
       "source_location": "L75",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_readme_zero_data_loss_upgrades_database_backups",
-      "target": "dms_readme_1_how_it_works",
-      "confidence_score": 1.0
+      "target": "dms_readme_1_how_it_works"
     },
     {
       "relation": "contains",
@@ -14311,9 +14434,9 @@
       "source_file": "README.md",
       "source_location": "L79",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_readme_zero_data_loss_upgrades_database_backups",
-      "target": "dms_readme_2_standard_upgrade_steps",
-      "confidence_score": 1.0
+      "target": "dms_readme_2_standard_upgrade_steps"
     },
     {
       "relation": "contains",
@@ -14321,9 +14444,9 @@
       "source_file": "README.md",
       "source_location": "L89",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_readme_zero_data_loss_upgrades_database_backups",
-      "target": "dms_readme_3_database_backup_restore",
-      "confidence_score": 1.0
+      "target": "dms_readme_3_database_backup_restore"
     },
     {
       "relation": "contains",
@@ -14331,9 +14454,9 @@
       "source_file": "README.md",
       "source_location": "L81",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_readme_2_standard_upgrade_steps",
-      "target": "dms_readme_codeblock_4",
-      "confidence_score": 1.0
+      "target": "dms_readme_codeblock_4"
     },
     {
       "relation": "contains",
@@ -14351,9 +14474,9 @@
       "source_file": "README.md",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_readme_3_database_backup_restore",
-      "target": "dms_readme_codeblock_5",
-      "confidence_score": 1.0
+      "target": "dms_readme_codeblock_5"
     },
     {
       "relation": "contains",
@@ -14361,8 +14484,18 @@
       "source_file": "README.md",
       "source_location": "L97",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_readme_3_database_backup_restore",
-      "target": "dms_readme_codeblock_6",
+      "target": "dms_readme_codeblock_6"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L114",
+      "weight": 1.0,
+      "source": "dms_readme_migrating_to_postgresql_optional",
+      "target": "dms_readme_codeblock_7",
       "confidence_score": 1.0
     },
     {
@@ -16162,5 +16295,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "513f51b83e8457f006ccb9dda208395f9ccf5e52"
+  "built_at_commit": "bf87e2726e8b7e117cf8c4871cd0801309439fe7"
 }
