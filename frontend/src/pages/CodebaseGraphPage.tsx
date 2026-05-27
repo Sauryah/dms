@@ -20,24 +20,35 @@ const CodebaseGraphPage: React.FC = () => {
 
   const fetchGraph = async () => {
     try {
+      console.log('[DMS Codebase] Initiating codebase dependency graph fetch from backend...');
       setLoading(true);
       setLoadError('');
       const response = await api.get('/dev/codebase-graph');
       
-      // Clean links nodes
       const graphData = response.data;
+      console.log('[DMS Codebase] Raw backend graph data fetched successfully:', {
+        hasNodes: !!graphData.nodes,
+        nodesCount: graphData.nodes?.length,
+        hasLinks: !!graphData.links,
+        linksCount: graphData.links?.length
+      });
       
-      // Ensure each link points to target and source correctly
       const parsedLinks = (graphData.links || []).map((link: any) => ({
         source: typeof link.source === 'object' ? link.source.id : link.source,
         target: typeof link.target === 'object' ? link.target.id : link.target,
         relation: link.relation,
       }));
 
-      setNodes(graphData.nodes || []);
+      const finalNodes = graphData.nodes || [];
+      console.log('[DMS Codebase] Processed codebase graph payload:', {
+        nodesToRender: finalNodes.length,
+        linksToRender: parsedLinks.length
+      });
+
+      setNodes(finalNodes);
       setLinks(parsedLinks);
     } catch (error: any) {
-      console.error('Failed to load codebase graph structure', error);
+      console.error('[DMS Codebase] Failed to load codebase graph structure:', error);
       setLoadError(error.response?.data?.error || 'Failed to load codebase graph.');
       setNodes([]);
       setLinks([]);
@@ -76,9 +87,15 @@ const CodebaseGraphPage: React.FC = () => {
     fetchGraph();
   }, []);
 
-  // Compute local stats
-  const fileNodes = nodes.filter(n => !(n.label.endsWith('()') || n.label.includes('(')));
-  const funcNodes = nodes.filter(n => (n.label.endsWith('()') || n.label.includes('(')));
+  // Compute local stats with robust safety fallbacks to prevent TypeError crashes
+  const fileNodes = nodes.filter(n => {
+    const label = n.label || '';
+    return !(label.endsWith('()') || label.includes('('));
+  });
+  const funcNodes = nodes.filter(n => {
+    const label = n.label || '';
+    return (label.endsWith('()') || label.includes('('));
+  });
 
   return (
     <div className="codebase-studio">

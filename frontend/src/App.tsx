@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
 import Sidebar from './components/Sidebar';
@@ -41,6 +41,7 @@ const ProtectedLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
 // Secure administrator-only route pipeline guard
 const AdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated, user } = useAuth();
+  const location = useLocation();
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
@@ -48,6 +49,12 @@ const AdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   if (user?.role !== 'ADMIN') {
     return <Navigate to="/" replace />;
+  }
+
+  const isFullscreen = ['/topology', '/codebase'].includes(location.pathname);
+
+  if (isFullscreen) {
+    return <div className="fade-in" style={{ position: 'fixed', inset: 0, overflow: 'hidden' }}>{children}</div>;
   }
 
   return (

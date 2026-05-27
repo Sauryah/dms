@@ -85,6 +85,34 @@ body {
   flex-shrink: 0;
 }
 
+.sidebar-logo {
+  padding: 0.5rem 0;
+  margin-bottom: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.sidebar-logo-text {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
 .main-content {
   flex: 1;
   display: flex;
@@ -190,6 +218,13 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 1.75rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 0.65fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 /* Buttons System - Custom Glowing States */
@@ -796,29 +831,58 @@ body.compact-mode .btn { padding: 0.5rem 1.15rem; font-size: 0.8125rem; border-r
    MOBILE & TABLET VIEWPORT OVERRIDES (RESPONSIVENESS BOOSTER)
    ========================================================================== */
 
+/* Tablet Layout (1024px) - Collapsed Icon Sidebar */
 @media (max-width: 1024px) {
   .sidebar {
     width: 80px;
-    padding: 2rem 0.75rem;
+    padding: 2rem 0.5rem;
     align-items: center;
   }
   
-  .sidebar .btn span {
-    display: none; /* Hide labels, icons only */
-  }
-  
-  .sidebar .btn {
-    padding: 0.65rem;
+  .sidebar-logo {
+    margin-bottom: 2rem;
     justify-content: center;
-    border-radius: 8px;
   }
   
-  .sidebar .btn.btn-primary::after {
-    display: none;
+  .sidebar-logo-text {
+    display: none !important;
   }
   
-  .sidebar h2, .sidebar p {
-    display: none; /* Hide sidebar headers */
+  .sidebar-nav {
+    width: 100%;
+    align-items: center;
+  }
+  
+  .sidebar-nav .btn {
+    justify-content: center;
+    padding: 0.65rem;
+  }
+  
+  .sidebar-nav .btn span {
+    display: none !important; /* Hide labels, icons only */
+  }
+  
+  #sidebar-codebase-link {
+    margin-top: 1rem !important;
+    padding-top: 1rem !important;
+    border-top: 1px solid var(--border) !important;
+    width: 100%;
+  }
+
+  .sidebar-footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+  }
+  
+  .sidebar-footer .btn {
+    justify-content: center;
+    padding: 0.65rem;
+  }
+  
+  .sidebar-footer .btn span {
+    display: none !important;
   }
   
   .topbar {
@@ -830,38 +894,119 @@ body.compact-mode .btn { padding: 0.5rem 1.15rem; font-size: 0.8125rem; border-r
   }
 }
 
+/* Mobile Layout (768px) - Slide-Out Navigation Drawer */
 @media (max-width: 768px) {
-  .app-container {
-    flex-direction: column;
-  }
-  
+  /* Slide-Out Drawer Sidebar overrides */
   .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    padding: 1rem 1.25rem;
-    flex-direction: row;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    height: 100vh;
+    z-index: 1200;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    background-color: var(--bg-sidebar);
+    box-shadow: 8px 0 32px rgba(0, 0, 0, 0.6);
+    flex-direction: column !important;
+    padding: 2.25rem 1.5rem !important;
+  }
+  
+  body.sidebar-open .sidebar {
+    transform: translateX(0);
+  }
+  
+  /* Backdrop Blur Overlay */
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 1199;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  body.sidebar-open::after {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  /* Toggle buttons visibility */
+  .hamburger-btn {
+    display: flex !important;
     align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    justify-content: center;
   }
   
-  .sidebar .btn {
-    width: auto;
-    margin-bottom: 0;
-    padding: 0.5rem 0.75rem;
+  .sidebar-close-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
   }
   
-  .sidebar .btn span {
-    display: none;
+  .sidebar-logo {
+    margin-bottom: 2.5rem;
   }
   
-  .sidebar-nav-links {
-    display: flex;
+  .sidebar-logo-text {
+    display: block !important;
+  }
+  
+  .sidebar-nav {
+    flex-direction: column;
     gap: 0.5rem;
-    align-items: center;
+    width: 100%;
+    align-items: stretch;
+  }
+  
+  .sidebar-nav .btn {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 0.65rem 1.35rem;
+  }
+  
+  .sidebar-nav .btn span {
+    display: inline !important;
+  }
+  
+  #sidebar-codebase-link {
+    margin-top: 1.5rem !important;
+    padding-top: 1.5rem !important;
+    border-top: 1px solid var(--border) !important;
+  }
+  
+  .sidebar-footer {
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .sidebar-footer .btn {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 0.65rem 1.35rem;
+  }
+  
+  .sidebar-footer .btn span {
+    display: inline !important;
+  }
+  
+  /* Main Content Layout Adjustments */
+  .app-container {
+    flex-direction: row;
+  }
+  
+  .main-content {
+    width: 100%;
   }
   
   .topbar {
@@ -877,13 +1022,19 @@ body.compact-mode .btn { padding: 0.5rem 1.15rem; font-size: 0.8125rem; border-r
     font-size: 1.75rem;
   }
   
+  /* Stacking columns */
   .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: 1fr !important;
     gap: 1.25rem;
   }
   
   .metric-strip {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr) !important;
     gap: 1rem;
   }
   
@@ -901,7 +1052,7 @@ body.compact-mode .btn { padding: 0.5rem 1.15rem; font-size: 0.8125rem; border-r
     width: 100%;
   }
   
-  /* Prevent tables from clipping by adding horizontal scroll parameter */
+  /* Horizontally Scrollable Tables */
   .table-container {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -910,7 +1061,7 @@ body.compact-mode .btn { padding: 0.5rem 1.15rem; font-size: 0.8125rem; border-r
   .data-table th, .data-table td {
     padding: 0.85rem 1rem;
     font-size: 0.8125rem;
-    white-space: nowrap; /* Prevent ugly multiline cell wraps */
+    white-space: nowrap; /* Prevent ugly multiline wraps */
   }
   
   .toast-container {
@@ -921,19 +1072,13 @@ body.compact-mode .btn { padding: 0.5rem 1.15rem; font-size: 0.8125rem; border-r
   }
 }
 
+/* Phone Viewport Collapses (480px) */
 @media (max-width: 480px) {
   .metric-strip {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
   
   .topbar {
-    flex-direction: column;
-    justify-content: center;
-    height: 80px;
-    gap: 0.25rem;
-  }
-  
-  .sidebar {
-    padding: 0.75rem 1rem;
+    height: 65px;
   }
 }

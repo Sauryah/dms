@@ -142,7 +142,11 @@ export const getMachines = async (req: Request, res: Response, next: NextFunctio
   try {
     const machines = await prisma.machine.findMany({
       include: {
-        sets: true,
+        sets: {
+          include: {
+            dies: true,
+          },
+        },
       },
     });
     res.json(machines);

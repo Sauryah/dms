@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Search, Settings, Disc, Orbit, Workflow } from 'lucide-react';
+import { LayoutDashboard, Search, Settings, Disc, Orbit, Workflow, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 /**
@@ -13,68 +13,95 @@ const Sidebar: React.FC = () => {
   const { user } = useAuth();
   const isAdmin = user?.role === 'ADMIN';
 
+  const closeSidebar = () => {
+    document.body.classList.remove('sidebar-open');
+  };
+
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (document.body.classList.contains('sidebar-open')) {
+        const sidebar = document.querySelector('.sidebar');
+        const hamburger = document.querySelector('.hamburger-btn');
+        if (sidebar && !sidebar.contains(e.target as Node) && hamburger && !hamburger.contains(e.target as Node)) {
+          document.body.classList.remove('sidebar-open');
+        }
+      }
+    };
+    document.addEventListener('click', handleOutsideClick);
+    return () => document.removeEventListener('click', handleOutsideClick);
+  }, []);
+
   return (
     <aside className="sidebar">
-      <div style={{ padding: '0.5rem 0', marginBottom: '2.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-        <div className="icon-wrapper icon-blue" style={{ borderRadius: '8px', padding: '0.5rem' }}>
-          <Disc size={24} />
+      <div className="sidebar-logo" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div className="icon-wrapper icon-blue" style={{ borderRadius: '8px', padding: '0.5rem' }}>
+            <Disc size={24} />
+          </div>
+          <span className="sidebar-logo-text">
+            DMS
+          </span>
         </div>
-        <span style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em' }}>
-          DMS
-        </span>
+        <button 
+          className="btn-icon sidebar-close-btn" 
+          onClick={closeSidebar}
+          style={{ display: 'none' }}
+          title="Close Navigation"
+        >
+          <X size={20} />
+        </button>
       </div>
 
-      <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1 }}>
+      <nav className="sidebar-nav">
         <NavLink 
           to="/" 
           className={({ isActive }) => `btn ${isActive ? 'btn-primary' : 'btn-ghost'}`}
-          style={{ justifyContent: 'flex-start', textDecoration: 'none' }}
+          style={{ textDecoration: 'none' }}
+          onClick={closeSidebar}
         >
-          <LayoutDashboard size={20} /> Equipment Dashboard
+          <LayoutDashboard size={20} /> <span>Equipment Dashboard</span>
         </NavLink>
         {isAdmin && (
           <NavLink 
             to="/topology" 
             className={({ isActive }) => `btn ${isActive ? 'btn-primary' : 'btn-ghost'}`}
-            style={{ justifyContent: 'flex-start', textDecoration: 'none' }}
+            style={{ textDecoration: 'none' }}
+            onClick={closeSidebar}
           >
-            <Orbit size={20} /> 3D Fleet View
+            <Orbit size={20} /> <span>3D Fleet View</span>
           </NavLink>
         )}
 
         <NavLink 
           to="/search" 
           className={({ isActive }) => `btn ${isActive ? 'btn-primary' : 'btn-ghost'}`}
-          style={{ justifyContent: 'flex-start', textDecoration: 'none' }}
+          style={{ textDecoration: 'none' }}
+          onClick={closeSidebar}
         >
-          <Search size={20} /> Universal Search
+          <Search size={20} /> <span>Universal Search</span>
         </NavLink>
 
         {isAdmin && (
           <NavLink 
             to="/codebase" 
             className={({ isActive }) => `btn ${isActive ? 'btn-primary' : 'btn-ghost'}`}
-            style={{ 
-              justifyContent: 'flex-start', 
-              textDecoration: 'none', 
-              marginTop: '1.5rem', 
-              borderTop: '1px solid var(--border)', 
-              paddingTop: '1.5rem', 
-              borderRadius: '8px' 
-            }}
+            style={{ textDecoration: 'none' }}
+            id="sidebar-codebase-link"
+            onClick={closeSidebar}
           >
-            <Workflow size={20} /> 3D Codebase View
+            <Workflow size={20} /> <span>3D Codebase View</span>
           </NavLink>
         )}
       </nav>
 
-      <div style={{ marginTop: 'auto' }}>
+      <div className="sidebar-footer">
         <NavLink 
           to="/settings" 
           className={({ isActive }) => `btn ${isActive ? 'btn-primary' : 'btn-ghost'}`}
-          style={{ justifyContent: 'flex-start', textDecoration: 'none' }}
+          style={{ textDecoration: 'none' }}
+          onClick={closeSidebar}
         >
-          <Settings size={20} /> Settings
+          <Settings size={20} /> <span>Settings</span>
         </NavLink>
       </div>
     </aside>

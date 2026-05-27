@@ -232,6 +232,7 @@ const Fleet3DGraph: React.FC<Fleet3DGraphProps> = ({
       const w = canvas.width;
       const h = canvas.height;
       if (w === 0 || h === 0) {
+        resizeCanvas();
         animationId = requestAnimationFrame(tick);
         return;
       }
@@ -292,7 +293,7 @@ const Fleet3DGraph: React.FC<Fleet3DGraphProps> = ({
         v.vx += fx; v.vy += fy; v.vz += fz;
       });
 
-      // Force 3: Damping gravity and bounding positioning updates
+      // Force 3: Damping gravity and bounding positioning updates & NaN safety safeguards
       simNodes.forEach(u => {
         // Centripetal force pulling back to coordinates origin (0,0,0)
         u.vx -= u.x * gravity;
@@ -306,6 +307,14 @@ const Fleet3DGraph: React.FC<Fleet3DGraphProps> = ({
         u.vx *= friction;
         u.vy *= friction;
         u.vz *= friction;
+
+        // Prevent coordinates from blowing up to NaN/Infinity
+        if (isNaN(u.x) || isNaN(u.y) || isNaN(u.z) || !isFinite(u.x) || !isFinite(u.y) || !isFinite(u.z)) {
+          u.x = (Math.random() - 0.5) * 100;
+          u.y = (Math.random() - 0.5) * 100;
+          u.z = (Math.random() - 0.5) * 100;
+          u.vx = 0; u.vy = 0; u.vz = 0;
+        }
       });
 
       // --- 2. CAMERA CALCULATION & AUTO-ORBIT ROTATION ---
@@ -456,16 +465,6 @@ const Fleet3DGraph: React.FC<Fleet3DGraphProps> = ({
               opacity = 0.25;
             }
 
-            // Radial gradient creates a glowing 3D spherical bubble
-            const grad = ctx.createRadialGradient(
-              n.sx - projectedRadius * 0.3,
-              n.sy - projectedRadius * 0.3,
-              projectedRadius * 0.05,
-              n.sx,
-              n.sy,
-              projectedRadius
-            );
-
             // Theme colors
             let colorCore = '#2563eb'; // Royal Blue (Machine)
             let colorGlow = 'rgba(37, 99, 235, 0.4)';
@@ -478,15 +477,30 @@ const Fleet3DGraph: React.FC<Fleet3DGraphProps> = ({
               colorGlow = 'rgba(139, 92, 246, 0.4)';
             }
 
-            grad.addColorStop(0, `rgba(255, 255, 255, ${opacity})`);
-            grad.addColorStop(0.3, `rgba(${n.type === 'machine' ? '37, 99, 235' : n.type === 'set' ? '16, 185, 129' : '139, 92, 246'}, ${opacity})`);
-            grad.addColorStop(1, `rgba(${n.type === 'machine' ? '30, 64, 175' : n.type === 'set' ? '5, 150, 105' : '124, 58, 237'}, ${opacity})`);
-
-            // Sphere shading fill
             ctx.beginPath();
-            ctx.arc(n.sx, n.sy, projectedRadius, 0, Math.PI * 2);
-            ctx.fillStyle = grad;
-            ctx.fill();
+            const drawRadius = Math.max(0.5, projectedRadius);
+            ctx.arc(n.sx, n.sy, drawRadius, 0, Math.PI * 2);
+
+            if (projectedRadius < 1.5) {
+              ctx.fillStyle = `rgba(${n.type === 'machine' ? '37, 99, 235' : n.type === 'set' ? '16, 185, 129' : '139, 92, 246'}, ${opacity})`;
+              ctx.fill();
+            } else {
+              const grad = ctx.createRadialGradient(
+                n.sx - projectedRadius * 0.3,
+                n.sy - projectedRadius * 0.3,
+                projectedRadius * 0.05,
+                n.sx,
+                n.sy,
+                projectedRadius
+              );
+
+              grad.addColorStop(0, `rgba(255, 255, 255, ${opacity})`);
+              grad.addColorStop(0.3, `rgba(${n.type === 'machine' ? '37, 99, 235' : n.type === 'set' ? '16, 185, 129' : '139, 92, 246'}, ${opacity})`);
+              grad.addColorStop(1, `rgba(${n.type === 'machine' ? '30, 64, 175' : n.type === 'set' ? '5, 150, 105' : '124, 58, 237'}, ${opacity})`);
+
+              ctx.fillStyle = grad;
+              ctx.fill();
+            }
 
             // Glow Aura Ring on search match or cursor hover
             const isHovered = hoveredNode && hoveredNode.id === n.id;

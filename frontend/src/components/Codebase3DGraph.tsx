@@ -59,6 +59,7 @@ const Codebase3DGraph: React.FC<Codebase3DGraphProps> = ({
   const isDraggingRef = useRef<boolean>(false);
   const dragStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const lastInteractionRef = useRef<number>(Date.now());
+  const firstFrameRef = useRef<boolean>(false);
 
   // Code packet flows along codebase links
   const packetRef = useRef<{ linkIndex: number; progress: number; speed: number }[]>([]);
@@ -246,14 +247,26 @@ const Codebase3DGraph: React.FC<Codebase3DGraphProps> = ({
       const w = canvas.width;
       const h = canvas.height;
       if (w === 0 || h === 0) {
+        console.warn('[DMS Canvas3D] Canvas initialized at zero size. Attempting layout resize...', { w, h });
+        resizeCanvas();
         animationId = requestAnimationFrame(tick);
         return;
       }
 
-      ctx.clearRect(0, 0, w, h);
-
       const simNodes = simNodesRef.current;
       const simLinks = simLinksRef.current;
+
+      if (!firstFrameRef.current) {
+        firstFrameRef.current = true;
+        console.log('[DMS Canvas3D] First frame render loop successfully started!', {
+          canvasWidth: w,
+          canvasHeight: h,
+          simNodesCount: simNodes.length,
+          simLinksCount: simLinks.length
+        });
+      }
+
+      ctx.clearRect(0, 0, w, h);
 
       // Force variables optimized for high density (150+ nodes)
       const repulsion = 7200;
@@ -307,7 +320,7 @@ const Codebase3DGraph: React.FC<Codebase3DGraphProps> = ({
         v.vx += fx; v.vy += fy; v.vz += fz;
       });
 
-      // Force 3: Damping gravity bounds
+      // Force 3: Damping gravity bounds & NaN safety safeguards
       simNodes.forEach(u => {
         u.vx -= u.x * gravity;
         u.vy -= u.y * gravity;
@@ -320,6 +333,14 @@ const Codebase3DGraph: React.FC<Codebase3DGraphProps> = ({
         u.vx *= friction;
         u.vy *= friction;
         u.vz *= friction;
+
+        // Prevent coordinates from blowing up to NaN/Infinity
+        if (isNaN(u.x) || isNaN(u.y) || isNaN(u.z) || !isFinite(u.x) || !isFinite(u.y) || !isFinite(u.z)) {
+          u.x = (Math.random() - 0.5) * 100;
+          u.y = (Math.random() - 0.5) * 100;
+          u.z = (Math.random() - 0.5) * 100;
+          u.vx = 0; u.vy = 0; u.vz = 0;
+        }
       });
 
       // Camera calculations & auto-orbit rotation
@@ -465,15 +486,6 @@ const Codebase3DGraph: React.FC<Codebase3DGraphProps> = ({
               opacity = 0.2;
             }
 
-            const grad = ctx.createRadialGradient(
-              n.sx - projectedRadius * 0.3,
-              n.sy - projectedRadius * 0.3,
-              projectedRadius * 0.05,
-              n.sx,
-              n.sy,
-              projectedRadius
-            );
-
             // Shading color themes
             let colorCore = '#8b5cf6'; // Violet Purple (Function)
             let colorGlow = 'rgba(139, 92, 246, 0.4)';
@@ -494,14 +506,30 @@ const Codebase3DGraph: React.FC<Codebase3DGraphProps> = ({
               }
             }
 
-            grad.addColorStop(0, `rgba(255, 255, 255, ${opacity})`);
-            grad.addColorStop(0.3, `rgba(${colorCore === '#06b6d4' ? '6, 182, 212' : colorCore === '#10b981' ? '16, 185, 129' : colorCore === '#f59e0b' ? '245, 158, 11' : colorCore === '#8b5cf6' ? '139, 92, 246' : '156, 163, 175'}, ${opacity})`);
-            grad.addColorStop(1, `rgba(${colorCore === '#06b6d4' ? '8, 145, 178' : colorCore === '#10b981' ? '4, 120, 87' : colorCore === '#f59e0b' ? '217, 119, 6' : colorCore === '#8b5cf6' ? '124, 58, 237' : '107, 114, 128'}, ${opacity})`);
-
             ctx.beginPath();
-            ctx.arc(n.sx, n.sy, projectedRadius, 0, Math.PI * 2);
-            ctx.fillStyle = grad;
-            ctx.fill();
+            const drawRadius = Math.max(0.5, projectedRadius);
+            ctx.arc(n.sx, n.sy, drawRadius, 0, Math.PI * 2);
+
+            if (projectedRadius < 1.5) {
+              ctx.fillStyle = `rgba(${colorCore === '#06b6d4' ? '6, 182, 212' : colorCore === '#10b981' ? '16, 185, 129' : colorCore === '#f59e0b' ? '245, 158, 11' : colorCore === '#8b5cf6' ? '139, 92, 246' : '156, 163, 175'}, ${opacity})`;
+              ctx.fill();
+            } else {
+              const grad = ctx.createRadialGradient(
+                n.sx - projectedRadius * 0.3,
+                n.sy - projectedRadius * 0.3,
+                projectedRadius * 0.05,
+                n.sx,
+                n.sy,
+                projectedRadius
+              );
+
+              grad.addColorStop(0, `rgba(255, 255, 255, ${opacity})`);
+              grad.addColorStop(0.3, `rgba(${colorCore === '#06b6d4' ? '6, 182, 212' : colorCore === '#10b981' ? '16, 185, 129' : colorCore === '#f59e0b' ? '245, 158, 11' : colorCore === '#8b5cf6' ? '139, 92, 246' : '156, 163, 175'}, ${opacity})`);
+              grad.addColorStop(1, `rgba(${colorCore === '#06b6d4' ? '8, 145, 178' : colorCore === '#10b981' ? '4, 120, 87' : colorCore === '#f59e0b' ? '217, 119, 6' : colorCore === '#8b5cf6' ? '124, 58, 237' : '107, 114, 128'}, ${opacity})`);
+
+              ctx.fillStyle = grad;
+              ctx.fill();
+            }
 
             // Glow Aura ring on select or match
             const isHovered = hoveredNode && hoveredNode.id === n.id;

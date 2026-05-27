@@ -31,6 +31,12 @@ const SettingsPage: React.FC = () => {
   const [logSearch, setLogSearch] = useState('');
   const [selectedLog, setSelectedLog] = useState<any | null>(null);
 
+  // Password Change States
+  const [pwdLoading, setPwdLoading] = useState(false);
+  const [pwdError, setPwdError] = useState('');
+  const [pwdSuccess, setPwdSuccess] = useState('');
+  const [pwdData, setPwdData] = useState({ currentPassword: '', newPassword: '', confirmNewPassword: '' });
+
   const isAdmin = user?.role === 'ADMIN';
 
   useEffect(() => {
@@ -126,15 +132,46 @@ const SettingsPage: React.FC = () => {
     }
   };
 
+  const handlePasswordChange = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPwdError('');
+    setPwdSuccess('');
+
+    if (pwdData.newPassword.length < 8) {
+      setPwdError('New password must be at least 8 characters long.');
+      return;
+    }
+
+    if (pwdData.newPassword !== pwdData.confirmNewPassword) {
+      setPwdError('New passwords do not match.');
+      return;
+    }
+
+    try {
+      setPwdLoading(true);
+      const response = await api.post('/auth/change-password', {
+        currentPassword: pwdData.currentPassword,
+        newPassword: pwdData.newPassword,
+        confirmNewPassword: pwdData.confirmNewPassword
+      });
+      setPwdSuccess(response.data.message || 'Password changed successfully.');
+      setPwdData({ currentPassword: '', newPassword: '', confirmNewPassword: '' });
+    } catch (err: any) {
+      setPwdError(err.response?.data?.error || 'Failed to change password. Please try again.');
+    } finally {
+      setPwdLoading(false);
+    }
+  };
+
   // Dynamic custom action badge color themes
   const getActionColor = (action: string) => {
     const act = action.toUpperCase();
-    if (act.includes('DELETE')) return { bg: '#fee2e2', text: '#ef4444' };
-    if (act.includes('CREATE')) return { bg: '#e0f2fe', text: '#0284c7' };
-    if (act.includes('UPDATE')) return { bg: '#fef3c7', text: '#d97706' };
-    if (act.includes('IMPORT') || act.includes('EXPORT')) return { bg: '#f3e8ff', text: '#7c3aed' };
-    if (act.includes('LOGIN')) return { bg: '#d1fae5', text: '#059669' };
-    return { bg: '#f1f5f9', text: '#475569' };
+    if (act.includes('DELETE')) return { bg: 'var(--danger-light)', text: 'var(--danger)' };
+    if (act.includes('CREATE')) return { bg: 'var(--primary-light)', text: 'var(--primary)' };
+    if (act.includes('UPDATE')) return { bg: 'hsla(38, 92%, 50%, 0.15)', text: 'hsl(38, 92%, 60%)' };
+    if (act.includes('IMPORT') || act.includes('EXPORT')) return { bg: 'var(--warning-light)', text: 'var(--warning)' };
+    if (act.includes('LOGIN')) return { bg: 'var(--success-light)', text: 'var(--success)' };
+    return { bg: 'hsl(222, 20%, 16%)', text: 'var(--text-muted)' };
   };
 
   // Real-time search filter for audit logs
@@ -204,6 +241,83 @@ const SettingsPage: React.FC = () => {
             </div>
           </div>
 
+          {/* Change Password Card */}
+          <div className="card" style={{ cursor: 'default', padding: '2rem' }}>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <Lock size={20} className="icon-blue" /> Change Password
+            </h2>
+
+            {pwdSuccess && (
+              <div style={{ padding: '0.75rem 1rem', background: 'var(--success-light)', color: 'var(--success)', borderRadius: '8px', fontSize: '0.875rem', marginBottom: '1.5rem', border: '1px solid hsla(142, 70%, 45%, 0.2)', fontWeight: 500 }}>
+                {pwdSuccess}
+              </div>
+            )}
+
+            {pwdError && (
+              <div style={{ padding: '0.75rem 1rem', background: 'var(--danger-light)', color: 'var(--danger)', borderRadius: '8px', fontSize: '0.875rem', marginBottom: '1.5rem', border: '1px solid hsla(0, 84%, 60%, 0.2)', fontWeight: 500 }}>
+                {pwdError}
+              </div>
+            )}
+
+            <form onSubmit={handlePasswordChange} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+              <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem', margin: 0 }}>
+                <div className="input-group" style={{ margin: 0 }}>
+                  <label className="label">Current Password</label>
+                  <div style={{ position: 'relative' }}>
+                    <Lock size={16} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                    <input 
+                      type="password" 
+                      className="input" 
+                      placeholder="Enter current password..." 
+                      value={pwdData.currentPassword} 
+                      onChange={(e) => setPwdData({ ...pwdData, currentPassword: e.target.value })} 
+                      style={{ paddingLeft: '2.5rem' }}
+                      required 
+                    />
+                  </div>
+                </div>
+
+                <div className="input-group" style={{ margin: 0 }}>
+                  <label className="label">New Password</label>
+                  <div style={{ position: 'relative' }}>
+                    <Lock size={16} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                    <input 
+                      type="password" 
+                      className="input" 
+                      placeholder="Min 8 characters..." 
+                      value={pwdData.newPassword} 
+                      onChange={(e) => setPwdData({ ...pwdData, newPassword: e.target.value })} 
+                      style={{ paddingLeft: '2.5rem' }}
+                      required 
+                    />
+                  </div>
+                </div>
+
+                <div className="input-group" style={{ margin: 0 }}>
+                  <label className="label">Confirm New Password</label>
+                  <div style={{ position: 'relative' }}>
+                    <Lock size={16} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                    <input 
+                      type="password" 
+                      className="input" 
+                      placeholder="Re-enter new password..." 
+                      value={pwdData.confirmNewPassword} 
+                      onChange={(e) => setPwdData({ ...pwdData, confirmNewPassword: e.target.value })} 
+                      style={{ paddingLeft: '2.5rem' }}
+                      required 
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'flex-start', marginTop: '0.5rem' }}>
+                <button type="submit" className="btn btn-primary" disabled={pwdLoading} style={{ height: '2.5rem', padding: '0 1.5rem' }}>
+                  {pwdLoading ? 'Updating Password...' : 'Update Password'}
+                </button>
+              </div>
+            </form>
+          </div>
+
           {/* Appearance Settings */}
           <div className="card" style={{ cursor: 'default', padding: '2rem' }}>
             <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -237,7 +351,7 @@ const SettingsPage: React.FC = () => {
 
       {/* Tab 2: Admin User Management Section */}
       {isAdmin && activeTab === 'users' && (
-        <div style={{ marginTop: '2rem', padding: '2.5rem', background: 'white', borderRadius: '16px', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
+        <div style={{ marginTop: '2rem', padding: '2.5rem', background: 'var(--white)', borderRadius: '16px', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
           <div className="flex-between" style={{ marginBottom: '2rem' }}>
             <div>
               <h2 className="section-title" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
@@ -251,7 +365,7 @@ const SettingsPage: React.FC = () => {
           </div>
 
           {success && (
-            <div style={{ padding: '0.75rem 1rem', background: 'var(--success-light)', color: 'var(--success)', borderRadius: '8px', fontSize: '0.875rem', marginBottom: '1.5rem', border: '1px solid #d1fae5', fontWeight: 500 }}>
+            <div style={{ padding: '0.75rem 1rem', background: 'var(--success-light)', color: 'var(--success)', borderRadius: '8px', fontSize: '0.875rem', marginBottom: '1.5rem', border: '1px solid hsla(142, 70%, 45%, 0.2)', fontWeight: 500 }}>
               {success}
             </div>
           )}
@@ -337,7 +451,7 @@ const SettingsPage: React.FC = () => {
 
       {/* Tab 3: Admin Compliance Audit Trails Section */}
       {isAdmin && activeTab === 'audit' && (
-        <div style={{ marginTop: '2rem', padding: '2.5rem', background: 'white', borderRadius: '16px', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
+        <div style={{ marginTop: '2rem', padding: '2.5rem', background: 'var(--white)', borderRadius: '16px', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
           <div className="flex-between" style={{ marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
               <h2 className="section-title" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
@@ -443,7 +557,7 @@ const SettingsPage: React.FC = () => {
             </div>
 
             {error && (
-              <div style={{ padding: '0.75rem', background: 'var(--danger-light)', color: 'var(--danger)', borderRadius: '8px', fontSize: '0.875rem', marginBottom: '1.5rem', border: '1px solid #fee2e2' }}>
+              <div style={{ padding: '0.75rem', background: 'var(--danger-light)', color: 'var(--danger)', borderRadius: '8px', fontSize: '0.875rem', marginBottom: '1.5rem', border: '1px solid hsla(0, 84%, 60%, 0.2)' }}>
                 {error}
               </div>
             )}
@@ -516,7 +630,7 @@ const SettingsPage: React.FC = () => {
       {selectedLog && (
         <div className="modal-overlay" style={{ zIndex: 1100 }}>
           <div className="modal-content" style={{ maxWidth: '520px', padding: '2rem' }}>
-            <div className="flex-between" style={{ marginBottom: '1.5rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '1rem' }}>
+            <div className="flex-between" style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--border)', paddingBottom: '1rem' }}>
               <h2 className="section-title" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.25rem' }}>
                 <Eye size={20} style={{ color: 'var(--primary)' }} /> Audit Log Details
               </h2>
@@ -530,7 +644,7 @@ const SettingsPage: React.FC = () => {
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '0.5rem' }}>
                 <strong style={{ color: 'var(--text-muted)' }}>Actor Name:</strong>
-                <span style={{ fontWeight: 600 }}>{selectedLog.actorName} <small style={{ color: '#64748b', fontFamily: 'monospace', marginLeft: '0.5rem' }}>({selectedLog.actorId})</small></span>
+                <span style={{ fontWeight: 600 }}>{selectedLog.actorName} <small style={{ color: 'var(--text-muted)', fontFamily: 'monospace', marginLeft: '0.5rem' }}>({selectedLog.actorId})</small></span>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '0.5rem', alignItems: 'center' }}>
                 <strong style={{ color: 'var(--text-muted)' }}>Action Type:</strong>
@@ -550,21 +664,21 @@ const SettingsPage: React.FC = () => {
                 <span style={{ fontWeight: 600 }}>{selectedLog.target}</span>
               </div>
               
-              <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '1rem', marginTop: '0.5rem' }}>
+              <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1rem', marginTop: '0.5rem' }}>
                 <strong style={{ display: 'block', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>Event Details:</strong>
-                <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0', lineHeight: 1.5, color: '#334155' }}>
+                <div style={{ background: 'rgba(2, 6, 23, 0.34)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border)', lineHeight: 1.5, color: 'var(--text-main)' }}>
                   {selectedLog.details}
                 </div>
               </div>
 
-              <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '0.5rem' }}>
                   <strong style={{ color: 'var(--text-muted)' }}>IP Address:</strong>
                   <span style={{ fontFamily: 'monospace' }}>{selectedLog.ipAddress || 'Not recorded'}</span>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '0.5rem' }}>
                   <strong style={{ color: 'var(--text-muted)' }}>User Agent:</strong>
-                  <span style={{ fontSize: '0.75rem', color: '#475569', lineHeight: 1.4, wordBreak: 'break-all' }}>{selectedLog.userAgent || 'Not recorded'}</span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: 1.4, wordBreak: 'break-all' }}>{selectedLog.userAgent || 'Not recorded'}</span>
                 </div>
               </div>
             </div>

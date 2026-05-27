@@ -189,14 +189,26 @@ const MachineDetails: React.FC = () => {
       </div>
 
       <div className="card" style={{ cursor: 'default', marginBottom: '2.5rem', padding: '2rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-          <div className="icon-wrapper icon-blue" style={{ padding: '1.25rem' }}>
-            <Cpu size={32} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap', width: '100%' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+            <div className="icon-wrapper icon-blue" style={{ padding: '1.25rem' }}>
+              <Cpu size={32} />
+            </div>
+            <div>
+              <h1 className="page-title" style={{ margin: 0 }}>{machine.name}</h1>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-muted)' }}>
+                <MapPin size={18} /> {machine.location || 'Unknown Location'}
+              </div>
+            </div>
           </div>
-          <div>
-            <h1 className="page-title" style={{ margin: 0 }}>{machine.name}</h1>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-muted)' }}>
-              <MapPin size={18} /> {machine.location || 'Unknown Location'}
+          <div style={{ marginLeft: 'auto', display: 'flex', gap: '2.5rem', flexWrap: 'wrap' }}>
+            <div style={{ textAlign: 'left', minWidth: '100px' }}>
+              <span style={{ display: 'block', fontSize: '0.675rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Assigned Sets</span>
+              <strong style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-main)', lineHeight: 1 }}>{machine.sets.length}</strong>
+            </div>
+            <div style={{ textAlign: 'left', minWidth: '100px' }}>
+              <span style={{ display: 'block', fontSize: '0.675rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Total Dies</span>
+              <strong style={{ fontSize: '2rem', fontWeight: 800, color: '#a78bfa', lineHeight: 1 }}>{machine.sets.reduce((sum, s) => sum + (s.dies?.length || 0), 0)}</strong>
             </div>
           </div>
         </div>

@@ -385,13 +385,8 @@
     "semantic_hash": "3dc1d42107f7cad8360da0bee1a23a18"
   },
   "/home/sahil/Desktop/Projects/dms/README.md": {
-    "mtime": 1779900587.9490736,
-    "ast_hash": "4e5a936fde6f186bf2b983f90fbfd7de",
-    "semantic_hash": ""
-  },
-  "/home/sahil/Desktop/Projects/dms/walkthrough.md": {
-    "mtime": 1779900582.781082,
-    "ast_hash": "745b90718d66988bfa362dbcec3791c4",
+    "mtime": 1779894268.5995493,
+    "ast_hash": "a9418d92267d0ce1489d5d815d37b85e",
     "semantic_hash": ""
   }
 }

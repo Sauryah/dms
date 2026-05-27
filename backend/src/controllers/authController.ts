@@ -172,3 +172,48 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
     next(error);
   }
 };
+
+export const changePassword = async (req: Request, res: Response, next: NextFunction) => {
+  const { currentPassword, newPassword } = req.body;
+  const authReq = req as any;
+
+  try {
+    if (!authReq.user) {
+      return res.status(401).json({ error: 'Authentication required.' });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: authReq.user.id }
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User account not found.' });
+    }
+
+    // Verify current password
+    const isPasswordValid = await bcrypt.compare(currentPassword, user.passwordHash);
+    if (!isPasswordValid) {
+      return res.status(400).json({ error: 'Incorrect current password.' });
+    }
+
+    // Check if new password is the same as the old one
+    const isSamePassword = await bcrypt.compare(newPassword, user.passwordHash);
+    if (isSamePassword) {
+      return res.status(400).json({ error: 'New password cannot be the same as your current password.' });
+    }
+
+    // Hash new password and update
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { passwordHash: hashedPassword }
+    });
+
+    // Log successful password change in audit trail
+    await logAction(user.id, user.username, 'UPDATE_PASSWORD', 'User Profile', `User "${user.username}" successfully changed their own password`, req);
+
+    res.json({ message: 'Password updated successfully. Please log in again with your new credentials.' });
+  } catch (error) {
+    next(error);
+  }
+};

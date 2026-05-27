@@ -1,14 +1,17 @@
 import { Router } from 'express';
-import { register, login, getUsers, deleteUser } from '../controllers/authController';
+import { register, login, getUsers, deleteUser, changePassword } from '../controllers/authController';
 import { authenticate, authorize } from '../middleware/authMiddleware';
 import { validateBody } from '../middleware/validationMiddleware';
-import { loginSchema, registerSchema } from '../lib/schemas';
+import { changePasswordSchema, loginSchema, registerSchema } from '../lib/schemas';
 import { authLimiter } from '../middleware/rateLimiter';
 
 const router = Router();
 
 // Public routes with brute-force protection
 router.post('/login', authLimiter, validateBody(loginSchema), login);
+
+// Authenticated user routes
+router.post('/change-password', authenticate, validateBody(changePasswordSchema), changePassword);
 
 // Admin-only routes
 router.post('/register', authenticate, authorize(['ADMIN']), validateBody(registerSchema), register);

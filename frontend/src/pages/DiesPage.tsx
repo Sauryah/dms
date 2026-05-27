@@ -280,22 +280,32 @@ const DiesPage: React.FC = () => {
           <h1 className="page-title">Dies Inventory</h1>
           <p className="page-subtitle">Manage individual production dies and their specifications</p>
         </div>
-        {isAdmin && (
-          <div style={{ display: 'flex', gap: '0.75rem' }}>
-            <button 
-              className="btn btn-secondary" 
-              onClick={() => setShowImportModal(true)}
-            >
-              <Upload size={18} /> Import Excel
-            </button>
-            <button 
-              className="btn btn-primary" 
-              onClick={() => setShowModal(true)}
-            >
-              <Plus size={18} /> Register Die
-            </button>
-          </div>
-        )}
+        <div style={{ display: 'flex', gap: '0.75rem' }}>
+          <button 
+            className="btn btn-secondary" 
+            onClick={handleDownloadTemplate}
+            disabled={downloadingTemplate}
+            title="Download reference Excel spreadsheet template for bulk import"
+          >
+            <Download size={18} /> {downloadingTemplate ? 'Downloading...' : 'Excel Template'}
+          </button>
+          {isAdmin && (
+            <>
+              <button 
+                className="btn btn-secondary" 
+                onClick={() => setShowImportModal(true)}
+              >
+                <Upload size={18} /> Import Excel
+              </button>
+              <button 
+                className="btn btn-primary" 
+                onClick={() => setShowModal(true)}
+              >
+                <Plus size={18} /> Register Die
+              </button>
+            </>
+          )}
+        </div>
       </div>
 
       <div className="ops-toolbar">
@@ -585,7 +595,7 @@ const DiesPage: React.FC = () => {
       
       <style>{`
         .hover-row:hover {
-          background-color: #f8fafc !important;
+          background-color: hsl(222, 25%, 13%) !important;
         }
         .row-actions {
           display: flex;
@@ -605,7 +615,7 @@ const DiesPage: React.FC = () => {
           height: 32px;
           border-radius: 6px;
           border: 1px solid var(--border);
-          background: white;
+          background: var(--white);
           color: var(--text-muted);
           cursor: pointer;
           transition: all 0.2s;

@@ -153,7 +153,7 @@ const Dashboard: React.FC = () => {
           </div>
         ))}
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1.35fr 0.65fr', gap: '1rem' }}>
+      <div className="dashboard-grid" style={{ gap: '1rem' }}>
         <div className="ops-panel" style={{ padding: '1rem' }}>
           <Skeleton width={200} height="1.5rem" style={{ marginBottom: '1rem' }} />
           <Skeleton variant="rect" height={300} />
@@ -226,7 +226,7 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1.35fr 0.65fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+      <div className="dashboard-grid">
         
         {/* Left Side: Operations Center */}
         <div className="ops-panel" style={{ padding: '1.5rem' }}>
@@ -264,6 +264,7 @@ const Dashboard: React.FC = () => {
                   <th>Machine</th>
                   <th>Location</th>
                   <th>Sets</th>
+                  <th>Dies</th>
                   <th>Capacity Loadout</th>
                   <th style={{ textAlign: 'right' }}>Actions</th>
                 </tr>
@@ -288,6 +289,11 @@ const Dashboard: React.FC = () => {
                         </span>
                       </td>
                       <td><span className="badge badge-neutral">{setNum}</span></td>
+                      <td>
+                        <span className="badge badge-neutral" style={{ background: 'rgba(167, 139, 250, 0.14)', color: '#a78bfa', border: '1px solid rgba(167, 139, 250, 0.22)' }}>
+                          {machine.sets?.reduce((sum, s) => sum + (s.dies?.length || 0), 0) || 0}
+                        </span>
+                      </td>
                       
                       {/* OEE-Style capacity Loadout spark bars */}
                       <td style={{ minWidth: '130px' }}>
@@ -326,7 +332,7 @@ const Dashboard: React.FC = () => {
                 })}
                 {currentMachines.length === 0 && (
                   <tr>
-                    <td colSpan={5} className="empty-state" style={{ border: 'none' }}>
+                    <td colSpan={6} className="empty-state" style={{ border: 'none' }}>
                       {searchQuery ? `No machines matching "${searchQuery}"` : 'No machines registered yet.'}
                     </td>
                   </tr>
@@ -572,7 +578,7 @@ const Dashboard: React.FC = () => {
       
       <style>{`
         .hover-row:hover {
-          background-color: hsl(220, 20%, 98%) !important;
+          background-color: hsl(222, 25%, 13%) !important;
         }
         .row-actions {
           display: flex;
@@ -592,7 +598,7 @@ const Dashboard: React.FC = () => {
           height: 32px;
           border-radius: 6px;
           border: 1px solid var(--border);
-          background: white;
+          background: var(--white);
           color: var(--text-muted);
           cursor: pointer;
           transition: all 0.2s;
