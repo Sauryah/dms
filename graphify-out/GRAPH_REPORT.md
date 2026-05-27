@@ -1,16 +1,16 @@
 # Graph Report - dms  (2026-05-27)
 
 ## Corpus Check
-- 69 files · ~38,363 words
+- 69 files · ~41,289 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 659 nodes · 950 edges · 78 communities (62 shown, 16 thin omitted)
+- 676 nodes · 978 edges · 77 communities (61 shown, 16 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 17 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `bcfe873e`
+- Built from commit: `513f51b8`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -66,13 +66,12 @@
 - [[_COMMUNITY_Community 72|Community 72]]
 - [[_COMMUNITY_Community 73|Community 73]]
 - [[_COMMUNITY_Community 74|Community 74]]
-- [[_COMMUNITY_Community 75|Community 75]]
 - [[_COMMUNITY_Community 76|Community 76]]
-- [[_COMMUNITY_Community 77|Community 77]]
+- [[_COMMUNITY_Community 78|Community 78]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `useAuth()` - 22 edges
-2. `logAction()` - 21 edges
+1. `logAction()` - 23 edges
+2. `useAuth()` - 22 edges
 3. `compilerOptions` - 17 edges
 4. `compilerOptions` - 16 edges
 5. `logAction()` - 15 edges
@@ -80,29 +79,29 @@
 7. `definitions` - 11 edges
 8. `🚀 Quick Start Guide (Docker)` - 10 edges
 9. `ToastContext` - 9 edges
-10. `authenticate()` - 8 edges
+10. `Walkthrough: Premium Dark SaaS Dashboard & Mobile Responsiveness Overhaul` - 9 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `login()` --calls--> `handleSubmit()`  [INFERRED]
   D:/PROJECT/mmmmm/backend/src/controllers/authController.ts → frontend/src/pages/LoginPage.tsx
+- `fetchUsers()` --calls--> `handleDelete()`  [EXTRACTED]
+  frontend/src/pages/SettingsPage.tsx → D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx
 - `Backend Dependencies` --conceptually_related_to--> `Backend Service (Prod)`  [INFERRED]
   requirements.txt → docker-compose.yml
 - `exportAuditLogs()` --calls--> `logAction()`  [INFERRED]
   D:/PROJECT/mmmmm/backend/src/controllers/auditController.ts → D:/PROJECT/mmmmm/backend/src/lib/auditLogger.ts
 - `deleteDie()` --calls--> `logAction()`  [INFERRED]
   D:/PROJECT/mmmmm/backend/src/controllers/dieController.ts → D:/PROJECT/mmmmm/backend/src/lib/auditLogger.ts
-- `createMachine()` --calls--> `logAction()`  [INFERRED]
-  D:/PROJECT/mmmmm/backend/src/controllers/machineController.ts → D:/PROJECT/mmmmm/backend/src/lib/auditLogger.ts
 
-## Communities (78 total, 16 thin omitted)
+## Communities (77 total, 16 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.29
-Nodes (12): createDie(), deleteDie(), formatSizeString(), getDieById(), getDies(), getImportTemplate(), importDies(), parseSizeToFloat() (+4 more)
+Cohesion: 0.28
+Nodes (14): createDie(), deleteDie(), formatSizeString(), getDieById(), getDies(), getImportTemplate(), importDies(), importDiesConfirm() (+6 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.06
-Nodes (52): ActivityFeed(), AuditLog, BreadcrumbItem, Breadcrumbs(), SegmentedControlProps, SegmentedOption, Sidebar(), Skeleton() (+44 more)
+Cohesion: 0.07
+Nodes (47): ActivityFeed(), AuditLog, BreadcrumbItem, Breadcrumbs(), SegmentedControlProps, SegmentedOption, Sidebar(), Skeleton() (+39 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.15
@@ -113,16 +112,16 @@ Cohesion: 0.09
 Nodes (18): exportAuditLogs(), logAction(), login(), createDie(), deleteDie(), formatSizeString(), importDies(), parseSizeToFloat() (+10 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.11
-Nodes (19): devDependencies, is-thirteen, @mermaid-js/mermaid-cli, nodemon, prisma, prisma-dbml-generator, prisma-erd-generator, prisma-json-schema-generator (+11 more)
+Cohesion: 0.06
+Nodes (34): author, description, devDependencies, is-thirteen, @mermaid-js/mermaid-cli, nodemon, prisma, prisma-dbml-generator (+26 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 0.07
 Nodes (28): dependencies, axios, lucide-react, react, react-dom, react-router-dom, devDependencies, eslint (+20 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.12
-Nodes (16): dependencies, bcryptjs, cors, dotenv, express, express-rate-limit, helmet, jsonwebtoken (+8 more)
+Cohesion: 0.09
+Nodes (24): dependencies, bcryptjs, cors, dotenv, express, express-rate-limit, helmet, jsonwebtoken (+16 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.16
@@ -149,8 +148,8 @@ Cohesion: 0.48
 Nodes (6): main(), prisma, ensureDie(), ensureMachine(), ensureSet(), ensureUser()
 
 ### Community 16 - "Community 16"
-Cohesion: 0.14
-Nodes (18): 1. Application Hierarchy & Data Model, 2. Key Features, 3. Operational Procedures, 4. UI/UX Standards, 5. Development Maintenance, 6. Developer Experience (DX), API Documentation, code:bash (docker compose up -d --build) (+10 more)
+Cohesion: 0.11
+Nodes (23): 1. Application Hierarchy & Data Model, 2. Key Features, 3. Operational Procedures, 4. UI/UX Standards, 5. Development Maintenance, 6. Developer Experience (DX), API Documentation, code:bash (docker compose up -d --build) (+15 more)
 
 ### Community 18 - "Community 18"
 Cohesion: 0.33
@@ -185,8 +184,8 @@ Cohesion: 0.18
 Nodes (15): $ref, definitions, Machine, $ref, anyOf, $ref, type, auditLog (+7 more)
 
 ### Community 62 - "Community 62"
-Cohesion: 0.17
-Nodes (13): changePassword(), deleteUser(), getUsers(), login(), register(), JWT_SECRET, changePasswordSchema, createDieSchema (+5 more)
+Cohesion: 0.21
+Nodes (12): changePassword(), deleteUser(), getUsers(), login(), register(), changePasswordSchema, createDieSchema, createMachineSchema (+4 more)
 
 ### Community 63 - "Community 63"
 Cohesion: 0.26
@@ -202,23 +201,23 @@ Nodes (12): type, format, type, Die, properties, type, type, casing (+4 more)
 
 ### Community 66 - "Community 66"
 Cohesion: 0.10
-Nodes (19): 1. Docker Build & Restart, 1. Immersive Full-Screen Layout Wrappers (Fullscreen Fix), 1. Unified Carbon-Cobalt Design Tokens, 2. Canvas Zero-Dimension Self-Healing (WebGL Initialization Fix), 2. Glassmorphic Navigation Panels, 2. Micro-Animations & transitions, 3. Professional Spacing & Spacing Systems, code:bash (docker compose up -d --build) (+11 more)
+Nodes (20): 1. Docker Build & Restart, 1. Immersive Full-Screen Layout Wrappers (Fullscreen Fix), 1. Unified Carbon-Cobalt Design Tokens, 2. Canvas Zero-Dimension Self-Healing (WebGL Initialization Fix), 2. Glassmorphic Navigation Panels, 2. Micro-Animations & transitions, 3. Professional Spacing & Spacing Systems, code:bash (docker compose up -d --build) (+12 more)
 
 ### Community 67 - "Community 67"
 Cohesion: 0.36
 Nodes (9): assignDieToSet(), createSet(), deleteSet(), getSetById(), getSets(), updateSet(), logAction(), updateSetSchema (+1 more)
 
 ### Community 68 - "Community 68"
-Cohesion: 0.14
-Nodes (13): universalSearch(), authenticate(), authorize(), AuthRequest, apiLimiter, authLimiter, devReindexLimiter, importLimiter (+5 more)
+Cohesion: 0.22
+Nodes (8): apiLimiter, authLimiter, devReindexLimiter, importLimiter, graphData, graphJsonPath, rawData, router
 
 ### Community 69 - "Community 69"
 Cohesion: 0.28
 Nodes (4): app, options, swaggerSpec, prismaErrorHandler()
 
 ### Community 70 - "Community 70"
-Cohesion: 0.36
-Nodes (4): exportAuditLogs(), getAuditLogs(), prisma, router
+Cohesion: 0.24
+Nodes (6): universalSearch(), JWT_SECRET, authenticate(), authorize(), AuthRequest, router
 
 ### Community 71 - "Community 71"
 Cohesion: 0.29
@@ -233,23 +232,19 @@ Cohesion: 0.29
 Nodes (7): role, sizeValue, default, enum, type, default, type
 
 ### Community 74 - "Community 74"
-Cohesion: 0.11
-Nodes (20): 1. Prerequisites, 2. Environment Setup, 3. Launch the Application, 4. Initialize & Seed the Database (CRITICAL), 4. Initialize the Database (IMPORTANT), 5. Access the App, 6. Default Login Credentials, 7. Common Commands (+12 more)
-
-### Community 75 - "Community 75"
-Cohesion: 0.18
-Nodes (10): author, description, keywords, license, main, name, prisma, seed (+2 more)
+Cohesion: 0.09
+Nodes (26): 1. How it works:, 1. Prerequisites, 2. Environment Setup, 2. Standard Upgrade Steps:, 3. Database Backup & Restore:, 3. Launch the Application, 4. Initialize & Seed the Database (CRITICAL), 4. Initialize the Database (IMPORTANT) (+18 more)
 
 ### Community 76 - "Community 76"
-Cohesion: 0.25
-Nodes (8): prisma, bcrypt, { PrismaClient }, ensureDie(), ensureMachine(), ensureSet(), ensureUser(), main()
+Cohesion: 0.27
+Nodes (7): exportAuditLogs(), getAuditLogs(), broadcastEvent(), sseClients, prisma, keepAlive, router
 
-### Community 77 - "Community 77"
-Cohesion: 0.40
-Nodes (5): scripts, build, dev, start, test
+### Community 78 - "Community 78"
+Cohesion: 0.48
+Nodes (5): fetchDies(), handleDelete(), handleImport(), handleSubmit(), resetForm()
 
 ## Knowledge Gaps
-- **253 isolated node(s):** `name`, `version`, `description`, `main`, `dev` (+248 more)
+- **260 isolated node(s):** `name`, `version`, `description`, `main`, `dev` (+255 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -257,16 +252,16 @@ Nodes (5): scripts, build, dev, start, test
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `LoginPage()` connect `Community 1` to `Community 3`?**
-  _High betweenness centrality (0.016) - this node is a cross-community bridge._
+  _High betweenness centrality (0.015) - this node is a cross-community bridge._
 - **Why does `handleSubmit()` connect `Community 3` to `Community 1`?**
-  _High betweenness centrality (0.016) - this node is a cross-community bridge._
+  _High betweenness centrality (0.015) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `description` to the rest of the system?**
-  _253 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _260 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.05827505827505827 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06559356136820925 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**
   _Cohesion score 0.0855614973262032 - nodes in this community are weakly interconnected._
 - **Should `Community 4` be split into smaller, more focused modules?**
-  _Cohesion score 0.10526315789473684 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.058823529411764705 - nodes in this community are weakly interconnected._
 - **Should `Community 5` be split into smaller, more focused modules?**
   _Cohesion score 0.06896551724137931 - nodes in this community are weakly interconnected._

@@ -532,3 +532,294 @@ export const getImportTemplate = async (req: Request, res: Response, next: NextF
     next(error);
   }
 };
+
+export const importDiesPreview = async (req: Request, res: Response, next: NextFunction) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+
+  try {
+    const workbook = xlsx.read(req.file.buffer, { type: 'buffer' });
+    const sheetName = workbook.SheetNames[0];
+    const sheet = workbook.Sheets[sheetName];
+    const data = xlsx.utils.sheet_to_json(sheet) as any[];
+
+    if (data.length > 5000) {
+      return res.status(400).json({ error: 'Import file is too large. Please limit imports to 5,000 rows or fewer.' });
+    }
+
+    // Pre-fetch all existing Sets to map setName -> id in-memory
+    const allSets = await prisma.set.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+    const setMap = new Map<string, string>();
+    for (const set of allSets) {
+      setMap.set(set.name.trim(), set.id);
+    }
+
+    const previewRows: Array<{
+      key: number;
+      dieId: string;
+      size: string;
+      casing: string;
+      details: string;
+      setName: string;
+      errors: {
+        dieId: string | null;
+        size: string | null;
+        casing: string | null;
+      };
+      warnings: {
+        setName: string | null;
+      };
+    }> = [];
+
+    for (let i = 0; i < data.length; i++) {
+      const row = data[i];
+      const dieId = row['Die ID']?.toString().trim() || '';
+      const size = row['Size']?.toString().trim() || '';
+      const casing = row['Casing']?.toString().trim() || '';
+      const details = row['Details']?.toString().trim() || '';
+      const setName = row['Set Name']?.toString().trim() || '';
+
+      // Skip completely empty row
+      if (!dieId && !size && !casing && !details && !setName) {
+        continue;
+      }
+
+      const formattedSize = size ? formatSizeString(size) : '';
+      const sizeValue = formattedSize ? parseSizeToFloat(formattedSize) : 0;
+
+      const dieIdError = !dieId 
+        ? 'Die ID is required' 
+        : (!/^[a-zA-Z0-9-_\s]+$/.test(dieId) ? 'Die ID contains invalid characters' : null);
+      const sizeError = !size 
+        ? 'Size is required' 
+        : (sizeValue <= 0 ? 'Invalid size dimensions' : null);
+      const casingError = !casing 
+        ? 'Casing is required' 
+        : (casing.length < 2 ? 'Casing must be at least 2 characters' : null);
+
+      const setNameWarning = (setName && !setMap.has(setName.trim())) 
+        ? `Set Name "${setName}" does not match any existing database set` 
+        : null;
+
+      previewRows.push({
+        key: i,
+        dieId,
+        size,
+        casing,
+        details,
+        setName,
+        errors: {
+          dieId: dieIdError,
+          size: sizeError,
+          casing: casingError
+        },
+        warnings: {
+          setName: setNameWarning
+        }
+      });
+    }
+
+    res.json({ rows: previewRows });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const importDiesConfirm = async (req: Request, res: Response, next: NextFunction) => {
+  const { rows } = req.body;
+  
+  if (!rows || !Array.isArray(rows)) {
+    return res.status(400).json({ error: 'Invalid or empty rows data provided' });
+  }
+
+  try {
+    let successCount = 0;
+    let skipCount = 0;
+    let errorCount = 0;
+
+    // Pre-fetch all existing Sets to map setName -> id in-memory
+    const allSets = await prisma.set.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+    const setMap = new Map<string, string>();
+    for (const set of allSets) {
+      setMap.set(set.name.trim(), set.id);
+    }
+
+    const rowsToProcess: Array<{
+      dieId: string;
+      size: string;
+      sizeValue: number;
+      casing: string;
+      details: string | null;
+      setId: string | null;
+    }> = [];
+
+    const warnings: Array<{ row: number; dieId: string; reason: string }> = [];
+
+    for (let i = 0; i < rows.length; i++) {
+      const row = rows[i];
+      const rowIndex = row.key !== undefined ? row.key + 2 : i + 2;
+
+      const dieId = row.dieId?.toString().trim();
+      const size = row.size?.toString().trim();
+      const casing = row.casing?.toString().trim();
+      const details = row.details?.toString().trim() || null;
+      const setName = row.setName?.toString().trim();
+
+      // Completely empty row, can be safely ignored
+      if (!dieId && !size && !casing) {
+        skipCount++;
+        continue;
+      }
+
+      if (!dieId) {
+        warnings.push({ row: rowIndex, dieId: 'Unknown', reason: 'Missing required "Die ID" column' });
+        skipCount++;
+        continue;
+      }
+      if (!size) {
+        warnings.push({ row: rowIndex, dieId, reason: 'Missing required "Size" column' });
+        skipCount++;
+        continue;
+      }
+      if (!casing) {
+        warnings.push({ row: rowIndex, dieId, reason: 'Missing required "Casing" column' });
+        skipCount++;
+        continue;
+      }
+
+      const formattedSize = formatSizeString(size);
+      const sizeValue = parseSizeToFloat(formattedSize);
+      
+      if (sizeValue <= 0) {
+        warnings.push({ row: rowIndex, dieId, reason: `Invalid size value "${size}" (could not parse dimensions)` });
+        skipCount++;
+        continue;
+      }
+
+      let setId: string | null = null;
+      if (setName) {
+        const matchedSetId = setMap.get(setName);
+        if (matchedSetId) {
+          setId = matchedSetId;
+        } else {
+          warnings.push({
+            row: rowIndex,
+            dieId,
+            reason: `Set Name "${setName}" does not match any existing database set (imported as Unassigned)`
+          });
+        }
+      }
+
+      rowsToProcess.push({
+        dieId,
+        size: formattedSize,
+        sizeValue,
+        casing,
+        details,
+        setId,
+      });
+    }
+
+    // Map memory records to Prisma operations
+    const operations = rowsToProcess.map(row => {
+      const updateData: any = {
+        size: row.size,
+        sizeValue: row.sizeValue,
+        casing: row.casing,
+        details: row.details,
+      };
+      if (row.setId) {
+        updateData.setId = row.setId;
+      } else {
+        updateData.setId = null;
+      }
+
+      return prisma.die.upsert({
+        where: { dieId: row.dieId },
+        update: updateData,
+        create: {
+          dieId: row.dieId,
+          size: row.size,
+          sizeValue: row.sizeValue,
+          casing: row.casing,
+          details: row.details,
+          setId: row.setId,
+        },
+      });
+    });
+
+    if (operations.length > 0) {
+      try {
+        await prisma.$transaction(operations);
+        successCount = operations.length;
+      } catch (transactionErr) {
+        console.warn('Bulk import transaction failed. Falling back to individual processing:', transactionErr);
+        for (const row of rowsToProcess) {
+          try {
+            const updateData: any = {
+              size: row.size,
+              sizeValue: row.sizeValue,
+              casing: row.casing,
+              details: row.details,
+            };
+            if (row.setId) {
+              updateData.setId = row.setId;
+            } else {
+              updateData.setId = null;
+            }
+
+            await prisma.die.upsert({
+              where: { dieId: row.dieId },
+              update: updateData,
+              create: {
+                dieId: row.dieId,
+                size: row.size,
+                sizeValue: row.sizeValue,
+                casing: row.casing,
+                details: row.details,
+                setId: row.setId,
+              },
+            });
+            successCount++;
+          } catch (individualErr) {
+            console.error(`Error importing die ${row.dieId}:`, individualErr);
+            errorCount++;
+          }
+        }
+      }
+    }
+
+    const user = (req as any).user;
+    if (user) {
+      await logAction(
+        user.id,
+        user.username,
+        'IMPORT_DIES',
+        'Excel Ingest',
+        `Bulk imported ${successCount} dies via Pre-upload grid (skipped ${skipCount}, errors ${errorCount})`,
+        req
+      );
+    }
+
+    res.json({
+      message: warnings.length > 0 ? 'Import completed with warnings' : 'Import completed successfully',
+      successCount,
+      skipCount,
+      errorCount,
+      warnings,
+    });
+  } catch (error) {
+    next(error);
+  }
+};

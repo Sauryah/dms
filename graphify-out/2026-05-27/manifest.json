@@ -45,14 +45,14 @@
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/backend/src/controllers/dieController.ts": {
-    "mtime": 1779811759.4472747,
-    "ast_hash": "7502e83d894b2701957559c8b5ee2998",
+    "mtime": 1779901034.4723675,
+    "ast_hash": "8dcb3093b22a9408ca762fef2cd73403",
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/backend/src/controllers/auditController.ts": {
-    "mtime": 1779726964.0,
-    "ast_hash": "1f8e26ea39a1248ab108ba37508d7897",
-    "semantic_hash": "1f8e26ea39a1248ab108ba37508d7897"
+    "mtime": 1779901245.9250329,
+    "ast_hash": "e3ddc3c31356d9c0f1628e95bf34355f",
+    "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/backend/src/controllers/searchController.ts": {
     "mtime": 1779668026.0,
@@ -60,9 +60,9 @@
     "semantic_hash": "edd31ef9b992173fc9ce1c327b9c3594"
   },
   "/home/sahil/Desktop/Projects/dms/backend/src/routes/dieRoutes.ts": {
-    "mtime": 1779809349.0331464,
-    "ast_hash": "c0070c40bdfd24531d3c4342d62b5222",
-    "semantic_hash": "c0070c40bdfd24531d3c4342d62b5222"
+    "mtime": 1779901047.0623474,
+    "ast_hash": "8319aaf1d138b6a4b85c777be51da974",
+    "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/backend/src/routes/authRoutes.ts": {
     "mtime": 1779900126.5028036,
@@ -85,9 +85,9 @@
     "semantic_hash": "9eca2e6afa9671418c24b06b131fbafc"
   },
   "/home/sahil/Desktop/Projects/dms/backend/src/routes/auditRoutes.ts": {
-    "mtime": 1779730962.0,
-    "ast_hash": "cdb83ebb4c4f241720d6559d5905d499",
-    "semantic_hash": "cdb83ebb4c4f241720d6559d5905d499"
+    "mtime": 1779901439.1237273,
+    "ast_hash": "fcde060dcbb31a1774a47fe9630a3394",
+    "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/backend/src/routes/setRoutes.ts": {
     "mtime": 1779726942.0,
@@ -95,9 +95,9 @@
     "semantic_hash": "3e1b4693944d2d2bdbe059461773711b"
   },
   "/home/sahil/Desktop/Projects/dms/backend/src/middleware/authMiddleware.ts": {
-    "mtime": 1779730928.0,
-    "ast_hash": "e0e9bcc441cdd5fdb71a4edbb43c9130",
-    "semantic_hash": "e0e9bcc441cdd5fdb71a4edbb43c9130"
+    "mtime": 1779901481.3966606,
+    "ast_hash": "6a099f4b5cf5097dad02094ffb450ef1",
+    "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/backend/src/middleware/validationMiddleware.ts": {
     "mtime": 1779727066.0,
@@ -115,9 +115,9 @@
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/backend/src/lib/auditLogger.ts": {
-    "mtime": 1779725770.0,
-    "ast_hash": "48838ff56fbc20c3b5598cc9ac867a3a",
-    "semantic_hash": "48838ff56fbc20c3b5598cc9ac867a3a"
+    "mtime": 1779901434.852734,
+    "ast_hash": "20e2eb8c08e4fb143a941d453fb867c6",
+    "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/backend/src/lib/prisma.ts": {
     "mtime": 1779807507.070364,
@@ -265,8 +265,8 @@
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/frontend/src/pages/SettingsPage.tsx": {
-    "mtime": 1779900098.5178452,
-    "ast_hash": "0e7a43b1b685c44238a3ffe93a1fdc92",
+    "mtime": 1779901504.7956235,
+    "ast_hash": "5ae4c44c1746bf16cf001e336a26ab3d",
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/frontend/src/pages/MachineDetails.tsx": {
@@ -295,8 +295,8 @@
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/frontend/src/pages/DiesPage.tsx": {
-    "mtime": 1779900375.1404104,
-    "ast_hash": "1aad1731f3c7034e6179f6e4114e107e",
+    "mtime": 1779901092.7042754,
+    "ast_hash": "fba9f053c27d29c33d98982c0df134dd",
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/frontend/src/pages/SetsPage.tsx": {
@@ -330,8 +330,8 @@
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/GEMINI.md": {
-    "mtime": 1779813446.7497044,
-    "ast_hash": "2087d88a7c1bf1e7e54243d57bfa7067",
+    "mtime": 1779902111.5816636,
+    "ast_hash": "2542b082a34c82f8aac8516eede4261d",
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/requirements.txt": {
@@ -385,8 +385,13 @@
     "semantic_hash": "3dc1d42107f7cad8360da0bee1a23a18"
   },
   "/home/sahil/Desktop/Projects/dms/README.md": {
-    "mtime": 1779894268.5995493,
-    "ast_hash": "a9418d92267d0ce1489d5d815d37b85e",
+    "mtime": 1779900587.9490736,
+    "ast_hash": "4e5a936fde6f186bf2b983f90fbfd7de",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/walkthrough.md": {
+    "mtime": 1779901193.364116,
+    "ast_hash": "00a93c1c84de47dc06bb3eb7df67790e",
     "semantic_hash": ""
   }
 }

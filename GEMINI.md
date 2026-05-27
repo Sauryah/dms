@@ -30,7 +30,7 @@ Users can bulk-import dies using an Excel spreadsheet (`.xlsx` or `.xls`).
 The application is containerized using Docker Compose.
 *   **Frontend:** Nginx on Port 80.
 *   **Backend:** Express API on Port 5000.
-*   **Database:** SQLite stored in a persistent volume at `/app/data/prod.db`.
+*   **Database:** SQLite stored in a persistent Docker volume (`dms-db`) at `/app/data/prod.db`.
 
 **Launch Command:**
 ```bash
@@ -50,6 +50,36 @@ To access the app from other computers on the same network:
 1.  Update `.env` root file: `VITE_API_URL="http://[SERVER_IP]:5000/api"`.
 2.  Rebuild: `docker compose up -d --build`.
 3.  Access via: `http://[SERVER_IP]`.
+
+### Zero-Data-Loss Upgrades & Persistence
+When pulling codebase updates from GitHub, database data is fully protected and automatically migrated:
+1.  **Named Volume Mapping:** All production data resides inside the named volume `dms-db`. Running `git pull` or rebuilding containers leaves this volume untouched.
+2.  **Auto-Migration on Boot:** The backend container's entrypoint command runs `npx prisma migrate deploy` automatically before starting the server. This safely applies schema structural updates (such as new columns/tables) to the existing database without erasing old records.
+
+**Standard Upgrade Steps:**
+```bash
+# Pull newest changes
+git pull
+
+# Rebuild and restart the container stack
+docker compose up -d --build
+```
+
+### Manual Database Backup & Restore
+For safety, operators should periodically back up their database file:
+
+*   **Export (Backup):** Copies the live database from the running container to the host computer:
+    ```bash
+    docker cp dms-backend:/app/data/prod.db ./prod_backup_$(date +%F).db
+    ```
+*   **Import (Restore):** Copies a saved backup file back into the container:
+    ```bash
+    # Restore the backup file
+    docker cp ./prod_backup.db dms-backend:/app/data/prod.db
+
+    # Restart the backend to load the restored database
+    docker compose restart backend
+    ```
 
 ## 4. UI/UX Standards
 *   **Hierarchy-First Navigation:** Users should primarily navigate through the **Equipment Dashboard** (Machine → Set → Die).

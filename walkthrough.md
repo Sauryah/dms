@@ -141,3 +141,27 @@ We resolved a prominent visual regression where moving the cursor over a data ro
      background: var(--white);
      ```
    * Ensures that buttons blend naturally into the telemetry tables under default states and only light up with an intense electric halo blue during explicit cursor focus or hover actions.
+
+---
+
+## 📊 Feature 1: Pre-Upload Excel Grid & Online Schema Validator
+
+We implemented a stunning, high-utility **Excel pre-upload preview grid and real-time schema validator** within the Die Inventory page, turning standard file uploading into an interactive, bulletproof verification dashboard:
+
+1. **Two-Stage Ingest Pipeline (Express Backend):**
+   * **Stage 1: Preview Endpoint (`/api/dies/import-preview`)**:
+     * Parses the uploaded spreadsheet buffer in memory using `xlsx`.
+     * Validates each cell's schema rules: check required `Die ID` alphanumeric patterns, verify positive dimensions for `Size`, check `Casing` lengths, and query existing Sets to map `Set Name` references.
+     * Returns the rows as clean JSON structures flagged with itemized cell-level `errors` and `warnings`.
+   * **Stage 2: Confirm Endpoint (`/api/dies/import-confirm`)**:
+     * Receives the user's finalized, pre-validated, and corrected JSON rows from the frontend.
+     * Commits all records to SQLite in a high-performance database transaction, safely falling back to single-record upserts if lock collisions are detected.
+
+2. **Spreadsheet-tier Interactive Telemetry Grid (React Frontend):**
+   * Redesigned the import modal in [DiesPage.tsx](file:///home/sahil/Desktop/Projects/dms/frontend/src/pages/DiesPage.tsx) to smoothly expand from `540px` to `1000px` using premium bezier transitions when previewing data.
+   * Renders parsed rows in a fully editable, borderless spreadsheet-like table where operators can modify cell values (`Die ID`, `Size`, `Casing`, `Details`, `Set Name`) directly inside the modal grid.
+   * **On-the-Fly Dynamic Validation**: Updates to any input cell instantly recalculate cell errors client-side.
+     * If a cell contains an error, the input background glows with a translucent danger red and shows inline warning text.
+     * If `Set Name` is unrecognized, it renders with an amber highlight warning the operator that it will be imported as *Unassigned*.
+     * Renders visual status badges for each row: `Valid` (Green), `Warning` (Amber), and `Error` (Red).
+     * The `Confirm and Import` action remains securely disabled until all red validation errors are completely resolved by the operator.

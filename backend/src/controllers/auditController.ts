@@ -7,14 +7,29 @@ import { logAction } from '../lib/auditLogger';
  * sorted by creation timestamp descending.
  */
 export const getAuditLogs = async (req: Request, res: Response, next: NextFunction) => {
+  const page = parseInt(req.query.page as string) || 1;
+  const limit = parseInt(req.query.limit as string) || 50;
+  const skip = (page - 1) * limit;
+
   try {
-    const logs = await prisma.auditLog.findMany({
-      orderBy: {
-        createdAt: 'desc',
-      },
-      take: 50,
+    const [logs, totalCount] = await Promise.all([
+      prisma.auditLog.findMany({
+        orderBy: {
+          createdAt: 'desc',
+        },
+        skip,
+        take: limit,
+      }),
+      prisma.auditLog.count(),
+    ]);
+
+    res.json({
+      logs,
+      totalCount,
+      page,
+      limit,
+      totalPages: Math.ceil(totalCount / limit),
     });
-    res.json(logs);
   } catch (error) {
     next(error);
   }

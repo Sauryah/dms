@@ -1,13 +1,22 @@
+import { Response } from 'express';
 import prisma from './prisma';
+
+export const sseClients = new Set<Response>();
+
+export const broadcastEvent = (eventData: any) => {
+  const payload = `data: ${JSON.stringify(eventData)}\n\n`;
+  sseClients.forEach(client => {
+    try {
+      client.write(payload);
+    } catch (err) {
+      console.error('Failed to write to SSE client, removing:', err);
+      sseClients.delete(client);
+    }
+  });
+};
 
 /**
  * Utility helper to record an action to the database audit log table asynchronously.
- * 
- * @param actorId - The ID of the authenticated user who initiated the action.
- * @param actorName - The username of the user.
- * @param action - Action tag identifier (e.g., "CREATE_MACHINE", "ASSIGN_SET").
- * @param target - Name or identifier of the impacted asset (e.g., "Machine #101").
- * @param details - Human-readable descriptive details of the event.
  */
 export const logAction = async (
   actorId: string,
@@ -25,7 +34,7 @@ export const logAction = async (
       ? req.headers['user-agent'] 
       : null;
 
-    await prisma.auditLog.create({
+    const log = await prisma.auditLog.create({
       data: {
         actorId,
         actorName,
@@ -36,6 +45,9 @@ export const logAction = async (
         userAgent: userAgent ? String(userAgent) : null,
       },
     });
+
+    // Broadcast the new audit log in real time to all streaming subscribers!
+    broadcastEvent({ type: 'audit_log', data: log });
   } catch (err) {
     console.error('Failed to write audit log entry:', err);
   }

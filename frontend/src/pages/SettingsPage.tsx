@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
-import { User, LogOut, Shield, Plus, X, Lock, Users, Trash2, Settings, FileText, Download, RefreshCw, Eye, Search } from 'lucide-react';
+import { User, LogOut, Shield, Plus, X, Lock, Users, Trash2, Settings, FileText, Download, RefreshCw, Eye, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import SegmentedControl from '../components/SegmentedControl';
 import Skeleton from '../components/Skeleton';
 
@@ -12,7 +12,7 @@ interface UserInfo {
 }
 
 const SettingsPage: React.FC = () => {
-  const { user, logout } = useAuth();
+  const { user, token, logout } = useAuth();
   const [usersList, setUsersList] = useState<UserInfo[]>([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -30,6 +30,11 @@ const SettingsPage: React.FC = () => {
   const [exporting, setExporting] = useState(false);
   const [logSearch, setLogSearch] = useState('');
   const [selectedLog, setSelectedLog] = useState<any | null>(null);
+
+  // Audit Logs Pagination States
+  const [logsPage, setLogsPage] = useState(1);
+  const [logsTotalCount, setLogsTotalCount] = useState(0);
+  const [logsTotalPages, setLogsTotalPages] = useState(1);
 
   // Password Change States
   const [pwdLoading, setPwdLoading] = useState(false);
@@ -66,8 +71,10 @@ const SettingsPage: React.FC = () => {
     if (!isAdmin) return;
     try {
       setLogsLoading(true);
-      const response = await api.get('/audit-logs');
-      setAuditLogs(response.data);
+      const response = await api.get(`/audit-logs?page=${logsPage}&limit=15`);
+      setAuditLogs(response.data.logs);
+      setLogsTotalCount(response.data.totalCount);
+      setLogsTotalPages(response.data.totalPages);
     } catch (err) {
       console.error('Failed to fetch audit logs', err);
     } finally {
@@ -77,10 +84,74 @@ const SettingsPage: React.FC = () => {
 
   useEffect(() => {
     if (isAdmin) {
-      fetchUsers();
       fetchAuditLogs();
     }
+  }, [isAdmin, logsPage]);
+
+  useEffect(() => {
+    if (isAdmin) {
+      fetchUsers();
+    }
   }, [isAdmin]);
+
+  // Real-time EventSource connection for streaming audit log telemetry
+  useEffect(() => {
+    if (!isAdmin || !token || activeTab !== 'audit') return;
+
+    const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+    const streamUrl = `${apiBase}/audit-logs/stream?token=${encodeURIComponent(token)}`;
+    let eventSource: EventSource;
+
+    const connectSSE = () => {
+      console.log('Establishing connection to real-time audit logs SSE stream...');
+      eventSource = new EventSource(streamUrl);
+
+      eventSource.onmessage = (event) => {
+        try {
+          if (!event.data) return; // Ignore pings/heartbeats
+          const logPayload = JSON.parse(event.data);
+          
+          if (logPayload && logPayload.id) {
+            setAuditLogs((prev) => {
+              // De-duplicate incoming logs
+              if (prev.some((log) => log.id === logPayload.id)) return prev;
+
+              // Only prepend to page 1 to preserve layout
+              if (logsPage === 1) {
+                const nextLogs = [logPayload, ...prev];
+                return nextLogs.slice(0, 15); // limit to current grid page size
+              }
+              return prev;
+            });
+            setLogsTotalCount((prev) => prev + 1);
+          }
+        } catch (err) {
+          console.error('Failed parsing real-time SSE stream log payload:', err);
+        }
+      };
+
+      eventSource.onerror = (err) => {
+        console.warn('Real-time audit log stream disconnected or failed. Retrying in 5 seconds...', err);
+        eventSource.close();
+        
+        // Reconnection logic with linear backoff
+        setTimeout(() => {
+          if (isAdmin && token && activeTab === 'audit') {
+            connectSSE();
+          }
+        }, 5000);
+      };
+    };
+
+    connectSSE();
+
+    return () => {
+      if (eventSource) {
+        console.log('Cleaning up SSE stream connection');
+        eventSource.close();
+      }
+    };
+  }, [isAdmin, token, activeTab, logsPage]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -542,6 +613,35 @@ const SettingsPage: React.FC = () => {
               </tbody>
             </table>
           </div>
+
+          {/* Scale-Safe Audit Log Pagination Controls */}
+          {logsTotalPages > 1 && (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '1.25rem', borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
+              <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 500 }}>
+                Showing page <strong>{logsPage}</strong> of <strong>{logsTotalPages}</strong> ({logsTotalCount} total logs)
+              </span>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button 
+                  type="button"
+                  className="btn btn-secondary" 
+                  disabled={logsPage === 1} 
+                  onClick={() => setLogsPage(prev => Math.max(1, prev - 1))}
+                  style={{ padding: '0.35rem 0.75rem', height: '2rem', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                >
+                  <ChevronLeft size={14} /> Previous
+                </button>
+                <button 
+                  type="button"
+                  className="btn btn-secondary" 
+                  disabled={logsPage === logsTotalPages} 
+                  onClick={() => setLogsPage(prev => Math.min(logsTotalPages, prev + 1))}
+                  style={{ padding: '0.35rem 0.75rem', height: '2rem', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                >
+                  Next <ChevronRight size={14} />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

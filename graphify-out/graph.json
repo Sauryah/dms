@@ -18,7 +18,7 @@
       "source_file": "backend/package.json",
       "source_location": "L1",
       "id": "backend_package_json",
-      "community": 75,
+      "community": 4,
       "norm_label": "package.json"
     },
     {
@@ -27,7 +27,7 @@
       "source_file": "backend/package.json",
       "source_location": "L2",
       "id": "backend_package_name",
-      "community": 75,
+      "community": 4,
       "norm_label": "name"
     },
     {
@@ -36,7 +36,7 @@
       "source_file": "backend/package.json",
       "source_location": "L3",
       "id": "backend_package_version",
-      "community": 75,
+      "community": 4,
       "norm_label": "version"
     },
     {
@@ -45,7 +45,7 @@
       "source_file": "backend/package.json",
       "source_location": "L4",
       "id": "backend_package_description",
-      "community": 75,
+      "community": 4,
       "norm_label": "description"
     },
     {
@@ -54,7 +54,7 @@
       "source_file": "backend/package.json",
       "source_location": "L5",
       "id": "backend_package_main",
-      "community": 75,
+      "community": 4,
       "norm_label": "main"
     },
     {
@@ -63,7 +63,7 @@
       "source_file": "backend/package.json",
       "source_location": "L6",
       "id": "backend_package_scripts",
-      "community": 77,
+      "community": 4,
       "norm_label": "scripts"
     },
     {
@@ -72,7 +72,7 @@
       "source_file": "backend/package.json",
       "source_location": "L7",
       "id": "backend_package_scripts_dev",
-      "community": 77,
+      "community": 4,
       "norm_label": "dev"
     },
     {
@@ -81,7 +81,7 @@
       "source_file": "backend/package.json",
       "source_location": "L8",
       "id": "backend_package_scripts_build",
-      "community": 77,
+      "community": 4,
       "norm_label": "build"
     },
     {
@@ -90,7 +90,7 @@
       "source_file": "backend/package.json",
       "source_location": "L9",
       "id": "backend_package_scripts_start",
-      "community": 77,
+      "community": 4,
       "norm_label": "start"
     },
     {
@@ -99,7 +99,7 @@
       "source_file": "backend/package.json",
       "source_location": "L10",
       "id": "backend_package_scripts_test",
-      "community": 77,
+      "community": 4,
       "norm_label": "test"
     },
     {
@@ -108,7 +108,7 @@
       "source_file": "backend/package.json",
       "source_location": "L12",
       "id": "backend_package_prisma",
-      "community": 75,
+      "community": 4,
       "norm_label": "prisma"
     },
     {
@@ -117,7 +117,7 @@
       "source_file": "backend/package.json",
       "source_location": "L13",
       "id": "backend_package_prisma_seed",
-      "community": 75,
+      "community": 4,
       "norm_label": "seed"
     },
     {
@@ -126,7 +126,7 @@
       "source_file": "backend/package.json",
       "source_location": "L15",
       "id": "backend_package_keywords",
-      "community": 75,
+      "community": 4,
       "norm_label": "keywords"
     },
     {
@@ -135,7 +135,7 @@
       "source_file": "backend/package.json",
       "source_location": "L16",
       "id": "backend_package_author",
-      "community": 75,
+      "community": 4,
       "norm_label": "author"
     },
     {
@@ -144,7 +144,7 @@
       "source_file": "backend/package.json",
       "source_location": "L17",
       "id": "backend_package_license",
-      "community": 75,
+      "community": 4,
       "norm_label": "license"
     },
     {
@@ -153,7 +153,7 @@
       "source_file": "backend/package.json",
       "source_location": "L18",
       "id": "backend_package_type",
-      "community": 75,
+      "community": 4,
       "norm_label": "type"
     },
     {
@@ -922,12 +922,30 @@
       "norm_label": "getimporttemplate()"
     },
     {
+      "label": "importDiesPreview()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/dieController.ts",
+      "source_location": "L536",
+      "id": "controllers_diecontroller_importdiespreview",
+      "community": 0,
+      "norm_label": "importdiespreview()"
+    },
+    {
+      "label": "importDiesConfirm()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/dieController.ts",
+      "source_location": "L634",
+      "id": "controllers_diecontroller_importdiesconfirm",
+      "community": 0,
+      "norm_label": "importdiesconfirm()"
+    },
+    {
       "label": "auditController.ts",
       "file_type": "code",
       "source_file": "backend/src/controllers/auditController.ts",
       "source_location": "L1",
       "id": "backend_src_controllers_auditcontroller_ts",
-      "community": 70,
+      "community": 76,
       "norm_label": "auditcontroller.ts"
     },
     {
@@ -936,16 +954,16 @@
       "source_file": "backend/src/controllers/auditController.ts",
       "source_location": "L9",
       "id": "controllers_auditcontroller_getauditlogs",
-      "community": 70,
+      "community": 76,
       "norm_label": "getauditlogs()"
     },
     {
       "label": "exportAuditLogs()",
       "file_type": "code",
       "source_file": "backend/src/controllers/auditController.ts",
-      "source_location": "L26",
+      "source_location": "L41",
       "id": "controllers_auditcontroller_exportauditlogs",
-      "community": 70,
+      "community": 76,
       "norm_label": "exportauditlogs()"
     },
     {
@@ -954,7 +972,7 @@
       "source_file": "backend/src/controllers/searchController.ts",
       "source_location": "L1",
       "id": "backend_src_controllers_searchcontroller_ts",
-      "community": 68,
+      "community": 70,
       "norm_label": "searchcontroller.ts"
     },
     {
@@ -963,7 +981,7 @@
       "source_file": "backend/src/controllers/searchController.ts",
       "source_location": "L11",
       "id": "controllers_searchcontroller_universalsearch",
-      "community": 68,
+      "community": 70,
       "norm_label": "universalsearch()"
     },
     {
@@ -979,7 +997,7 @@
       "label": "router",
       "file_type": "code",
       "source_file": "backend/src/routes/dieRoutes.ts",
-      "source_location": "L17",
+      "source_location": "L19",
       "id": "routes_dieroutes_router",
       "community": 0,
       "norm_label": "router"
@@ -988,7 +1006,7 @@
       "label": "upload",
       "file_type": "code",
       "source_file": "backend/src/routes/dieRoutes.ts",
-      "source_location": "L18",
+      "source_location": "L20",
       "id": "routes_dieroutes_upload",
       "community": 0,
       "norm_label": "upload"
@@ -1017,7 +1035,7 @@
       "source_file": "backend/src/routes/searchRoutes.ts",
       "source_location": "L1",
       "id": "backend_src_routes_searchroutes_ts",
-      "community": 68,
+      "community": 70,
       "norm_label": "searchroutes.ts"
     },
     {
@@ -1026,7 +1044,7 @@
       "source_file": "backend/src/routes/searchRoutes.ts",
       "source_location": "L5",
       "id": "routes_searchroutes_router",
-      "community": 68,
+      "community": 70,
       "norm_label": "router"
     },
     {
@@ -1098,17 +1116,26 @@
       "source_file": "backend/src/routes/auditRoutes.ts",
       "source_location": "L1",
       "id": "backend_src_routes_auditroutes_ts",
-      "community": 70,
+      "community": 76,
       "norm_label": "auditroutes.ts"
     },
     {
       "label": "router",
       "file_type": "code",
       "source_file": "backend/src/routes/auditRoutes.ts",
-      "source_location": "L5",
+      "source_location": "L6",
       "id": "routes_auditroutes_router",
-      "community": 70,
+      "community": 76,
       "norm_label": "router"
+    },
+    {
+      "label": "keepAlive",
+      "file_type": "code",
+      "source_file": "backend/src/routes/auditRoutes.ts",
+      "source_location": "L20",
+      "id": "routes_auditroutes_keepalive",
+      "community": 76,
+      "norm_label": "keepalive"
     },
     {
       "label": "setRoutes.ts",
@@ -1134,7 +1161,7 @@
       "source_file": "backend/src/middleware/authMiddleware.ts",
       "source_location": "L1",
       "id": "backend_src_middleware_authmiddleware_ts",
-      "community": 68,
+      "community": 70,
       "norm_label": "authmiddleware.ts"
     },
     {
@@ -1143,7 +1170,7 @@
       "source_file": "backend/src/middleware/authMiddleware.ts",
       "source_location": "L5",
       "id": "middleware_authmiddleware_authrequest",
-      "community": 68,
+      "community": 70,
       "norm_label": "authrequest"
     },
     {
@@ -1152,16 +1179,16 @@
       "source_file": "backend/src/middleware/authMiddleware.ts",
       "source_location": "L13",
       "id": "middleware_authmiddleware_authenticate",
-      "community": 68,
+      "community": 70,
       "norm_label": "authenticate()"
     },
     {
       "label": "authorize()",
       "file_type": "code",
       "source_file": "backend/src/middleware/authMiddleware.ts",
-      "source_location": "L29",
+      "source_location": "L34",
       "id": "middleware_authmiddleware_authorize",
-      "community": 68,
+      "community": 70,
       "norm_label": "authorize()"
     },
     {
@@ -1278,14 +1305,32 @@
       "source_file": "backend/src/lib/auditLogger.ts",
       "source_location": "L1",
       "id": "backend_src_lib_auditlogger_ts",
-      "community": 70,
+      "community": 76,
       "norm_label": "auditlogger.ts"
+    },
+    {
+      "label": "sseClients",
+      "file_type": "code",
+      "source_file": "backend/src/lib/auditLogger.ts",
+      "source_location": "L4",
+      "id": "lib_auditlogger_sseclients",
+      "community": 76,
+      "norm_label": "sseclients"
+    },
+    {
+      "label": "broadcastEvent()",
+      "file_type": "code",
+      "source_file": "backend/src/lib/auditLogger.ts",
+      "source_location": "L6",
+      "id": "lib_auditlogger_broadcastevent",
+      "community": 76,
+      "norm_label": "broadcastevent()"
     },
     {
       "label": "logAction()",
       "file_type": "code",
       "source_file": "backend/src/lib/auditLogger.ts",
-      "source_location": "L12",
+      "source_location": "L21",
       "id": "lib_auditlogger_logaction",
       "community": 67,
       "norm_label": "logaction()"
@@ -1296,7 +1341,7 @@
       "source_file": "backend/src/lib/prisma.ts",
       "source_location": "L1",
       "id": "backend_src_lib_prisma_ts",
-      "community": 70,
+      "community": 76,
       "norm_label": "prisma.ts"
     },
     {
@@ -1305,7 +1350,7 @@
       "source_file": "backend/src/lib/prisma.ts",
       "source_location": "L6",
       "id": "lib_prisma_prisma",
-      "community": 70,
+      "community": 76,
       "norm_label": "prisma"
     },
     {
@@ -1314,7 +1359,7 @@
       "source_file": "backend/src/lib/config.ts",
       "source_location": "L1",
       "id": "backend_src_lib_config_ts",
-      "community": 62,
+      "community": 70,
       "norm_label": "config.ts"
     },
     {
@@ -1323,7 +1368,7 @@
       "source_file": "backend/src/lib/config.ts",
       "source_location": "L1",
       "id": "lib_config_getrequiredenv",
-      "community": 62,
+      "community": 70,
       "norm_label": "getrequiredenv()"
     },
     {
@@ -1332,7 +1377,7 @@
       "source_file": "backend/src/lib/config.ts",
       "source_location": "L11",
       "id": "lib_config_jwt_secret",
-      "community": 62,
+      "community": 70,
       "norm_label": "jwt_secret"
     },
     {
@@ -1548,7 +1593,7 @@
       "source_file": "backend/prisma/seed.js",
       "source_location": "L1",
       "id": "backend_prisma_seed_js",
-      "community": 76,
+      "community": 6,
       "norm_label": "seed.js"
     },
     {
@@ -1557,7 +1602,7 @@
       "source_file": "backend/prisma/seed.js",
       "source_location": "L1",
       "id": "prisma_seed_prismaclient",
-      "community": 76,
+      "community": 6,
       "norm_label": "{ prismaclient }"
     },
     {
@@ -1566,7 +1611,7 @@
       "source_file": "backend/prisma/seed.js",
       "source_location": "L2",
       "id": "prisma_seed_bcrypt",
-      "community": 76,
+      "community": 6,
       "norm_label": "bcrypt"
     },
     {
@@ -1575,7 +1620,7 @@
       "source_file": "backend/prisma/seed.js",
       "source_location": "L3",
       "id": "backend_prisma_seed_js_prisma_seed_prisma",
-      "community": 76,
+      "community": 6,
       "norm_label": "prisma"
     },
     {
@@ -1584,7 +1629,7 @@
       "source_file": "backend/prisma/seed.js",
       "source_location": "L4",
       "id": "backend_prisma_seed_js_prisma_seed_main",
-      "community": 76,
+      "community": 6,
       "norm_label": "main()"
     },
     {
@@ -3865,10 +3910,55 @@
       "norm_label": "lan access (remote computers)"
     },
     {
-      "label": "4. UI/UX Standards",
+      "label": "Zero-Data-Loss Upgrades & Persistence",
       "file_type": "document",
       "source_file": "GEMINI.md",
       "source_location": "L54",
+      "id": "dms_gemini_zero_data_loss_upgrades_persistence",
+      "community": 16,
+      "norm_label": "zero-data-loss upgrades & persistence"
+    },
+    {
+      "label": "code:bash (# Pull newest changes)",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": "L60",
+      "id": "dms_gemini_codeblock_3",
+      "community": 16,
+      "norm_label": "code:bash (# pull newest changes)"
+    },
+    {
+      "label": "Manual Database Backup & Restore",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": "L68",
+      "id": "dms_gemini_manual_database_backup_restore",
+      "community": 16,
+      "norm_label": "manual database backup & restore"
+    },
+    {
+      "label": "code:bash (docker cp dms-backend:/app/data/prod.db ./prod_backup_$(date)",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": "L72",
+      "id": "dms_gemini_codeblock_4",
+      "community": 16,
+      "norm_label": "code:bash (docker cp dms-backend:/app/data/prod.db ./prod_backup_$(date)"
+    },
+    {
+      "label": "code:bash (# Restore the backup file)",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": "L76",
+      "id": "dms_gemini_codeblock_5",
+      "community": 16,
+      "norm_label": "code:bash (# restore the backup file)"
+    },
+    {
+      "label": "4. UI/UX Standards",
+      "file_type": "document",
+      "source_file": "GEMINI.md",
+      "source_location": "L84",
       "id": "dms_gemini_4_ui_ux_standards",
       "community": 16,
       "norm_label": "4. ui/ux standards"
@@ -3877,7 +3967,7 @@
       "label": "5. Development Maintenance",
       "file_type": "document",
       "source_file": "GEMINI.md",
-      "source_location": "L59",
+      "source_location": "L89",
       "id": "dms_gemini_5_development_maintenance",
       "community": 16,
       "norm_label": "5. development maintenance"
@@ -3886,7 +3976,7 @@
       "label": "6. Developer Experience (DX)",
       "file_type": "document",
       "source_file": "GEMINI.md",
-      "source_location": "L63",
+      "source_location": "L93",
       "id": "dms_gemini_6_developer_experience_dx",
       "community": 16,
       "norm_label": "6. developer experience (dx)"
@@ -3895,7 +3985,7 @@
       "label": "API Documentation",
       "file_type": "document",
       "source_file": "GEMINI.md",
-      "source_location": "L65",
+      "source_location": "L95",
       "id": "dms_gemini_api_documentation",
       "community": 16,
       "norm_label": "api documentation"
@@ -3904,7 +3994,7 @@
       "label": "Schema Visualization",
       "file_type": "document",
       "source_file": "GEMINI.md",
-      "source_location": "L70",
+      "source_location": "L100",
       "id": "dms_gemini_schema_visualization",
       "community": 16,
       "norm_label": "schema visualization"
@@ -3913,7 +4003,7 @@
       "label": "Knowledge Graph",
       "file_type": "document",
       "source_file": "GEMINI.md",
-      "source_location": "L75",
+      "source_location": "L105",
       "id": "dms_gemini_knowledge_graph",
       "community": 16,
       "norm_label": "knowledge graph"
@@ -4036,10 +4126,73 @@
       "norm_label": "\ud83d\udee0 common commands"
     },
     {
-      "label": "\ud83c\udf10 LAN Access (Optional)",
+      "label": "\ud83d\udd04 Zero-Data-Loss Upgrades & Database Backups",
       "file_type": "document",
       "source_file": "README.md",
       "source_location": "L71",
+      "id": "dms_readme_zero_data_loss_upgrades_database_backups",
+      "community": 74,
+      "norm_label": "\ud83d\udd04 zero-data-loss upgrades & database backups"
+    },
+    {
+      "label": "1. How it works:",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L75",
+      "id": "dms_readme_1_how_it_works",
+      "community": 74,
+      "norm_label": "1. how it works:"
+    },
+    {
+      "label": "2. Standard Upgrade Steps:",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L79",
+      "id": "dms_readme_2_standard_upgrade_steps",
+      "community": 74,
+      "norm_label": "2. standard upgrade steps:"
+    },
+    {
+      "label": "code:bash (# Pull new changes)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L81",
+      "id": "dms_readme_codeblock_4",
+      "community": 74,
+      "norm_label": "code:bash (# pull new changes)"
+    },
+    {
+      "label": "3. Database Backup & Restore:",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L89",
+      "id": "dms_readme_3_database_backup_restore",
+      "community": 74,
+      "norm_label": "3. database backup & restore:"
+    },
+    {
+      "label": "code:bash (docker cp dms-backend:/app/data/prod.db ./prod_backup_$(date)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L93",
+      "id": "dms_readme_codeblock_5",
+      "community": 74,
+      "norm_label": "code:bash (docker cp dms-backend:/app/data/prod.db ./prod_backup_$(date)"
+    },
+    {
+      "label": "code:bash (# Restore the backup file back into the container)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L97",
+      "id": "dms_readme_codeblock_6",
+      "community": 74,
+      "norm_label": "code:bash (# restore the backup file back into the container)"
+    },
+    {
+      "label": "\ud83c\udf10 LAN Access (Optional)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L106",
       "id": "dms_readme_lan_access_optional",
       "community": 74,
       "norm_label": "\ud83c\udf10 lan access (optional)"
@@ -4048,7 +4201,7 @@
       "label": "\ud83c\udfa8 Premium Upgrades & Feature Walkthrough",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L79",
+      "source_location": "L114",
       "id": "dms_readme_premium_upgrades_feature_walkthrough",
       "community": 74,
       "norm_label": "\ud83c\udfa8 premium upgrades & feature walkthrough"
@@ -4234,6 +4387,15 @@
       "norm_label": "code:css (background: var(--white);)"
     },
     {
+      "label": "\ud83d\udcca Feature 1: Pre-Upload Excel Grid & Online Schema Validator",
+      "file_type": "document",
+      "source_file": "walkthrough.md",
+      "source_location": "L147",
+      "id": "dms_walkthrough_feature_1_pre_upload_excel_grid_online_schema_validator",
+      "community": 66,
+      "norm_label": "\ud83d\udcca feature 1: pre-upload excel grid & online schema validator"
+    },
+    {
       "label": "README.md",
       "file_type": "document",
       "source_file": "frontend/README.md",
@@ -4322,15 +4484,6 @@
       "community": 74,
       "norm_label": "4. initialize the database (important)",
       "id": "dms_readme_4_initialize_the_database_important"
-    },
-    {
-      "label": "code:bash (# This creates the default 'admin' and 'viewer' accounts)",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": "L49",
-      "community": 74,
-      "norm_label": "code:bash (# this creates the default 'admin' and 'viewer' accounts)",
-      "id": "dms_readme_codeblock_4"
     },
     {
       "label": "5. Access the App",
@@ -4571,7 +4724,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/backend/prisma/seed.ts",
       "source_location": "L64",
-      "community": 76,
+      "community": 6,
       "norm_label": "main()",
       "id": "seed_main"
     },
@@ -4580,7 +4733,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/backend/prisma/seed.ts",
       "source_location": "L1",
-      "community": 76,
+      "community": 6,
       "norm_label": "seed.ts",
       "id": "d_project_mmmmm_backend_prisma_seed_ts"
     },
@@ -4589,7 +4742,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/backend/prisma/seed.ts",
       "source_location": "L11",
-      "community": 76,
+      "community": 6,
       "norm_label": "ensureuser()",
       "id": "seed_ensureuser"
     },
@@ -4598,7 +4751,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/backend/prisma/seed.ts",
       "source_location": "L25",
-      "community": 76,
+      "community": 6,
       "norm_label": "ensuredie()",
       "id": "seed_ensuredie"
     },
@@ -4607,7 +4760,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/backend/prisma/seed.ts",
       "source_location": "L34",
-      "community": 76,
+      "community": 6,
       "norm_label": "ensureset()",
       "id": "seed_ensureset"
     },
@@ -4616,7 +4769,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/backend/prisma/seed.ts",
       "source_location": "L49",
-      "community": 76,
+      "community": 6,
       "norm_label": "ensuremachine()",
       "id": "seed_ensuremachine"
     },
@@ -5453,7 +5606,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L1",
-      "community": 1,
+      "community": 78,
       "norm_label": "diespage.tsx",
       "id": "d_project_mmmmm_frontend_src_pages_diespage_tsx"
     },
@@ -5462,7 +5615,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L34",
-      "community": 1,
+      "community": 78,
       "norm_label": "fetchdies()",
       "id": "diespage_fetchdies"
     },
@@ -5471,7 +5624,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L50",
-      "community": 1,
+      "community": 78,
       "norm_label": "handlesubmit()",
       "id": "diespage_handlesubmit"
     },
@@ -5480,7 +5633,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L66",
-      "community": 1,
+      "community": 78,
       "norm_label": "handleimport()",
       "id": "diespage_handleimport"
     },
@@ -5489,7 +5642,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L88",
-      "community": 1,
+      "community": 78,
       "norm_label": "handledelete()",
       "id": "diespage_handledelete"
     },
@@ -5498,7 +5651,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L99",
-      "community": 1,
+      "community": 78,
       "norm_label": "openeditmodal()",
       "id": "diespage_openeditmodal"
     },
@@ -5507,7 +5660,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L105",
-      "community": 1,
+      "community": 78,
       "norm_label": "resetform()",
       "id": "diespage_resetform"
     },
@@ -7543,6 +7696,26 @@
       "target": "controllers_diecontroller_getimporttemplate"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/dieController.ts",
+      "source_location": "L536",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_diecontroller_ts",
+      "target": "controllers_diecontroller_importdiespreview"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/dieController.ts",
+      "source_location": "L634",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_diecontroller_ts",
+      "target": "controllers_diecontroller_importdiesconfirm"
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -7591,6 +7764,28 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/controllers/dieController.ts",
+      "source_location": "L594",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_diecontroller_importdiespreview",
+      "target": "controllers_diecontroller_parsesizetofloat"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/dieController.ts",
+      "source_location": "L702",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_diecontroller_importdiesconfirm",
+      "target": "controllers_diecontroller_parsesizetofloat"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/dieController.ts",
       "source_location": "L135",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -7617,6 +7812,28 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "controllers_diecontroller_importdies",
+      "target": "controllers_diecontroller_formatsizestring"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/dieController.ts",
+      "source_location": "L593",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_diecontroller_importdiespreview",
+      "target": "controllers_diecontroller_formatsizestring"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/dieController.ts",
+      "source_location": "L701",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "controllers_diecontroller_importdiesconfirm",
       "target": "controllers_diecontroller_formatsizestring"
     },
     {
@@ -7739,6 +7956,39 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_dieroutes_ts",
       "target": "controllers_diecontroller_getimporttemplate"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/dieRoutes.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_dieroutes_ts",
+      "target": "controllers_diecontroller_importdiespreview"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/dieRoutes.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_dieroutes_ts",
+      "target": "controllers_diecontroller_importdiesconfirm"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/dieController.ts",
+      "source_location": "L805",
+      "weight": 1.0,
+      "source": "controllers_diecontroller_importdiesconfirm",
+      "target": "lib_auditlogger_logaction"
     },
     {
       "relation": "imports_from",
@@ -8400,6 +8650,28 @@
       "target": "middleware_authmiddleware_authorize"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/auditRoutes.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_auditroutes_ts",
+      "target": "backend_src_lib_auditlogger_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/auditRoutes.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_auditroutes_ts",
+      "target": "lib_auditlogger_sseclients"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/routes/auditRoutes.ts",
@@ -8408,6 +8680,16 @@
       "confidence_score": 1.0,
       "source": "backend_src_routes_auditroutes_ts",
       "target": "routes_auditroutes_router"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/auditRoutes.ts",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_auditroutes_ts",
+      "target": "routes_auditroutes_keepalive"
     },
     {
       "relation": "imports_from",
@@ -8654,11 +8936,42 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/lib/auditLogger.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_lib_auditlogger_ts",
+      "target": "lib_auditlogger_sseclients"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/lib/auditLogger.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_lib_auditlogger_ts",
+      "target": "lib_auditlogger_broadcastevent"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/lib/auditLogger.ts",
       "source_location": "L12",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "backend_src_lib_auditlogger_ts",
       "target": "lib_auditlogger_logaction"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/lib/auditLogger.ts",
+      "source_location": "L50",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_auditlogger_logaction",
+      "target": "lib_auditlogger_broadcastevent"
     },
     {
       "relation": "contains",
@@ -13616,6 +13929,26 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "GEMINI.md",
+      "source_location": "L54",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_gemini_3_operational_procedures",
+      "target": "dms_gemini_zero_data_loss_upgrades_persistence"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "GEMINI.md",
+      "source_location": "L68",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_gemini_3_operational_procedures",
+      "target": "dms_gemini_manual_database_backup_restore"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "GEMINI.md",
       "source_location": "L27",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -13641,6 +13974,36 @@
       "confidence_score": 1.0,
       "source": "dms_gemini_docker_deployment",
       "target": "dms_gemini_codeblock_2"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "GEMINI.md",
+      "source_location": "L60",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_gemini_zero_data_loss_upgrades_persistence",
+      "target": "dms_gemini_codeblock_3"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "GEMINI.md",
+      "source_location": "L72",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_gemini_manual_database_backup_restore",
+      "target": "dms_gemini_codeblock_4"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "GEMINI.md",
+      "source_location": "L76",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_gemini_manual_database_backup_restore",
+      "target": "dms_gemini_codeblock_5"
     },
     {
       "relation": "contains",
@@ -13758,6 +14121,16 @@
       "source_file": "README.md",
       "source_location": "L71",
       "weight": 1.0,
+      "source": "dms_readme_dms_die_management_system",
+      "target": "dms_readme_zero_data_loss_upgrades_database_backups",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L71",
+      "weight": 1.0,
       "confidence_score": 1.0,
       "source": "dms_readme_dms_die_management_system",
       "target": "dms_readme_lan_access_optional"
@@ -13768,9 +14141,9 @@
       "source_file": "README.md",
       "source_location": "L79",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_readme_dms_die_management_system",
-      "target": "dms_readme_premium_upgrades_feature_walkthrough",
-      "confidence_score": 1.0
+      "target": "dms_readme_premium_upgrades_feature_walkthrough"
     },
     {
       "relation": "contains",
@@ -13925,12 +14298,82 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "dms_readme_zero_data_loss_upgrades_database_backups",
+      "target": "dms_readme_1_how_it_works",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L79",
+      "weight": 1.0,
+      "source": "dms_readme_zero_data_loss_upgrades_database_backups",
+      "target": "dms_readme_2_standard_upgrade_steps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L89",
+      "weight": 1.0,
+      "source": "dms_readme_zero_data_loss_upgrades_database_backups",
+      "target": "dms_readme_3_database_backup_restore",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L81",
+      "weight": 1.0,
+      "source": "dms_readme_2_standard_upgrade_steps",
+      "target": "dms_readme_codeblock_4",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L49",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_readme_4_initialize_the_database_important",
+      "target": "dms_readme_codeblock_4"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "dms_readme_3_database_backup_restore",
+      "target": "dms_readme_codeblock_5",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "dms_readme_3_database_backup_restore",
+      "target": "dms_readme_codeblock_6",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "walkthrough.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "walkthrough_md",
-      "target": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul"
     },
     {
       "relation": "contains",
@@ -13938,9 +14381,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
-      "target": "dms_walkthrough_major_visual_overhaul_features",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_major_visual_overhaul_features"
     },
     {
       "relation": "contains",
@@ -13948,9 +14391,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
-      "target": "dms_walkthrough_mobile_tablet_viewport_fluidity",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_mobile_tablet_viewport_fluidity"
     },
     {
       "relation": "contains",
@@ -13958,9 +14401,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
-      "target": "dms_walkthrough_verification_compilation_results",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_verification_compilation_results"
     },
     {
       "relation": "contains",
@@ -13968,9 +14411,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L62",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
-      "target": "dms_walkthrough_immersive_3d_visualizer_fixes_polishing",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_immersive_3d_visualizer_fixes_polishing"
     },
     {
       "relation": "contains",
@@ -13978,9 +14421,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L74",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
-      "target": "dms_walkthrough_settings_theme_unification_user_administration_audit_trails",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_settings_theme_unification_user_administration_audit_trails"
     },
     {
       "relation": "contains",
@@ -13988,9 +14431,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L104",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
-      "target": "dms_walkthrough_interactive_profile_settings_change_password_integration",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_interactive_profile_settings_change_password_integration"
     },
     {
       "relation": "contains",
@@ -13998,9 +14441,19 @@
       "source_file": "walkthrough.md",
       "source_location": "L127",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
-      "target": "dms_walkthrough_consistent_row_hover_aesthetics_eliminating_high_contrast_glare",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_consistent_row_hover_aesthetics_eliminating_high_contrast_glare"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "walkthrough.md",
+      "source_location": "L147",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
+      "target": "dms_walkthrough_feature_1_pre_upload_excel_grid_online_schema_validator"
     },
     {
       "relation": "contains",
@@ -14008,9 +14461,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_major_visual_overhaul_features",
-      "target": "dms_walkthrough_1_unified_carbon_cobalt_design_tokens",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_1_unified_carbon_cobalt_design_tokens"
     },
     {
       "relation": "contains",
@@ -14018,9 +14471,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_major_visual_overhaul_features",
-      "target": "dms_walkthrough_2_glassmorphic_navigation_panels",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_2_glassmorphic_navigation_panels"
     },
     {
       "relation": "contains",
@@ -14028,9 +14481,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_major_visual_overhaul_features",
-      "target": "dms_walkthrough_3_professional_spacing_spacing_systems",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_3_professional_spacing_spacing_systems"
     },
     {
       "relation": "contains",
@@ -14038,9 +14491,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_verification_compilation_results",
-      "target": "dms_walkthrough_1_docker_build_restart",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_1_docker_build_restart"
     },
     {
       "relation": "contains",
@@ -14048,9 +14501,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L56",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_verification_compilation_results",
-      "target": "dms_walkthrough_2_micro_animations_transitions",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_2_micro_animations_transitions"
     },
     {
       "relation": "contains",
@@ -14058,9 +14511,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_1_docker_build_restart",
-      "target": "dms_walkthrough_codeblock_1",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_codeblock_1"
     },
     {
       "relation": "contains",
@@ -14068,9 +14521,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L64",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_immersive_3d_visualizer_fixes_polishing",
-      "target": "dms_walkthrough_1_immersive_full_screen_layout_wrappers_fullscreen_fix",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_1_immersive_full_screen_layout_wrappers_fullscreen_fix"
     },
     {
       "relation": "contains",
@@ -14078,9 +14531,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L68",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_immersive_3d_visualizer_fixes_polishing",
-      "target": "dms_walkthrough_2_canvas_zero_dimension_self_healing_webgl_initialization_fix",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_2_canvas_zero_dimension_self_healing_webgl_initialization_fix"
     },
     {
       "relation": "contains",
@@ -14088,9 +14541,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L84",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_settings_theme_unification_user_administration_audit_trails",
-      "target": "dms_walkthrough_codeblock_2",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_codeblock_2"
     },
     {
       "relation": "contains",
@@ -14098,9 +14551,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L134",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_consistent_row_hover_aesthetics_eliminating_high_contrast_glare",
-      "target": "dms_walkthrough_codeblock_3",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_codeblock_3"
     },
     {
       "relation": "contains",
@@ -14108,9 +14561,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L140",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_consistent_row_hover_aesthetics_eliminating_high_contrast_glare",
-      "target": "dms_walkthrough_codeblock_4",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_codeblock_4"
     },
     {
       "relation": "contains",
@@ -14161,16 +14614,6 @@
       "confidence_score": 1.0,
       "source": "frontend_readme_expanding_the_eslint_configuration",
       "target": "frontend_readme_codeblock_2"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L49",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "dms_readme_4_initialize_the_database_important",
-      "target": "dms_readme_codeblock_4"
     },
     {
       "relation": "contains",
@@ -15719,5 +16162,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "bcfe873efb0a0f31fa0bf84b3cadc5f30e23be4a"
+  "built_at_commit": "513f51b83e8457f006ccb9dda208395f9ccf5e52"
 }

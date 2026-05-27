@@ -7,6 +7,8 @@ import {
   updateDie,
   deleteDie,
   importDies,
+  importDiesPreview,
+  importDiesConfirm,
   getImportTemplate,
 } from '../controllers/dieController';
 import { authenticate, authorize } from '../middleware/authMiddleware';
@@ -47,6 +49,8 @@ router.get('/:id', getDieById);
 // Modifying routes require ADMIN role
 router.post('/', authorize(['ADMIN']), validateBody(createDieSchema), createDie);
 router.post('/import', authorize(['ADMIN']), importLimiter, upload.single('file'), importDies);
+router.post('/import-preview', authorize(['ADMIN']), importLimiter, upload.single('file'), importDiesPreview);
+router.post('/import-confirm', authorize(['ADMIN']), importLimiter, importDiesConfirm);
 router.put('/:id', authorize(['ADMIN']), validateBody(updateDieSchema), updateDie);
 router.delete('/:id', authorize(['ADMIN']), deleteDie);
 

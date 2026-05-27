@@ -68,6 +68,41 @@ Once the setup is complete, you can access the app at:
 
 ---
 
+## 🔄 Zero-Data-Loss Upgrades & Database Backups
+
+DMS is built to support risk-free, seamless updates without any data loss.
+
+### 1. How it works:
+* **Persistent Named Volumes:** All user data (machines, tools, dies, audit logs, and users) resides in a local named Docker volume (`dms-db`). Pulling codebase updates from GitHub does not affect this volume.
+* **Auto-Schema Migrations:** Whenever you pull code changes and restart the container stack, the backend automatically runs `npx prisma migrate deploy` to safely apply structural table updates to your existing database.
+
+### 2. Standard Upgrade Steps:
+To pull updates and rebuild:
+```bash
+# Pull new changes
+git pull
+
+# Rebuild and restart the container stack
+docker compose up -d --build
+```
+
+### 3. Database Backup & Restore:
+For safety before pulling major updates, you can copy the live SQLite database directly out of the container:
+
+* **Export (Backup) Database:**
+  ```bash
+  docker cp dms-backend:/app/data/prod.db ./prod_backup_$(date +%F).db
+  ```
+* **Import (Restore) Database:**
+  ```bash
+  # Restore the backup file back into the container
+  docker cp ./prod_backup.db dms-backend:/app/data/prod.db
+  # Restart the backend to load the restored data
+  docker compose restart backend
+  ```
+
+---
+
 ## 🌐 LAN Access (Optional)
 To access DMS from other computers on your local network:
 1. Find your computer's local IP (e.g., `192.168.1.10`).
