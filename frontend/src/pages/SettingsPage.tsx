@@ -31,6 +31,12 @@ const SettingsPage: React.FC = () => {
   const [logSearch, setLogSearch] = useState('');
   const [selectedLog, setSelectedLog] = useState<any | null>(null);
 
+  // Advanced Audit Log Filter States
+  const [actorFilter, setActorFilter] = useState('');
+  const [actionFilter, setActionFilter] = useState('');
+  const [startDateFilter, setStartDateFilter] = useState('');
+  const [endDateFilter, setEndDateFilter] = useState('');
+
   // Audit Logs Pagination States
   const [logsPage, setLogsPage] = useState(1);
   const [logsTotalCount, setLogsTotalCount] = useState(0);
@@ -71,7 +77,16 @@ const SettingsPage: React.FC = () => {
     if (!isAdmin) return;
     try {
       setLogsLoading(true);
-      const response = await api.get(`/audit-logs?page=${logsPage}&limit=15`);
+      const queryParams = new URLSearchParams();
+      queryParams.append('page', logsPage.toString());
+      queryParams.append('limit', '15');
+      if (actorFilter) queryParams.append('actor', actorFilter);
+      if (actionFilter) queryParams.append('action', actionFilter);
+      if (startDateFilter) queryParams.append('startDate', startDateFilter);
+      if (endDateFilter) queryParams.append('endDate', endDateFilter);
+      if (logSearch) queryParams.append('search', logSearch);
+
+      const response = await api.get(`/audit-logs?${queryParams.toString()}`);
       setAuditLogs(response.data.logs);
       setLogsTotalCount(response.data.totalCount);
       setLogsTotalPages(response.data.totalPages);
@@ -82,11 +97,40 @@ const SettingsPage: React.FC = () => {
     }
   };
 
+  const handleActorChange = (val: string) => {
+    setActorFilter(val);
+    setLogsPage(1);
+  };
+
+  const handleActionChange = (val: string) => {
+    setActionFilter(val);
+    setLogsPage(1);
+  };
+
+  const handleStartDateChange = (val: string) => {
+    setStartDateFilter(val);
+    setLogsPage(1);
+  };
+
+  const handleEndDateChange = (val: string) => {
+    setEndDateFilter(val);
+    setLogsPage(1);
+  };
+
+  const handleSearchChange = (val: string) => {
+    setLogSearch(val);
+    setLogsPage(1);
+  };
+
+  // Debounced/Immediate listener for state filters
   useEffect(() => {
     if (isAdmin) {
-      fetchAuditLogs();
+      const handler = setTimeout(() => {
+        fetchAuditLogs();
+      }, 300);
+      return () => clearTimeout(handler);
     }
-  }, [isAdmin, logsPage]);
+  }, [isAdmin, logsPage, actorFilter, actionFilter, startDateFilter, endDateFilter, logSearch]);
 
   useEffect(() => {
     if (isAdmin) {
@@ -115,6 +159,11 @@ const SettingsPage: React.FC = () => {
             setAuditLogs((prev) => {
               // De-duplicate incoming logs
               if (prev.some((log) => log.id === logPayload.id)) return prev;
+
+              // Filter check: only slide in if the incoming log matches active filters
+              if (actorFilter && !logPayload.actorName.toLowerCase().includes(actorFilter.toLowerCase())) return prev;
+              if (actionFilter && logPayload.action !== actionFilter) return prev;
+              if (logSearch && !Object.values(logPayload).some(v => String(v).toLowerCase().includes(logSearch.toLowerCase()))) return prev;
 
               // Only prepend to page 1 to preserve layout
               if (logsPage === 1) {
@@ -151,7 +200,7 @@ const SettingsPage: React.FC = () => {
         eventSource.close();
       }
     };
-  }, [isAdmin, token, activeTab, logsPage]);
+  }, [isAdmin, token, activeTab, logsPage, actorFilter, actionFilter, logSearch]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -245,17 +294,8 @@ const SettingsPage: React.FC = () => {
     return { bg: 'hsl(222, 20%, 16%)', text: 'var(--text-muted)' };
   };
 
-  // Real-time search filter for audit logs
-  const filteredLogs = auditLogs.filter(log => {
-    const q = logSearch.toLowerCase().trim();
-    if (!q) return true;
-    return (
-      (log.actorName || '').toLowerCase().includes(q) ||
-      (log.action || '').toLowerCase().includes(q) ||
-      (log.target || '').toLowerCase().includes(q) ||
-      (log.details || '').toLowerCase().includes(q)
-    );
-  });
+  // Since we use database-level server-side filtering, auditLogs is mapped directly
+  const filteredLogs = auditLogs;
 
   const segmentedOptions = [
     { label: 'My Account', value: 'profile' },
@@ -540,17 +580,127 @@ const SettingsPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Real-time search filter */}
-          <div style={{ position: 'relative', marginBottom: '1.5rem' }}>
-            <Search size={18} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-            <input 
-              type="text" 
-              className="input" 
-              placeholder="Filter logs by actor, action, target, or details..." 
-              value={logSearch}
-              onChange={(e) => setLogSearch(e.target.value)}
-              style={{ paddingLeft: '2.5rem', height: '2.75rem' }}
-            />
+          {/* Advanced Multi-Dimensional Database Filters */}
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', 
+            gap: '1rem', 
+            marginBottom: '1.5rem',
+            padding: '1.25rem',
+            background: 'rgba(2, 6, 23, 0.3)',
+            borderRadius: '12px',
+            border: '1px solid var(--border)'
+          }}>
+            {/* Search Input */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+              <label style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)' }}>Search Term</label>
+              <div style={{ position: 'relative' }}>
+                <Search size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                <input 
+                  type="text" 
+                  className="input" 
+                  placeholder="Filter logs..." 
+                  value={logSearch}
+                  onChange={(e) => handleSearchChange(e.target.value)}
+                  style={{ paddingLeft: '2.25rem', height: '2.5rem', fontSize: '0.875rem' }}
+                />
+              </div>
+            </div>
+
+            {/* Actor Name Selector */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+              <label style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)' }}>Actor Name</label>
+              <select 
+                className="input" 
+                value={actorFilter}
+                onChange={(e) => handleActorChange(e.target.value)}
+                style={{ height: '2.5rem', fontSize: '0.875rem', padding: '0 0.5rem', background: 'var(--white)' }}
+              >
+                <option value="">All Actors</option>
+                <option value="admin">admin</option>
+                <option value="viewer">viewer</option>
+                {/* Dynamically extract unique actor names from existing logs to cover custom users */}
+                {Array.from(new Set(auditLogs.map(l => l.actorName).filter(Boolean)))
+                  .filter(name => name !== 'admin' && name !== 'viewer')
+                  .map(name => (
+                    <option key={name} value={name}>{name}</option>
+                  ))
+                }
+              </select>
+            </div>
+
+            {/* Action Selector */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+              <label style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)' }}>Action Type</label>
+              <select 
+                className="input" 
+                value={actionFilter}
+                onChange={(e) => handleActionChange(e.target.value)}
+                style={{ height: '2.5rem', fontSize: '0.875rem', padding: '0 0.5rem', background: 'var(--white)' }}
+              >
+                <option value="">All Actions</option>
+                <option value="LOGIN">LOGIN</option>
+                <option value="LOGOUT">LOGOUT</option>
+                <option value="CREATE_USER">CREATE_USER</option>
+                <option value="DELETE_USER">DELETE_USER</option>
+                <option value="CHANGE_PASSWORD">CHANGE_PASSWORD</option>
+                <option value="CREATE_MACHINE">CREATE_MACHINE</option>
+                <option value="UPDATE_MACHINE">UPDATE_MACHINE</option>
+                <option value="DELETE_MACHINE">DELETE_MACHINE</option>
+                <option value="CREATE_SET">CREATE_SET</option>
+                <option value="UPDATE_SET">UPDATE_SET</option>
+                <option value="DELETE_SET">DELETE_SET</option>
+                <option value="ASSIGN_SET">ASSIGN_SET</option>
+                <option value="CREATE_DIE">CREATE_DIE</option>
+                <option value="UPDATE_DIE">UPDATE_DIE</option>
+                <option value="DELETE_DIE">DELETE_DIE</option>
+                <option value="ASSIGN_DIE">ASSIGN_DIE</option>
+                <option value="IMPORT_DIES">IMPORT_DIES</option>
+                <option value="EXPORT_LOGS">EXPORT_LOGS</option>
+              </select>
+            </div>
+
+            {/* Start Date */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+              <label style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)' }}>Start Date</label>
+              <input 
+                type="date" 
+                className="input" 
+                value={startDateFilter}
+                onChange={(e) => handleStartDateChange(e.target.value)}
+                style={{ height: '2.5rem', fontSize: '0.875rem', padding: '0 0.5rem' }}
+              />
+            </div>
+
+            {/* End Date */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+              <label style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)' }}>End Date</label>
+              <input 
+                type="date" 
+                className="input" 
+                value={endDateFilter}
+                onChange={(e) => handleEndDateChange(e.target.value)}
+                style={{ height: '2.5rem', fontSize: '0.875rem', padding: '0 0.5rem' }}
+              />
+            </div>
+
+            {/* Reset Button */}
+            <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+              <button 
+                className="btn btn-secondary" 
+                onClick={() => {
+                  setActorFilter('');
+                  setActionFilter('');
+                  setStartDateFilter('');
+                  setEndDateFilter('');
+                  setLogSearch('');
+                  setLogsPage(1);
+                }}
+                style={{ height: '2.5rem', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+              >
+                Reset Filters
+              </button>
+            </div>
           </div>
 
           <div className="table-container">

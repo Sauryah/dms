@@ -11,16 +11,54 @@ export const getAuditLogs = async (req: Request, res: Response, next: NextFuncti
   const limit = parseInt(req.query.limit as string) || 50;
   const skip = (page - 1) * limit;
 
+  const { actor, action, startDate, endDate, search } = req.query;
+
+  // Build prisma where filter object
+  const where: any = {};
+
+  if (actor) {
+    where.actorName = {
+      contains: actor as string,
+    };
+  }
+
+  if (action) {
+    where.action = action as string;
+  }
+
+  if (startDate || endDate) {
+    where.createdAt = {};
+    if (startDate) {
+      where.createdAt.gte = new Date(startDate as string);
+    }
+    if (endDate) {
+      const end = new Date(endDate as string);
+      end.setHours(23, 59, 59, 999);
+      where.createdAt.lte = end;
+    }
+  }
+
+  if (search) {
+    const term = search as string;
+    where.OR = [
+      { actorName: { contains: term } },
+      { action: { contains: term } },
+      { target: { contains: term } },
+      { details: { contains: term } }
+    ];
+  }
+
   try {
     const [logs, totalCount] = await Promise.all([
       prisma.auditLog.findMany({
+        where,
         orderBy: {
           createdAt: 'desc',
         },
         skip,
         take: limit,
       }),
-      prisma.auditLog.count(),
+      prisma.auditLog.count({ where }),
     ]);
 
     res.json({
@@ -39,8 +77,46 @@ export const getAuditLogs = async (req: Request, res: Response, next: NextFuncti
  * Exports all database audit log entries to a formatted CSV file stream download.
  */
 export const exportAuditLogs = async (req: Request, res: Response, next: NextFunction) => {
+  const { actor, action, startDate, endDate, search } = req.query;
+
+  // Build prisma where filter object identically
+  const where: any = {};
+
+  if (actor) {
+    where.actorName = {
+      contains: actor as string,
+    };
+  }
+
+  if (action) {
+    where.action = action as string;
+  }
+
+  if (startDate || endDate) {
+    where.createdAt = {};
+    if (startDate) {
+      where.createdAt.gte = new Date(startDate as string);
+    }
+    if (endDate) {
+      const end = new Date(endDate as string);
+      end.setHours(23, 59, 59, 999);
+      where.createdAt.lte = end;
+    }
+  }
+
+  if (search) {
+    const term = search as string;
+    where.OR = [
+      { actorName: { contains: term } },
+      { action: { contains: term } },
+      { target: { contains: term } },
+      { details: { contains: term } }
+    ];
+  }
+
   try {
     const logs = await prisma.auditLog.findMany({
+      where,
       orderBy: {
         createdAt: 'desc',
       },

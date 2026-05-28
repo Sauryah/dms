@@ -1,4 +1,4 @@
-# Walkthrough: Premium Dark SaaS Dashboard & Mobile Responsiveness Overhaul
+# Walkthrough: Premium Dark SaaS Dashboard & Overhaul
 
 This walkthrough documents the full-scale visual, interactive, and structural redesign of the DieManager web application. We successfully overhauled the entire interface to match a premium, high-performance, dark SaaS telemetry console (similar to modern platforms like Vercel or Grafana), fully responsive across desktop, tablet, and mobile layouts.
 
@@ -38,24 +38,6 @@ We implemented comprehensive mobile and tablet responsive layouts using strict, 
     *   **Horizontal Header Sidebar:** The layout fluidly shifts to a column grid. The sidebar automatically moves to the top of the viewport, aligning links horizontally to conserve screen real estate.
     *   **Dynamic Grid Collapse:** Standard 3-column layouts automatically collapse into `1-column` blocks.
     *   **Zebra Scroll Wrappers:** Added horizontal scroll containment (`-webkit-overflow-scrolling: touch` and `white-space: nowrap`) to data tables, allowing operators to scroll wide tooling lists without breaking page alignment on mobile screens.
-
----
-
-## 🛠️ Verification & Compilation Results
-
-### 1. Docker Build & Restart
-We rebuilt the backend and frontend containers from scratch via Docker Compose:
-```bash
-docker compose up -d --build
-```
-* **Vite Compiler:** Verified 100% build compile success. All React pages compile successfully.
-* **Containers Health:** Both Nginx and Express services restarted successfully and are healthy:
-  - `Container diemanager-backend Healthy`
-  - `Container diemanager-frontend Started`
-
-### 2. Micro-Animations & transitions
-* **Hardware Accelerated Shimmers:** Skeletons utilize high-performance CSS hardware-accelerated transforms (`translate3d`) for zero-CPU-overhead animation.
-* **Fluid Layout Transitions:** Replaces instant rendering pops with smooth React mounting fades (`.fade-in`), presenting a premium SaaS feeling.
 
 ---
 
@@ -101,67 +83,23 @@ We resolved the high-contrast discordant pure-white panels clashing with the dar
 
 ---
 
-## 🔐 Interactive Profile Settings: Change Password Integration
+## 🚀 Advanced DMS Platform Improvements (Suggestions 2, 3, 4)
 
-We implemented a secure, self-contained **Change Password** subsystem, empowering any authenticated user (Viewer, Operator, or Admin) to change their own password directly from their profile view in Settings.
+We successfully implemented three highly premium advanced features to expand operational speed, administrative oversight, and telemetry visualizations:
 
-1. **Robust Backend Business Logic:**
-   * **Route Registration:** Created a new POST endpoint at `/api/auth/change-password` requiring JWT authentication (`authenticate`).
-   * **Strict Zod Schema Validator:** Configured a Zod validator `changePasswordSchema` inside schemas.ts enforcing:
-     * `currentPassword`: Required.
-     * `newPassword`: Must be between **8 and 128 characters**.
-     * `confirmNewPassword`: Required, validated to match the new password.
-   * **Bcrypt Hash Verification:**
-     * Verifies the user's active password using `bcrypt.compare`.
-     * Rejects updates where the new password matches the active current password.
-     * Encrypts the verified password using salt round 10 before saving to SQLite.
-   * **Compliance Audit Logs:** Automatically registers a standard action event trail (`UPDATE_PASSWORD`) noting: *"User [username] successfully changed their own password"*, maintaining full operational transparency.
+### 1. Feature 2: Client-Side Excel Pre-Parsing & Browser Validation
+* **High-Speed Binary Ingest (SheetJS):** Swapped the backend-dependent file parser for a local browser-side engine using the `xlsx` module and HTML `FileReader`. 
+* **Zero Network Overhead Previewing:** When an operator uploads a spreadsheet, the file is parsed in-memory directly on the client thread. Unrecognized `Set Names`, invalid `Die IDs`, and malformed sizing inputs are validated client-side instantly, providing real-time spreadsheet-like error alerts inside the modal.
+* **Secured Transactional Committing:** Validated rows are transmitted as a pre-mapped JSON array directly to the `/api/dies/import-confirm` transactional endpoint.
 
-2. **Futuristic UI Profile Settings Panel:**
-   * Embedded an elegant, tactile form card inside the profile settings grid.
-   * Leveraged glowing visual states, semi-translucent custom danger/success badges, and loading spinners during network operations.
-   * Completely self-contained state blocks, ensuring secure inputs, seamless clearing of credential states, and immediate feedback.
+### 2. Feature 3: Structured Database-Backed Audit Log Filters
+* **Server-Side Query Construction:** Upgraded `/api/audit-logs` and `/api/audit-logs/export` inside [auditController.ts](file:///home/sahil/Desktop/Projects/dms/backend/src/controllers/auditController.ts) to parse dynamic parameters: `actor`, `action`, `startDate`, `endDate`, and `search`.
+* **Prisma Dynamic Filtering:** Mapped filters to Prisma `where` constraints in the SQLite database query, matching contains, range boundaries, and logical OR terms.
+* **Slate Dashboard Filter Toolbar:** Designed a beautiful CSS Grid filter control bar in `SettingsPage.tsx` under the Audit Trails view. Changing dropdowns or date pickers resets pagination and queries the server.
+* **Real-time SSE Filtering:** Enhanced the SSE EventSource stream handler in `SettingsPage.tsx` to dynamically filter live incoming events locally on the client using the active filter states, preventing non-matching events from sliding into the table.
 
----
-
-## 🎨 Consistent Row Hover Aesthetics: Eliminating High-Contrast Glare
-
-We resolved a prominent visual regression where moving the cursor over a data row (specifically Machine rows on the **Dashboard** and Die rows on the **Dies Inventory**) would trigger a glaring light-contrast white background blink (`#f8fafc` or `hsl(220, 20%, 98%)`), which clashed with the dark premium theme.
-
-1. **Dashboard and Inventory Unification:**
-   * Modified the inline style blocks inside both Dashboard.tsx and DiesPage.tsx.
-   * Swapped the hardcoded high-contrast light backgrounds under `.hover-row:hover` to the global dark standard telemetry row-highlight color:
-     ```css
-     background-color: hsl(222, 25%, 13%) !important;
-     ```
-
-2. **Tactile Action Buttons Theme Alignment:**
-   * Swapped hardcoded solid white backgrounds (`background: white;`) inside column action icon-buttons (`.btn-icon`) to the coherent carbon card token:
-     ```css
-     background: var(--white);
-     ```
-   * Ensures that buttons blend naturally into the telemetry tables under default states and only light up with an intense electric halo blue during explicit cursor focus or hover actions.
-
----
-
-## 📊 Feature 1: Pre-Upload Excel Grid & Online Schema Validator
-
-We implemented a stunning, high-utility **Excel pre-upload preview grid and real-time schema validator** within the Die Inventory page, turning standard file uploading into an interactive, bulletproof verification dashboard:
-
-1. **Two-Stage Ingest Pipeline (Express Backend):**
-   * **Stage 1: Preview Endpoint (`/api/dies/import-preview`)**:
-     * Parses the uploaded spreadsheet buffer in memory using `xlsx`.
-     * Validates each cell's schema rules: check required `Die ID` alphanumeric patterns, verify positive dimensions for `Size`, check `Casing` lengths, and query existing Sets to map `Set Name` references.
-     * Returns the rows as clean JSON structures flagged with itemized cell-level `errors` and `warnings`.
-   * **Stage 2: Confirm Endpoint (`/api/dies/import-confirm`)**:
-     * Receives the user's finalized, pre-validated, and corrected JSON rows from the frontend.
-     * Commits all records to SQLite in a high-performance database transaction, safely falling back to single-record upserts if lock collisions are detected.
-
-2. **Spreadsheet-tier Interactive Telemetry Grid (React Frontend):**
-   * Redesigned the import modal in [DiesPage.tsx](file:///home/sahil/Desktop/Projects/dms/frontend/src/pages/DiesPage.tsx) to smoothly expand from `540px` to `1000px` using premium bezier transitions when previewing data.
-   * Renders parsed rows in a fully editable, borderless spreadsheet-like table where operators can modify cell values (`Die ID`, `Size`, `Casing`, `Details`, `Set Name`) directly inside the modal grid.
-   * **On-the-Fly Dynamic Validation**: Updates to any input cell instantly recalculate cell errors client-side.
-     * If a cell contains an error, the input background glows with a translucent danger red and shows inline warning text.
-     * If `Set Name` is unrecognized, it renders with an amber highlight warning the operator that it will be imported as *Unassigned*.
-     * Renders visual status badges for each row: `Valid` (Green), `Warning` (Amber), and `Error` (Red).
-     * The `Confirm and Import` action remains securely disabled until all red validation errors are completely resolved by the operator.
+### 3. Feature 4: Interactive Equipment Gantt Timeline
+* **Integrated Timeline Endpoint:** Added `/api/machines/timeline` in `machineController.ts` compiling live machine allocations and recent tooling audit logs.
+* **Gantt Utilization Lanes:** Built a gorgeous, horizontal Gantt utilization lane chart above the main dashboard grid in `Dashboard.tsx`. Active machines are tracks, and active sets are floating neon cobalt capsules.
+* **Historical Allocation Track:** Rendered a vertical step timeline showing mount/dismount actions, actor badges, and timestamps.
+* **SSE Auto-Refreshing:** Bound the dashboard metrics and timeline to the Server-Sent Events (SSE) stream. Any allocation changes instantly trigger a silent, synchronized background reload, updating all charts in real-time.

@@ -6,6 +6,7 @@ import { Disc, Plus, X, Edit2, Trash2, Search, Upload, FileSpreadsheet, Download
 import Breadcrumbs from '../components/Breadcrumbs';
 import SegmentedControl from '../components/SegmentedControl';
 import Skeleton from '../components/Skeleton';
+import * as XLSX from 'xlsx';
 
 interface Die {
   id: string;
@@ -150,29 +151,137 @@ const DiesPage: React.FC = () => {
     }
   };
 
+  const parseSizeToFloat = (sizeStr: string): number => {
+    const numericPart = sizeStr.match(/[\d\.]+/);
+    if (numericPart) {
+      const val = parseFloat(numericPart[0]);
+      if (!isNaN(val)) return val;
+    }
+    return 0.0;
+  };
+
+  const formatSizeString = (sizeStr: string): string => {
+    const numericMatch = sizeStr.match(/[\d\.]+/);
+    if (numericMatch) {
+      const numVal = parseFloat(numericMatch[0]);
+      if (!isNaN(numVal)) {
+        const formattedNum = numVal.toFixed(3);
+        return sizeStr.replace(numericMatch[0], formattedNum);
+      }
+    }
+    return sizeStr;
+  };
+
   const handleImportPreview = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!importFile) return;
 
     setError('');
     setIsSubmitting(true);
-    const formData = new FormData();
-    formData.append('file', importFile);
 
     try {
-      const response = await api.post('/dies/import-preview', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      setPreviewRows(response.data.rows);
-      setIsPreviewMode(true);
-      addToast('info', 'File Parsed', `Loaded ${response.data.rows.length} rows for review.`);
+      // 1. Fetch all existing Sets to map names on the frontend
+      const setsResponse = await api.get('/sets');
+      const setMap = new Map<string, string>();
+      if (Array.isArray(setsResponse.data)) {
+        for (const s of setsResponse.data) {
+          setMap.set(s.name.trim(), s.id);
+        }
+      }
+
+      // 2. Parse file using SheetJS (XLSX) in the browser
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const buffer = event.target?.result;
+          if (!buffer) {
+            throw new Error('Could not read file binary buffer');
+          }
+          const data = new Uint8Array(buffer as ArrayBuffer);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const sheetName = workbook.SheetNames[0];
+          const sheet = workbook.Sheets[sheetName];
+          const sheetData = XLSX.utils.sheet_to_json(sheet) as any[];
+
+          if (sheetData.length > 5000) {
+            setError('Import file is too large. Please limit imports to 5,000 rows or fewer.');
+            addToast('error', 'Validation Error', 'Excel spreadsheet contains more than 5,000 rows.');
+            setIsSubmitting(false);
+            return;
+          }
+
+          const parsedRows: any[] = [];
+          for (let i = 0; i < sheetData.length; i++) {
+            const row = sheetData[i];
+            const dieId = row['Die ID']?.toString().trim() || '';
+            const size = row['Size']?.toString().trim() || '';
+            const casing = row['Casing']?.toString().trim() || '';
+            const details = row['Details']?.toString().trim() || '';
+            const setName = row['Set Name']?.toString().trim() || '';
+
+            // Skip completely empty row
+            if (!dieId && !size && !casing && !details && !setName) {
+              continue;
+            }
+
+            const formattedSize = size ? formatSizeString(size) : '';
+            const sizeValue = formattedSize ? parseSizeToFloat(formattedSize) : 0;
+
+            const dieIdError = !dieId 
+              ? 'Die ID is required' 
+              : (!/^[a-zA-Z0-9-_\s]+$/.test(dieId) ? 'Die ID contains invalid characters' : null);
+            const sizeError = !size 
+              ? 'Size is required' 
+              : (sizeValue <= 0 ? 'Invalid size dimensions' : null);
+            const casingError = !casing 
+              ? 'Casing is required' 
+              : (casing.length < 2 ? 'Casing must be at least 2 characters' : null);
+
+            const setNameWarning = (setName && !setMap.has(setName)) 
+              ? `Set Name "${setName}" does not match any existing database set` 
+              : null;
+
+            parsedRows.push({
+              key: i,
+              dieId,
+              size,
+              casing,
+              details,
+              setName,
+              errors: {
+                dieId: dieIdError,
+                size: sizeError,
+                casing: casingError
+              },
+              warnings: {
+                setName: setNameWarning
+              }
+            });
+          }
+
+          setPreviewRows(parsedRows);
+          setIsPreviewMode(true);
+          addToast('info', 'File Parsed Locally', `Successfully parsed ${parsedRows.length} rows for review.`);
+          setIsSubmitting(false);
+        } catch (err: any) {
+          console.error('Error processing spreadsheet file', err);
+          setError(err.message || 'Error processing spreadsheet file');
+          addToast('error', 'Parsing Failed', err.message || 'Error processing spreadsheet file');
+          setIsSubmitting(false);
+        }
+      };
+
+      reader.onerror = () => {
+        setError('Failed to read the file.');
+        addToast('error', 'Reading Failed', 'Could not open the selected spreadsheet.');
+        setIsSubmitting(false);
+      };
+
+      reader.readAsArrayBuffer(importFile);
     } catch (err: any) {
-      const msg = err.response?.data?.error || 'Failed to parse import file';
-      setError(msg);
-      addToast('error', 'Preview Failed', msg);
-    } finally {
+      console.error('Failed to pre-fetch sets metadata from server', err);
+      setError('Failed to pre-fetch sets metadata from server');
+      addToast('error', 'Ingest Blocked', 'Could not load active sets lists to validate references.');
       setIsSubmitting(false);
     }
   };

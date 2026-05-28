@@ -7,6 +7,7 @@ import {
   deleteMachine,
   assignSetToMachine,
   getDashboardStats,
+  getMachineTimeline,
 } from '../controllers/machineController';
 import { authenticate, authorize } from '../middleware/authMiddleware';
 import { validateBody } from '../middleware/validationMiddleware';
@@ -18,6 +19,7 @@ const router = Router();
 router.use(authenticate);
 
 router.get('/stats', getDashboardStats);
+router.get('/timeline', getMachineTimeline);
 router.get('/', getMachines);
 router.get('/:id', getMachineById);
 

@@ -272,3 +272,44 @@ export const assignSetToMachine = async (req: Request, res: Response, next: Next
     next(error);
   }
 };
+
+/**
+ * Retrieves dynamic equipment utilization status and historical allocation logs.
+ */
+export const getMachineTimeline = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // 1. Fetch active utilization layout: machines, sets, and their dies
+    const machines = await prisma.machine.findMany({
+      include: {
+        sets: {
+          include: {
+            dies: true,
+          },
+        },
+      },
+      orderBy: {
+        name: 'asc',
+      },
+    });
+
+    // 2. Fetch recent tooling allocation audit logs (mount/dismount/changes)
+    const history = await prisma.auditLog.findMany({
+      where: {
+        action: {
+          in: ['ASSIGN_SET', 'ASSIGN_DIE', 'CREATE_MACHINE', 'DELETE_MACHINE', 'CREATE_SET', 'DELETE_SET'],
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 30,
+    });
+
+    res.json({
+      utilization: machines,
+      history,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
