@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import api from '../services/api';
 
 interface User {
   id: string;
@@ -9,7 +10,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   token: string | null;
-  login: (token: string, user: User) => void;
+  login: (token: string | null, user: User) => void;
   logout: () => void;
   isAuthenticated: boolean;
 }
@@ -30,19 +31,18 @@ const getStoredUser = (): User | null => {
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(() => getStoredUser());
-  const [token, setToken] = useState<string | null>(() => localStorage.getItem('token'));
 
-  const login = (newToken: string, newUser: User) => {
-    setToken(newToken);
+  const login = (_newToken: string | null, newUser: User) => {
     setUser(newUser);
-    localStorage.setItem('token', newToken);
     localStorage.setItem('user', JSON.stringify(newUser));
   };
 
   const logout = () => {
-    setToken(null);
+    // Notify the backend to clear the HttpOnly dms_token cookie
+    api.post('/auth/logout').catch((err) => {
+      console.error('Failed to notify server of session end:', err);
+    });
     setUser(null);
-    localStorage.removeItem('token');
     localStorage.removeItem('user');
   };
 
@@ -53,7 +53,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // 10-minute idle inactivity auto-logout mechanism
   useEffect(() => {
-    if (!token) return;
+    if (!user) return;
 
     const timeoutDuration = 10 * 60 * 1000; // 10 minutes in milliseconds
     let idleTimer: number;
@@ -81,10 +81,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         window.removeEventListener(event, resetTimer);
       });
     };
-  }, [token]);
+  }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated: !!token }}>
+    <AuthContext.Provider value={{ user, token: null, login, logout, isAuthenticated: !!user }}>
       {children}
     </AuthContext.Provider>
   );

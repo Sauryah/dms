@@ -116,10 +116,33 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       { expiresIn: '24h' }
     );
 
+    // Set token into a highly secure, HttpOnly, Strict cookie
+    const isProduction = process.env.NODE_ENV === 'production';
+    res.cookie('dms_token', token, {
+      httpOnly: true,
+      secure: isProduction, // Send only over HTTPS in production
+      sameSite: 'strict',   // Shield against CSRF
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    });
+
     // Log successful login audit trail
     await logAction(user.id, user.username, 'LOGIN', 'Auth System', `User "${user.username}" successfully logged in`, req);
 
-    res.json({ token, user: { id: user.id, username: user.username, role: user.role } });
+    res.json({ user: { id: user.id, username: user.username, role: user.role } });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const logout = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const isProduction = process.env.NODE_ENV === 'production';
+    res.clearCookie('dms_token', {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: 'strict'
+    });
+    res.json({ message: 'Logout successful' });
   } catch (error) {
     next(error);
   }

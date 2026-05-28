@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { register, login, getUsers, deleteUser, changePassword } from '../controllers/authController';
+import { register, login, logout, getUsers, deleteUser, changePassword } from '../controllers/authController';
 import { authenticate, authorize } from '../middleware/authMiddleware';
 import { validateBody } from '../middleware/validationMiddleware';
 import { changePasswordSchema, loginSchema, registerSchema } from '../lib/schemas';
@@ -9,6 +9,7 @@ const router = Router();
 
 // Public routes with brute-force protection
 router.post('/login', authLimiter, validateBody(loginSchema), login);
+router.post('/logout', logout);
 
 // Authenticated user routes
 router.post('/change-password', authenticate, validateBody(changePasswordSchema), changePassword);

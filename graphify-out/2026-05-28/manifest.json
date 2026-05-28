@@ -35,9 +35,9 @@
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/backend/src/controllers/setController.ts": {
-    "mtime": 1779725798.0,
-    "ast_hash": "877ad2e6a39995ad72b25ce6102d988f",
-    "semantic_hash": "877ad2e6a39995ad72b25ce6102d988f"
+    "mtime": 1779981861.4765086,
+    "ast_hash": "cb8cb1de6ca02b0b6d68c3c279dfa582",
+    "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/backend/src/controllers/machineController.ts": {
     "mtime": 1779937601.1588047,
@@ -90,9 +90,9 @@
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/backend/src/routes/setRoutes.ts": {
-    "mtime": 1779726942.0,
-    "ast_hash": "3e1b4693944d2d2bdbe059461773711b",
-    "semantic_hash": "3e1b4693944d2d2bdbe059461773711b"
+    "mtime": 1779981880.7109418,
+    "ast_hash": "40627ca86d00df877a990cd04d0f52d5",
+    "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/backend/src/middleware/authMiddleware.ts": {
     "mtime": 1779901481.3966606,
@@ -120,9 +120,9 @@
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/backend/src/lib/prisma.ts": {
-    "mtime": 1779807507.070364,
-    "ast_hash": "ba16bf8ef940096cfcd11c9534f031ac",
-    "semantic_hash": "ba16bf8ef940096cfcd11c9534f031ac"
+    "mtime": 1779980844.2479336,
+    "ast_hash": "a1fa6baa35e191215e211ba01be2f2d1",
+    "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/backend/src/lib/config.ts": {
     "mtime": 1779730904.0,
@@ -130,8 +130,8 @@
     "semantic_hash": "11dbd1192dadf2e61c5287947aa87cc5"
   },
   "/home/sahil/Desktop/Projects/dms/backend/src/lib/schemas.ts": {
-    "mtime": 1779900070.287885,
-    "ast_hash": "6fddec38c911b9684c6fe473cd8b102e",
+    "mtime": 1779981851.6495485,
+    "ast_hash": "76e8ed1ce27721c394864e46d5a1f90c",
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/backend/prisma/populateSizeValue.ts": {
@@ -255,9 +255,9 @@
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/frontend/src/components/ActivityFeed.tsx": {
-    "mtime": 1779729170.0,
-    "ast_hash": "50dfcac761ef85e920032e8f5efb0126",
-    "semantic_hash": "50dfcac761ef85e920032e8f5efb0126"
+    "mtime": 1779981582.4381766,
+    "ast_hash": "1952324eeef29e5da851ab11a87e775a",
+    "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/frontend/src/components/Sidebar.tsx": {
     "mtime": 1779895031.4033957,
@@ -290,8 +290,8 @@
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/frontend/src/pages/Dashboard.tsx": {
-    "mtime": 1779937645.586937,
-    "ast_hash": "f64fe64e59953d15a3c6a3f359abe576",
+    "mtime": 1779982079.4706233,
+    "ast_hash": "f85b9265694c6d41e472d1f7960311ec",
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/frontend/src/pages/DiesPage.tsx": {
@@ -325,8 +325,8 @@
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/docker-compose.yml": {
-    "mtime": 1779813544.252844,
-    "ast_hash": "c388496df27ed61e49557b7a824e4ec2",
+    "mtime": 1779981213.829358,
+    "ast_hash": "2849ca175044c96489f797ca3a215d9d",
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/GEMINI.md": {
@@ -390,8 +390,8 @@
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/walkthrough.md": {
-    "mtime": 1779901193.364116,
-    "ast_hash": "00a93c1c84de47dc06bb3eb7df67790e",
+    "mtime": 1779937763.9005678,
+    "ast_hash": "38c0f32e0d0a36d07838a163cca781fc",
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/implementation_plan.md": {
@@ -400,8 +400,13 @@
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/task.md": {
-    "mtime": 1779937393.742765,
-    "ast_hash": "dccbb697d8af1a83e8db8d86118d07ec",
+    "mtime": 1779937742.2378216,
+    "ast_hash": "0cbb461177805e196b0d7459d89c7a21",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/prisma/migrations/20260528031543_add_audit_log/migration.sql": {
+    "mtime": 1779938143.0,
+    "ast_hash": "22711a6ecc84436133b41611a686d555",
     "semantic_hash": ""
   }
 }

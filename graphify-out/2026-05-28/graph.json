@@ -760,6 +760,15 @@
       "norm_label": "assigndietoset()"
     },
     {
+      "label": "bulkCreateSets()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/setController.ts",
+      "source_location": "L134",
+      "id": "controllers_setcontroller_bulkcreatesets",
+      "community": 67,
+      "norm_label": "bulkcreatesets()"
+    },
+    {
       "label": "machineController.ts",
       "file_type": "code",
       "source_file": "backend/src/controllers/machineController.ts",
@@ -1159,7 +1168,7 @@
       "label": "router",
       "file_type": "code",
       "source_file": "backend/src/routes/setRoutes.ts",
-      "source_location": "L14",
+      "source_location": "L15",
       "id": "routes_setroutes_router",
       "community": 67,
       "norm_label": "router"
@@ -1417,10 +1426,19 @@
       "norm_label": "createsetschema"
     },
     {
-      "label": "createDieSchema",
+      "label": "bulkCreateSetSchema",
       "file_type": "code",
       "source_file": "backend/src/lib/schemas.ts",
       "source_location": "L38",
+      "id": "lib_schemas_bulkcreatesetschema",
+      "community": 62,
+      "norm_label": "bulkcreatesetschema"
+    },
+    {
+      "label": "createDieSchema",
+      "file_type": "code",
+      "source_file": "backend/src/lib/schemas.ts",
+      "source_location": "L58",
       "id": "lib_schemas_createdieschema",
       "community": 62,
       "norm_label": "createdieschema"
@@ -1429,7 +1447,7 @@
       "label": "loginSchema",
       "file_type": "code",
       "source_file": "backend/src/lib/schemas.ts",
-      "source_location": "L65",
+      "source_location": "L85",
       "id": "lib_schemas_loginschema",
       "community": 62,
       "norm_label": "loginschema"
@@ -1438,7 +1456,7 @@
       "label": "registerSchema",
       "file_type": "code",
       "source_file": "backend/src/lib/schemas.ts",
-      "source_location": "L75",
+      "source_location": "L95",
       "id": "lib_schemas_registerschema",
       "community": 62,
       "norm_label": "registerschema"
@@ -1447,7 +1465,7 @@
       "label": "changePasswordSchema",
       "file_type": "code",
       "source_file": "backend/src/lib/schemas.ts",
-      "source_location": "L92",
+      "source_location": "L112",
       "id": "lib_schemas_changepasswordschema",
       "community": 62,
       "norm_label": "changepasswordschema"
@@ -4297,13 +4315,13 @@
       "norm_label": "walkthrough.md"
     },
     {
-      "label": "Walkthrough: Premium Dark SaaS Dashboard & Mobile Responsiveness Overhaul",
+      "label": "Walkthrough: Premium Dark SaaS Dashboard & Overhaul",
       "file_type": "document",
       "source_file": "walkthrough.md",
       "source_location": "L1",
-      "id": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
+      "id": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_overhaul",
       "community": 66,
-      "norm_label": "walkthrough: premium dark saas dashboard & mobile responsiveness overhaul"
+      "norm_label": "walkthrough: premium dark saas dashboard & overhaul"
     },
     {
       "label": "\ud83c\udfa8 Major Visual Overhaul Features",
@@ -4351,46 +4369,10 @@
       "norm_label": "\ud83d\udcf1 mobile & tablet viewport fluidity"
     },
     {
-      "label": "\ud83d\udee0\ufe0f Verification & Compilation Results",
-      "file_type": "document",
-      "source_file": "walkthrough.md",
-      "source_location": "L44",
-      "id": "dms_walkthrough_verification_compilation_results",
-      "community": 66,
-      "norm_label": "\ud83d\udee0\ufe0f verification & compilation results"
-    },
-    {
-      "label": "1. Docker Build & Restart",
-      "file_type": "document",
-      "source_file": "walkthrough.md",
-      "source_location": "L46",
-      "id": "dms_walkthrough_1_docker_build_restart",
-      "community": 66,
-      "norm_label": "1. docker build & restart"
-    },
-    {
-      "label": "code:bash (docker compose up -d --build)",
-      "file_type": "document",
-      "source_file": "walkthrough.md",
-      "source_location": "L48",
-      "id": "dms_walkthrough_codeblock_1",
-      "community": 66,
-      "norm_label": "code:bash (docker compose up -d --build)"
-    },
-    {
-      "label": "2. Micro-Animations & transitions",
-      "file_type": "document",
-      "source_file": "walkthrough.md",
-      "source_location": "L56",
-      "id": "dms_walkthrough_2_micro_animations_transitions",
-      "community": 66,
-      "norm_label": "2. micro-animations & transitions"
-    },
-    {
       "label": "\ud83d\udee0\ufe0f Immersive 3D Visualizer Fixes & Polishing",
       "file_type": "document",
       "source_file": "walkthrough.md",
-      "source_location": "L62",
+      "source_location": "L44",
       "id": "dms_walkthrough_immersive_3d_visualizer_fixes_polishing",
       "community": 66,
       "norm_label": "\ud83d\udee0\ufe0f immersive 3d visualizer fixes & polishing"
@@ -4399,7 +4381,7 @@
       "label": "1. Immersive Full-Screen Layout Wrappers (Fullscreen Fix)",
       "file_type": "document",
       "source_file": "walkthrough.md",
-      "source_location": "L64",
+      "source_location": "L46",
       "id": "dms_walkthrough_1_immersive_full_screen_layout_wrappers_fullscreen_fix",
       "community": 66,
       "norm_label": "1. immersive full-screen layout wrappers (fullscreen fix)"
@@ -4408,7 +4390,7 @@
       "label": "2. Canvas Zero-Dimension Self-Healing (WebGL Initialization Fix)",
       "file_type": "document",
       "source_file": "walkthrough.md",
-      "source_location": "L68",
+      "source_location": "L50",
       "id": "dms_walkthrough_2_canvas_zero_dimension_self_healing_webgl_initialization_fix",
       "community": 66,
       "norm_label": "2. canvas zero-dimension self-healing (webgl initialization fix)"
@@ -4417,7 +4399,7 @@
       "label": "\ud83c\udfa8 Settings Theme Unification (User Administration & Audit Trails)",
       "file_type": "document",
       "source_file": "walkthrough.md",
-      "source_location": "L74",
+      "source_location": "L56",
       "id": "dms_walkthrough_settings_theme_unification_user_administration_audit_trails",
       "community": 66,
       "norm_label": "\ud83c\udfa8 settings theme unification (user administration & audit trails)"
@@ -4426,55 +4408,46 @@
       "label": "code:css (background: rgba(2, 6, 23, 0.34);)",
       "file_type": "document",
       "source_file": "walkthrough.md",
-      "source_location": "L84",
-      "id": "dms_walkthrough_codeblock_2",
+      "source_location": "L66",
+      "id": "dms_walkthrough_codeblock_1",
       "community": 66,
       "norm_label": "code:css (background: rgba(2, 6, 23, 0.34);)"
     },
     {
-      "label": "\ud83d\udd10 Interactive Profile Settings: Change Password Integration",
+      "label": "\ud83d\ude80 Advanced DMS Platform Improvements (Suggestions 2, 3, 4)",
       "file_type": "document",
       "source_file": "walkthrough.md",
-      "source_location": "L104",
-      "id": "dms_walkthrough_interactive_profile_settings_change_password_integration",
+      "source_location": "L86",
+      "id": "dms_walkthrough_advanced_dms_platform_improvements_suggestions_2_3_4",
       "community": 66,
-      "norm_label": "\ud83d\udd10 interactive profile settings: change password integration"
+      "norm_label": "\ud83d\ude80 advanced dms platform improvements (suggestions 2, 3, 4)"
     },
     {
-      "label": "\ud83c\udfa8 Consistent Row Hover Aesthetics: Eliminating High-Contrast Glare",
+      "label": "1. Feature 2: Client-Side Excel Pre-Parsing & Browser Validation",
       "file_type": "document",
       "source_file": "walkthrough.md",
-      "source_location": "L127",
-      "id": "dms_walkthrough_consistent_row_hover_aesthetics_eliminating_high_contrast_glare",
+      "source_location": "L90",
+      "id": "dms_walkthrough_1_feature_2_client_side_excel_pre_parsing_browser_validation",
       "community": 66,
-      "norm_label": "\ud83c\udfa8 consistent row hover aesthetics: eliminating high-contrast glare"
+      "norm_label": "1. feature 2: client-side excel pre-parsing & browser validation"
     },
     {
-      "label": "code:css (background-color: hsl(222, 25%, 13%) !important;)",
+      "label": "2. Feature 3: Structured Database-Backed Audit Log Filters",
       "file_type": "document",
       "source_file": "walkthrough.md",
-      "source_location": "L134",
-      "id": "dms_walkthrough_codeblock_3",
+      "source_location": "L95",
+      "id": "dms_walkthrough_2_feature_3_structured_database_backed_audit_log_filters",
       "community": 66,
-      "norm_label": "code:css (background-color: hsl(222, 25%, 13%) !important;)"
+      "norm_label": "2. feature 3: structured database-backed audit log filters"
     },
     {
-      "label": "code:css (background: var(--white);)",
+      "label": "3. Feature 4: Interactive Equipment Gantt Timeline",
       "file_type": "document",
       "source_file": "walkthrough.md",
-      "source_location": "L140",
-      "id": "dms_walkthrough_codeblock_4",
+      "source_location": "L101",
+      "id": "dms_walkthrough_3_feature_4_interactive_equipment_gantt_timeline",
       "community": 66,
-      "norm_label": "code:css (background: var(--white);)"
-    },
-    {
-      "label": "\ud83d\udcca Feature 1: Pre-Upload Excel Grid & Online Schema Validator",
-      "file_type": "document",
-      "source_file": "walkthrough.md",
-      "source_location": "L147",
-      "id": "dms_walkthrough_feature_1_pre_upload_excel_grid_online_schema_validator",
-      "community": 66,
-      "norm_label": "\ud83d\udcca feature 1: pre-upload excel grid & online schema validator"
+      "norm_label": "3. feature 4: interactive equipment gantt timeline"
     },
     {
       "label": "implementation_plan.md",
@@ -4732,10 +4705,100 @@
       "label": "updateDieSchema",
       "file_type": "code",
       "source_file": "backend/src/lib/schemas.ts",
-      "source_location": "L63",
+      "source_location": "L83",
       "id": "lib_schemas_updatedieschema",
       "community": 0,
       "norm_label": "updatedieschema"
+    },
+    {
+      "label": "Walkthrough: Premium Dark SaaS Dashboard & Mobile Responsiveness Overhaul",
+      "file_type": "document",
+      "source_file": "walkthrough.md",
+      "source_location": "L1",
+      "community": 66,
+      "norm_label": "walkthrough: premium dark saas dashboard & mobile responsiveness overhaul",
+      "id": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul"
+    },
+    {
+      "label": "\ud83d\udee0\ufe0f Verification & Compilation Results",
+      "file_type": "document",
+      "source_file": "walkthrough.md",
+      "source_location": "L44",
+      "community": 66,
+      "norm_label": "\ud83d\udee0\ufe0f verification & compilation results",
+      "id": "dms_walkthrough_verification_compilation_results"
+    },
+    {
+      "label": "1. Docker Build & Restart",
+      "file_type": "document",
+      "source_file": "walkthrough.md",
+      "source_location": "L46",
+      "community": 66,
+      "norm_label": "1. docker build & restart",
+      "id": "dms_walkthrough_1_docker_build_restart"
+    },
+    {
+      "label": "2. Micro-Animations & transitions",
+      "file_type": "document",
+      "source_file": "walkthrough.md",
+      "source_location": "L56",
+      "community": 66,
+      "norm_label": "2. micro-animations & transitions",
+      "id": "dms_walkthrough_2_micro_animations_transitions"
+    },
+    {
+      "label": "code:css (background: rgba(2, 6, 23, 0.34);)",
+      "file_type": "document",
+      "source_file": "walkthrough.md",
+      "source_location": "L84",
+      "community": 66,
+      "norm_label": "code:css (background: rgba(2, 6, 23, 0.34);)",
+      "id": "dms_walkthrough_codeblock_2"
+    },
+    {
+      "label": "\ud83d\udd10 Interactive Profile Settings: Change Password Integration",
+      "file_type": "document",
+      "source_file": "walkthrough.md",
+      "source_location": "L104",
+      "community": 66,
+      "norm_label": "\ud83d\udd10 interactive profile settings: change password integration",
+      "id": "dms_walkthrough_interactive_profile_settings_change_password_integration"
+    },
+    {
+      "label": "\ud83c\udfa8 Consistent Row Hover Aesthetics: Eliminating High-Contrast Glare",
+      "file_type": "document",
+      "source_file": "walkthrough.md",
+      "source_location": "L127",
+      "community": 66,
+      "norm_label": "\ud83c\udfa8 consistent row hover aesthetics: eliminating high-contrast glare",
+      "id": "dms_walkthrough_consistent_row_hover_aesthetics_eliminating_high_contrast_glare"
+    },
+    {
+      "label": "code:css (background-color: hsl(222, 25%, 13%) !important;)",
+      "file_type": "document",
+      "source_file": "walkthrough.md",
+      "source_location": "L134",
+      "community": 66,
+      "norm_label": "code:css (background-color: hsl(222, 25%, 13%) !important;)",
+      "id": "dms_walkthrough_codeblock_3"
+    },
+    {
+      "label": "code:css (background: var(--white);)",
+      "file_type": "document",
+      "source_file": "walkthrough.md",
+      "source_location": "L140",
+      "community": 66,
+      "norm_label": "code:css (background: var(--white);)",
+      "id": "dms_walkthrough_codeblock_4"
+    },
+    {
+      "label": "\ud83d\udcca Feature 1: Pre-Upload Excel Grid & Online Schema Validator",
+      "file_type": "document",
+      "source_file": "walkthrough.md",
+      "source_location": "L147",
+      "community": 66,
+      "norm_label": "\ud83d\udcca feature 1: pre-upload excel grid & online schema validator",
+      "id": "dms_walkthrough_feature_1_pre_upload_excel_grid_online_schema_validator"
     },
     {
       "label": "4. Initialize the Database (IMPORTANT)",
@@ -7478,6 +7541,16 @@
       "target": "controllers_setcontroller_assigndietoset"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/setController.ts",
+      "source_location": "L134",
+      "weight": 1.0,
+      "source": "backend_src_controllers_setcontroller_ts",
+      "target": "controllers_setcontroller_bulkcreatesets",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -7599,6 +7672,28 @@
       "target": "lib_auditlogger_logaction"
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/setRoutes.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_routes_setroutes_ts",
+      "target": "controllers_setcontroller_bulkcreatesets",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/setController.ts",
+      "source_location": "L186",
+      "weight": 1.0,
+      "source": "controllers_setcontroller_bulkcreatesets",
+      "target": "lib_auditlogger_logaction"
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -7707,9 +7802,9 @@
       "source_file": "backend/src/controllers/machineController.ts",
       "source_location": "L279",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_machinecontroller_ts",
-      "target": "controllers_machinecontroller_getmachinetimeline",
-      "confidence_score": 1.0
+      "target": "controllers_machinecontroller_getmachinetimeline"
     },
     {
       "relation": "imports_from",
@@ -7850,9 +7945,9 @@
       "source_file": "backend/src/routes/machineRoutes.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_machineroutes_ts",
-      "target": "controllers_machinecontroller_getmachinetimeline",
-      "confidence_score": 1.0
+      "target": "controllers_machinecontroller_getmachinetimeline"
     },
     {
       "relation": "imports_from",
@@ -9062,6 +9157,17 @@
       "target": "lib_schemas_updatesetschema"
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/setRoutes.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "backend_src_routes_setroutes_ts",
+      "target": "lib_schemas_bulkcreatesetschema",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/routes/setRoutes.ts",
@@ -9304,6 +9410,16 @@
       "confidence_score": 1.0,
       "source": "backend_src_lib_schemas_ts",
       "target": "lib_schemas_createsetschema"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/lib/schemas.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "backend_src_lib_schemas_ts",
+      "target": "lib_schemas_bulkcreatesetschema",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -11488,9 +11604,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_package_dependencies",
-      "target": "frontend_package_dependencies_xlsx",
-      "confidence_score": 1.0
+      "target": "frontend_package_dependencies_xlsx"
     },
     {
       "relation": "contains",
@@ -14735,6 +14851,16 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "walkthrough_md",
+      "target": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_overhaul"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "walkthrough.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "walkthrough_md",
       "target": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul"
     },
     {
@@ -14744,7 +14870,7 @@
       "source_location": "L7",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
+      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_overhaul",
       "target": "dms_walkthrough_major_visual_overhaul_features"
     },
     {
@@ -14754,7 +14880,7 @@
       "source_location": "L31",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
+      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_overhaul",
       "target": "dms_walkthrough_mobile_tablet_viewport_fluidity"
     },
     {
@@ -14764,58 +14890,28 @@
       "source_location": "L44",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
-      "target": "dms_walkthrough_verification_compilation_results"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "walkthrough.md",
-      "source_location": "L62",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
+      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_overhaul",
       "target": "dms_walkthrough_immersive_3d_visualizer_fixes_polishing"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "walkthrough.md",
-      "source_location": "L74",
+      "source_location": "L56",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
+      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_overhaul",
       "target": "dms_walkthrough_settings_theme_unification_user_administration_audit_trails"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "walkthrough.md",
-      "source_location": "L104",
+      "source_location": "L86",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
-      "target": "dms_walkthrough_interactive_profile_settings_change_password_integration"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "walkthrough.md",
-      "source_location": "L127",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
-      "target": "dms_walkthrough_consistent_row_hover_aesthetics_eliminating_high_contrast_glare"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "walkthrough.md",
-      "source_location": "L147",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
-      "target": "dms_walkthrough_feature_1_pre_upload_excel_grid_online_schema_validator"
+      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_overhaul",
+      "target": "dms_walkthrough_advanced_dms_platform_improvements_suggestions_2_3_4"
     },
     {
       "relation": "contains",
@@ -14851,31 +14947,21 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "walkthrough.md",
-      "source_location": "L46",
+      "source_location": "L7",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "dms_walkthrough_verification_compilation_results",
-      "target": "dms_walkthrough_1_docker_build_restart"
+      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
+      "target": "dms_walkthrough_major_visual_overhaul_features"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "walkthrough.md",
-      "source_location": "L56",
+      "source_location": "L31",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "dms_walkthrough_verification_compilation_results",
-      "target": "dms_walkthrough_2_micro_animations_transitions"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "walkthrough.md",
-      "source_location": "L48",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "dms_walkthrough_1_docker_build_restart",
-      "target": "dms_walkthrough_codeblock_1"
+      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
+      "target": "dms_walkthrough_mobile_tablet_viewport_fluidity"
     },
     {
       "relation": "contains",
@@ -14901,6 +14987,36 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "walkthrough.md",
+      "source_location": "L62",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
+      "target": "dms_walkthrough_immersive_3d_visualizer_fixes_polishing"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "walkthrough.md",
+      "source_location": "L66",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_walkthrough_settings_theme_unification_user_administration_audit_trails",
+      "target": "dms_walkthrough_codeblock_1"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "walkthrough.md",
+      "source_location": "L74",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
+      "target": "dms_walkthrough_settings_theme_unification_user_administration_audit_trails"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "walkthrough.md",
       "source_location": "L84",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -14911,21 +15027,41 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "walkthrough.md",
-      "source_location": "L134",
+      "source_location": "L48",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "dms_walkthrough_consistent_row_hover_aesthetics_eliminating_high_contrast_glare",
-      "target": "dms_walkthrough_codeblock_3"
+      "source": "dms_walkthrough_1_docker_build_restart",
+      "target": "dms_walkthrough_codeblock_1"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "walkthrough.md",
-      "source_location": "L140",
+      "source_location": "L90",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "dms_walkthrough_consistent_row_hover_aesthetics_eliminating_high_contrast_glare",
-      "target": "dms_walkthrough_codeblock_4"
+      "source": "dms_walkthrough_advanced_dms_platform_improvements_suggestions_2_3_4",
+      "target": "dms_walkthrough_1_feature_2_client_side_excel_pre_parsing_browser_validation"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "walkthrough.md",
+      "source_location": "L95",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_walkthrough_advanced_dms_platform_improvements_suggestions_2_3_4",
+      "target": "dms_walkthrough_2_feature_3_structured_database_backed_audit_log_filters"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "walkthrough.md",
+      "source_location": "L101",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_walkthrough_advanced_dms_platform_improvements_suggestions_2_3_4",
+      "target": "dms_walkthrough_3_feature_4_interactive_equipment_gantt_timeline"
     },
     {
       "relation": "contains",
@@ -15103,9 +15239,9 @@
       "source_file": "task.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "task_md",
-      "target": "dms_task_tasks_client_side_excel_structured_audit_filters_interactive_timeline",
-      "confidence_score": 1.0
+      "target": "dms_task_tasks_client_side_excel_structured_audit_filters_interactive_timeline"
     },
     {
       "relation": "contains",
@@ -15156,6 +15292,86 @@
       "confidence_score": 1.0,
       "source": "frontend_readme_expanding_the_eslint_configuration",
       "target": "frontend_readme_codeblock_2"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "walkthrough.md",
+      "source_location": "L44",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
+      "target": "dms_walkthrough_verification_compilation_results"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "walkthrough.md",
+      "source_location": "L104",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
+      "target": "dms_walkthrough_interactive_profile_settings_change_password_integration"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "walkthrough.md",
+      "source_location": "L127",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
+      "target": "dms_walkthrough_consistent_row_hover_aesthetics_eliminating_high_contrast_glare"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "walkthrough.md",
+      "source_location": "L147",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_mobile_responsiveness_overhaul",
+      "target": "dms_walkthrough_feature_1_pre_upload_excel_grid_online_schema_validator"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "walkthrough.md",
+      "source_location": "L46",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_walkthrough_verification_compilation_results",
+      "target": "dms_walkthrough_1_docker_build_restart"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "walkthrough.md",
+      "source_location": "L56",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_walkthrough_verification_compilation_results",
+      "target": "dms_walkthrough_2_micro_animations_transitions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "walkthrough.md",
+      "source_location": "L134",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_walkthrough_consistent_row_hover_aesthetics_eliminating_high_contrast_glare",
+      "target": "dms_walkthrough_codeblock_3"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "walkthrough.md",
+      "source_location": "L140",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dms_walkthrough_consistent_row_hover_aesthetics_eliminating_high_contrast_glare",
+      "target": "dms_walkthrough_codeblock_4"
     },
     {
       "relation": "contains",
@@ -16704,5 +16920,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "b88a2832ff557b3b3c5bcf91518f162046dd227f"
+  "built_at_commit": "c682e759231b519ea39e8b60c7a1ce0b9d15301f"
 }

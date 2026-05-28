@@ -23,11 +23,17 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' }
 }));
 
-// Restrict CORS origins in production
+// Restrict CORS origins to support secure HttpOnly credentials sharing
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production'
-    ? (process.env.FRONTEND_URL || 'http://localhost')
-    : '*',
+  origin: (origin, callback) => {
+    if (process.env.NODE_ENV === 'production') {
+      const allowed = process.env.FRONTEND_URL || 'http://localhost';
+      callback(null, origin === allowed ? true : false);
+    } else {
+      // Echo the requesting host origin dynamically in dev to allow cookie sharing
+      callback(null, true);
+    }
+  },
   credentials: true
 }));
 

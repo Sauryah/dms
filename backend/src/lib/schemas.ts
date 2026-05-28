@@ -35,6 +35,26 @@ export const createSetSchema = z.object({
 
 export const updateSetSchema = createSetSchema;
 
+export const bulkCreateSetSchema = z.object({
+  machineId: z.string().trim().uuid("Invalid target machine format").optional().nullable(),
+  sets: z.array(
+    z.object({
+      name: z
+        .string()
+        .trim()
+        .min(2, "Set name must be at least 2 characters")
+        .max(50, "Set name cannot exceed 50 characters"),
+      description: z
+        .string()
+        .trim()
+        .max(200, "Description cannot exceed 200 characters")
+        .optional()
+        .nullable(),
+      dieIds: z.array(z.string().trim().uuid("Invalid die identifier format")).optional(),
+    })
+  ).min(1, "At least one set configuration is required"),
+});
+
 export const createDieSchema = z.object({
   dieId: z
     .string()

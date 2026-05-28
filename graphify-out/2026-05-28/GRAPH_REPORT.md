@@ -1,16 +1,16 @@
 # Graph Report - dms  (2026-05-28)
 
 ## Corpus Check
-- 71 files · ~44,475 words
+- 72 files · ~45,344 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 705 nodes · 1006 edges · 79 communities (62 shown, 17 thin omitted)
+- 712 nodes · 1021 edges · 79 communities (62 shown, 17 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 17 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b88a2832`
+- Built from commit: `c682e759`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -72,7 +72,7 @@
 - [[_COMMUNITY_Community 78|Community 78]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `logAction()` - 23 edges
+1. `logAction()` - 24 edges
 2. `useAuth()` - 22 edges
 3. `compilerOptions` - 17 edges
 4. `compilerOptions` - 16 edges
@@ -186,8 +186,8 @@ Cohesion: 0.18
 Nodes (15): $ref, definitions, Machine, $ref, anyOf, $ref, type, auditLog (+7 more)
 
 ### Community 62 - "Community 62"
-Cohesion: 0.21
-Nodes (12): changePassword(), deleteUser(), getUsers(), login(), register(), changePasswordSchema, createDieSchema, createMachineSchema (+4 more)
+Cohesion: 0.19
+Nodes (13): changePassword(), deleteUser(), getUsers(), login(), register(), bulkCreateSetSchema, changePasswordSchema, createDieSchema (+5 more)
 
 ### Community 63 - "Community 63"
 Cohesion: 0.24
@@ -202,12 +202,12 @@ Cohesion: 0.17
 Nodes (12): type, format, type, Die, properties, type, type, casing (+4 more)
 
 ### Community 66 - "Community 66"
-Cohesion: 0.10
-Nodes (20): 1. Docker Build & Restart, 1. Immersive Full-Screen Layout Wrappers (Fullscreen Fix), 1. Unified Carbon-Cobalt Design Tokens, 2. Canvas Zero-Dimension Self-Healing (WebGL Initialization Fix), 2. Glassmorphic Navigation Panels, 2. Micro-Animations & transitions, 3. Professional Spacing & Spacing Systems, code:bash (docker compose up -d --build) (+12 more)
+Cohesion: 0.09
+Nodes (25): 1. Docker Build & Restart, 1. Feature 2: Client-Side Excel Pre-Parsing & Browser Validation, 1. Immersive Full-Screen Layout Wrappers (Fullscreen Fix), 1. Unified Carbon-Cobalt Design Tokens, 2. Canvas Zero-Dimension Self-Healing (WebGL Initialization Fix), 2. Feature 3: Structured Database-Backed Audit Log Filters, 2. Glassmorphic Navigation Panels, 2. Micro-Animations & transitions (+17 more)
 
 ### Community 67 - "Community 67"
-Cohesion: 0.36
-Nodes (9): assignDieToSet(), createSet(), deleteSet(), getSetById(), getSets(), updateSet(), logAction(), updateSetSchema (+1 more)
+Cohesion: 0.35
+Nodes (10): assignDieToSet(), bulkCreateSets(), createSet(), deleteSet(), getSetById(), getSets(), updateSet(), logAction() (+2 more)
 
 ### Community 68 - "Community 68"
 Cohesion: 0.20
@@ -250,7 +250,7 @@ Cohesion: 0.48
 Nodes (5): fetchDies(), handleDelete(), handleImport(), handleSubmit(), resetForm()
 
 ## Knowledge Gaps
-- **277 isolated node(s):** `name`, `version`, `description`, `main`, `dev` (+272 more)
+- **278 isolated node(s):** `name`, `version`, `description`, `main`, `dev` (+273 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **17 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -260,9 +260,9 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `LoginPage()` connect `Community 1` to `Community 3`?**
   _High betweenness centrality (0.014) - this node is a cross-community bridge._
 - **Why does `handleSubmit()` connect `Community 3` to `Community 1`?**
-  _High betweenness centrality (0.014) - this node is a cross-community bridge._
+  _High betweenness centrality (0.013) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `description` to the rest of the system?**
-  _277 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _278 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.06559356136820925 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**

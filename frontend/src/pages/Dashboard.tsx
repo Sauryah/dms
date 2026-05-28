@@ -63,6 +63,16 @@ const Dashboard: React.FC = () => {
   const [newMachine, setNewMachine] = useState({ name: '', location: '' });
   const [error, setError] = useState('');
   
+  // Bulk Set Add & Assign States
+  const [showBulkModal, setShowBulkModal] = useState(false);
+  const [selectedBulkMachine, setSelectedBulkMachine] = useState('');
+  const [bulkSets, setBulkSets] = useState<Array<{ name: string; description: string; dieIds: string[] }>>([
+    { name: '', description: '', dieIds: [] }
+  ]);
+  const [unassignedDiesList, setUnassignedDiesList] = useState<any[]>([]);
+  const [bulkError, setBulkError] = useState('');
+  const [submittingBulk, setSubmittingBulk] = useState(false);
+  
   // Scale-Safe Pagination States (10 machines per view)
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -72,6 +82,8 @@ const Dashboard: React.FC = () => {
   const navigate = useNavigate();
 
   const isAdmin = user?.role === 'ADMIN';
+  const isOperator = user?.role === 'OPERATOR';
+  const canModify = isAdmin || isOperator;
 
   const fetchData = async (isRefresh = false) => {
     try {
@@ -98,16 +110,13 @@ const Dashboard: React.FC = () => {
 
   // Server-Sent Events (SSE) subscriber loop for real-time Gantt timelines
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) return;
-
     const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-    const streamUrl = `${apiBase}/audit-logs/stream?token=${encodeURIComponent(token)}`;
+    const streamUrl = `${apiBase}/audit-logs/stream`;
     let eventSource: EventSource;
 
     const connectSSE = () => {
       console.log('Establishing connection to real-time dashboard SSE stream...');
-      eventSource = new EventSource(streamUrl);
+      eventSource = new EventSource(streamUrl, { withCredentials: true });
 
       eventSource.onmessage = (event) => {
         try {
@@ -163,6 +172,90 @@ const Dashboard: React.FC = () => {
       const msg = err.response?.data?.error || 'Failed to create machine';
       setError(msg);
       addToast('error', 'Registration Error', msg);
+    }
+  };
+
+  const fetchUnassignedDies = async () => {
+    try {
+      const res = await api.get('/dies');
+      // Filter out dies that are already assigned to a set
+      const unassigned = res.data.filter((die: any) => !die.setId);
+      setUnassignedDiesList(unassigned);
+    } catch (err) {
+      console.error('Failed to load unassigned dies:', err);
+    }
+  };
+
+  useEffect(() => {
+    if (showBulkModal) {
+      fetchUnassignedDies();
+    }
+  }, [showBulkModal]);
+
+  const handleAddBulkRow = () => {
+    setBulkSets([...bulkSets, { name: '', description: '', dieIds: [] }]);
+  };
+
+  const handleRemoveBulkRow = (idx: number) => {
+    if (bulkSets.length === 1) {
+      setBulkSets([{ name: '', description: '', dieIds: [] }]);
+      return;
+    }
+    setBulkSets(bulkSets.filter((_, i) => i !== idx));
+  };
+
+  const handleBulkRowChange = (idx: number, field: string, value: any) => {
+    const updated = [...bulkSets];
+    updated[idx] = {
+      ...updated[idx],
+      [field]: value
+    };
+    setBulkSets(updated);
+  };
+
+  const handleCreateBulkSets = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setBulkError('');
+    setSubmittingBulk(true);
+
+    const validSets = bulkSets.filter(s => s.name.trim() !== '');
+    if (validSets.length === 0) {
+      setBulkError('Please enter a Toolset Name for at least one row.');
+      setSubmittingBulk(false);
+      return;
+    }
+
+    const names = validSets.map(s => s.name.trim().toLowerCase());
+    const hasLocalDuplicates = names.some((name, idx) => names.indexOf(name) !== idx);
+    if (hasLocalDuplicates) {
+      setBulkError('Duplicate Toolset Names detected in your batch. Each name must be unique.');
+      setSubmittingBulk(false);
+      return;
+    }
+
+    try {
+      const payload = {
+        machineId: selectedBulkMachine || null,
+        sets: validSets.map(s => ({
+          name: s.name.trim(),
+          description: s.description.trim() || null,
+          dieIds: s.dieIds || []
+        }))
+      };
+
+      await api.post('/sets/bulk', payload);
+      addToast('success', 'Toolsets Registered', `Successfully batch-created ${validSets.length} toolsets.`);
+      
+      setBulkSets([{ name: '', description: '', dieIds: [] }]);
+      setSelectedBulkMachine('');
+      setShowBulkModal(false);
+      fetchData(true);
+    } catch (err: any) {
+      const msg = err.response?.data?.error || 'Failed to batch-create toolsets.';
+      setBulkError(msg);
+      addToast('error', 'Batch Creation Error', msg);
+    } finally {
+      setSubmittingBulk(false);
     }
   };
 
@@ -239,14 +332,26 @@ const Dashboard: React.FC = () => {
           <h1 className="page-title">Equipment Dashboard</h1>
           <p className="page-subtitle">Real-time overview of your facility's production assets</p>
         </div>
-        {isAdmin && (
-          <button 
-            className="btn btn-primary" 
-            onClick={() => setShowModal(true)}
-          >
-            <Plus size={18} /> Add Machine
-          </button>
-        )}
+        <div style={{ display: 'flex', gap: '0.75rem' }}>
+          {canModify && (
+            <button 
+              className="btn btn-secondary" 
+              onClick={() => setShowBulkModal(true)}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+            >
+              <Workflow size={18} /> Bulk Add Sets
+            </button>
+          )}
+          {isAdmin && (
+            <button 
+              className="btn btn-primary" 
+              onClick={() => setShowModal(true)}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+            >
+              <Plus size={18} /> Add Machine
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="metric-strip">
@@ -780,7 +885,171 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
       )}
-      
+
+      {showBulkModal && (
+        <div className="modal-overlay">
+          <div className="modal-content" style={{ maxWidth: '850px', width: '100%', padding: '2.5rem' }}>
+            <div className="flex-between" style={{ marginBottom: '1.5rem' }}>
+              <div>
+                <h2 className="section-title" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Workflow size={22} style={{ color: 'var(--primary)' }} /> Bulk Create & Assign Toolsets
+                </h2>
+                <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.8125rem', color: 'var(--text-muted)' }}>
+                  Batch define new toolsets and map them immediately onto an active machine slot.
+                </p>
+              </div>
+              <button onClick={() => setShowBulkModal(false)} className="btn btn-ghost" style={{ padding: '0.25rem' }}>
+                <X size={20} />
+              </button>
+            </div>
+
+            {bulkError && (
+              <div style={{ padding: '0.75rem 1rem', background: 'var(--danger-light)', color: 'var(--danger)', borderRadius: '8px', fontSize: '0.875rem', marginBottom: '1.5rem', border: '1px solid #fee2e2', fontWeight: 500 }}>
+                {bulkError}
+              </div>
+            )}
+
+            <form onSubmit={handleCreateBulkSets} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              
+              {/* Target Machine Selection */}
+              <div className="input-group" style={{ maxWidth: '400px' }}>
+                <label className="label">Mount onto Target Machine (Optional)</label>
+                <select 
+                  className="input"
+                  value={selectedBulkMachine}
+                  onChange={(e) => setSelectedBulkMachine(e.target.value)}
+                  style={{ height: '3rem' }}
+                >
+                  <option value="">-- Keep Unassigned / Offline --</option>
+                  {machines.map((machine) => (
+                    <option key={machine.id} value={machine.id}>
+                      {machine.name} ({machine.location || 'Floor A'})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Dynamic Rows Grid */}
+              <div className="table-container" style={{ maxHeight: '300px', overflowY: 'auto', border: '1px solid var(--border)', boxShadow: 'none' }}>
+                <table className="data-table" style={{ width: '100%' }}>
+                  <thead>
+                    <tr>
+                      <th style={{ width: '40%' }}>Toolset Name *</th>
+                      <th style={{ width: '35%' }}>Description</th>
+                      <th style={{ width: '20%' }}>Dies Mount (Ctrl+Click)</th>
+                      <th style={{ width: '5%', textAlign: 'center' }}></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bulkSets.map((row, idx) => {
+                      const isDuplicate = row.name.trim() !== '' && bulkSets.some((s, i) => i !== idx && s.name.trim().toLowerCase() === row.name.trim().toLowerCase());
+                      return (
+                        <tr key={idx} style={{ background: 'transparent' }}>
+                          <td style={{ verticalAlign: 'top' }}>
+                            <div style={{ position: 'relative' }}>
+                              <input 
+                                type="text"
+                                className="input"
+                                placeholder="e.g. Set Gamma"
+                                value={row.name}
+                                onChange={(e) => handleBulkRowChange(idx, 'name', e.target.value)}
+                                style={{ 
+                                  height: '2.75rem', 
+                                  borderColor: isDuplicate ? 'var(--danger)' : undefined,
+                                  boxShadow: isDuplicate ? '0 0 6px rgba(239, 68, 68, 0.2)' : undefined
+                                }}
+                                required
+                              />
+                              {isDuplicate && (
+                                <span style={{ fontSize: '0.6875rem', color: 'var(--danger)', display: 'block', marginTop: '0.25rem', fontWeight: 600 }}>
+                                  Name repeated in batch
+                                </span>
+                              )}
+                            </div>
+                          </td>
+                          <td style={{ verticalAlign: 'top' }}>
+                            <input 
+                              type="text"
+                              className="input"
+                              placeholder="Describe standard sizing..."
+                              value={row.description}
+                              onChange={(e) => handleBulkRowChange(idx, 'description', e.target.value)}
+                              style={{ height: '2.75rem' }}
+                            />
+                          </td>
+                          <td style={{ verticalAlign: 'top' }}>
+                            <select
+                              multiple
+                              className="input"
+                              value={row.dieIds}
+                              onChange={(e) => {
+                                const selected = Array.from(e.target.selectedOptions, opt => opt.value);
+                                handleBulkRowChange(idx, 'dieIds', selected);
+                              }}
+                              style={{ height: '2.75rem', fontSize: '0.75rem', padding: '0.25rem' }}
+                            >
+                              {unassignedDiesList.map((die) => (
+                                <option key={die.id} value={die.id}>
+                                  {die.dieId} ({die.size})
+                                </option>
+                              ))}
+                            </select>
+                          </td>
+                          <td style={{ verticalAlign: 'middle', textAlign: 'center' }}>
+                            <button 
+                              type="button" 
+                              className="btn btn-ghost" 
+                              onClick={() => handleRemoveBulkRow(idx)}
+                              style={{ padding: '0.35rem', color: 'var(--danger)' }}
+                              title="Remove Row"
+                            >
+                              <X size={16} />
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Add Row Action */}
+              <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <button 
+                  type="button" 
+                  className="btn btn-secondary" 
+                  onClick={handleAddBulkRow}
+                  style={{ padding: '0.5rem 1rem', height: '2.5rem', fontSize: '0.8125rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+                >
+                  <Plus size={14} /> Add Row
+                </button>
+              </div>
+
+              {/* Controls */}
+              <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', borderTop: '1px solid var(--border)', paddingTop: '1.25rem' }}>
+                <button 
+                  type="button" 
+                  className="btn btn-secondary" 
+                  onClick={() => setShowBulkModal(false)} 
+                  style={{ flex: 1 }}
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  className="btn btn-primary" 
+                  disabled={submittingBulk}
+                  style={{ flex: 1 }}
+                >
+                  {submittingBulk ? 'Batch Creating...' : `Confirm & Deploy Batch (${bulkSets.filter(s => s.name.trim() !== '').length} Sets)`}
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      )}
+
       <style>{`
         .hover-row:hover {
           background-color: hsl(222, 25%, 13%) !important;

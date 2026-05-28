@@ -43,7 +43,7 @@ const ActivityFeed: React.FC = () => {
   const fetchLogs = async () => {
     try {
       const response = await api.get('/audit-logs');
-      setLogs(response.data);
+      setLogs(response.data.logs || []);
     } catch (error) {
       console.error('Failed to fetch audit logs', error);
     } finally {

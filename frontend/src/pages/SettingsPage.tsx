@@ -12,7 +12,7 @@ interface UserInfo {
 }
 
 const SettingsPage: React.FC = () => {
-  const { user, token, logout } = useAuth();
+  const { user, logout } = useAuth();
   const [usersList, setUsersList] = useState<UserInfo[]>([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -140,15 +140,15 @@ const SettingsPage: React.FC = () => {
 
   // Real-time EventSource connection for streaming audit log telemetry
   useEffect(() => {
-    if (!isAdmin || !token || activeTab !== 'audit') return;
+    if (!isAdmin || activeTab !== 'audit') return;
 
     const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-    const streamUrl = `${apiBase}/audit-logs/stream?token=${encodeURIComponent(token)}`;
+    const streamUrl = `${apiBase}/audit-logs/stream`;
     let eventSource: EventSource;
 
     const connectSSE = () => {
       console.log('Establishing connection to real-time audit logs SSE stream...');
-      eventSource = new EventSource(streamUrl);
+      eventSource = new EventSource(streamUrl, { withCredentials: true });
 
       eventSource.onmessage = (event) => {
         try {
@@ -185,7 +185,7 @@ const SettingsPage: React.FC = () => {
         
         // Reconnection logic with linear backoff
         setTimeout(() => {
-          if (isAdmin && token && activeTab === 'audit') {
+          if (isAdmin && activeTab === 'audit') {
             connectSSE();
           }
         }, 5000);
@@ -200,7 +200,7 @@ const SettingsPage: React.FC = () => {
         eventSource.close();
       }
     };
-  }, [isAdmin, token, activeTab, logsPage, actorFilter, actionFilter, logSearch]);
+  }, [isAdmin, activeTab, logsPage, actorFilter, actionFilter, logSearch]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

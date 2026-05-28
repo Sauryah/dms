@@ -130,3 +130,76 @@ export const assignDieToSet = async (req: Request, res: Response, next: NextFunc
     next(error);
   }
 };
+
+export const bulkCreateSets = async (req: Request, res: Response, next: NextFunction) => {
+  const { machineId, sets } = req.body as {
+    machineId?: string | null;
+    sets: Array<{ name: string; description?: string | null; dieIds?: string[] }>;
+  };
+
+  try {
+    const result = await prisma.$transaction(async (tx) => {
+      // 1. Verify target machine exists if machineId is supplied
+      let machineName = '';
+      if (machineId) {
+        const machine = await tx.machine.findUnique({ where: { id: machineId } });
+        if (!machine) {
+          throw new Error(`Target Machine with ID "${machineId}" does not exist.`);
+        }
+        machineName = machine.name;
+      }
+
+      const createdSets = [];
+      for (const setData of sets) {
+        // 2. Validate duplicate set names inside transactional loop
+        const existing = await tx.set.findUnique({ where: { name: setData.name } });
+        if (existing) {
+          throw new Error(`Toolset Name "${setData.name}" already exists in the system database.`);
+        }
+
+        // 3. Create the Set and connect relations
+        const set = await tx.set.create({
+          data: {
+            name: setData.name,
+            description: setData.description || null,
+            machineId: machineId || null,
+            dies: setData.dieIds ? {
+              connect: setData.dieIds.map((id) => ({ id })),
+            } : undefined,
+          },
+          include: {
+            dies: true,
+          },
+        });
+        createdSets.push(set);
+      }
+
+      return { createdSets, machineName };
+    });
+
+    // 4. Record single high-level operational log
+    const user = (req as any).user;
+    if (user) {
+      const details = result.machineName
+        ? `Bulk created and mounted ${result.createdSets.length} toolsets onto Machine "${result.machineName}"`
+        : `Bulk created ${result.createdSets.length} unassigned toolsets`;
+      await logAction(
+        user.id,
+        user.username,
+        'BULK_CREATE_SETS',
+        `${result.createdSets.length} Sets`,
+        details,
+        req
+      );
+    }
+
+    res.status(201).json({
+      success: true,
+      count: result.createdSets.length,
+      sets: result.createdSets,
+    });
+  } catch (error: any) {
+    res.status(400).json({ error: error.message || 'Bulk set creation transaction failed.' });
+  }
+};
+

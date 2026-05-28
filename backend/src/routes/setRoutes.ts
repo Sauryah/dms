@@ -6,10 +6,11 @@ import {
   updateSet,
   deleteSet,
   assignDieToSet,
+  bulkCreateSets,
 } from '../controllers/setController';
 import { authenticate, authorize } from '../middleware/authMiddleware';
 import { validateBody } from '../middleware/validationMiddleware';
-import { createSetSchema, updateSetSchema } from '../lib/schemas';
+import { createSetSchema, updateSetSchema, bulkCreateSetSchema } from '../lib/schemas';
 
 const router = Router();
 
@@ -19,7 +20,8 @@ router.use(authenticate);
 router.get('/', getSets);
 router.get('/:id', getSetById);
 
-// Modifying routes require ADMIN role
+// Modifying routes require ADMIN or OPERATOR role
+router.post('/bulk', authorize(['ADMIN', 'OPERATOR']), validateBody(bulkCreateSetSchema), bulkCreateSets);
 router.post('/', authorize(['ADMIN']), validateBody(createSetSchema), createSet);
 router.put('/:id', authorize(['ADMIN']), validateBody(updateSetSchema), updateSet);
 router.delete('/:id', authorize(['ADMIN']), deleteSet);

@@ -670,10 +670,19 @@
       "norm_label": "login()"
     },
     {
+      "label": "logout()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/authController.ts",
+      "source_location": "L137",
+      "id": "controllers_authcontroller_logout",
+      "community": 62,
+      "norm_label": "logout()"
+    },
+    {
       "label": "getUsers()",
       "file_type": "code",
       "source_file": "backend/src/controllers/authController.ts",
-      "source_location": "L128",
+      "source_location": "L151",
       "id": "controllers_authcontroller_getusers",
       "community": 62,
       "norm_label": "getusers()"
@@ -682,7 +691,7 @@
       "label": "deleteUser()",
       "file_type": "code",
       "source_file": "backend/src/controllers/authController.ts",
-      "source_location": "L143",
+      "source_location": "L166",
       "id": "controllers_authcontroller_deleteuser",
       "community": 62,
       "norm_label": "deleteuser()"
@@ -691,7 +700,7 @@
       "label": "changePassword()",
       "file_type": "code",
       "source_file": "backend/src/controllers/authController.ts",
-      "source_location": "L176",
+      "source_location": "L199",
       "id": "controllers_authcontroller_changepassword",
       "community": 62,
       "norm_label": "changepassword()"
@@ -758,6 +767,15 @@
       "id": "controllers_setcontroller_assigndietoset",
       "community": 67,
       "norm_label": "assigndietoset()"
+    },
+    {
+      "label": "bulkCreateSets()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/setController.ts",
+      "source_location": "L134",
+      "id": "controllers_setcontroller_bulkcreatesets",
+      "community": 67,
+      "norm_label": "bulkcreatesets()"
     },
     {
       "label": "machineController.ts",
@@ -1159,7 +1177,7 @@
       "label": "router",
       "file_type": "code",
       "source_file": "backend/src/routes/setRoutes.ts",
-      "source_location": "L14",
+      "source_location": "L15",
       "id": "routes_setroutes_router",
       "community": 67,
       "norm_label": "router"
@@ -1183,10 +1201,19 @@
       "norm_label": "authrequest"
     },
     {
-      "label": "authenticate()",
+      "label": "parseCookies()",
       "file_type": "code",
       "source_file": "backend/src/middleware/authMiddleware.ts",
       "source_location": "L13",
+      "id": "middleware_authmiddleware_parsecookies",
+      "community": 70,
+      "norm_label": "parsecookies()"
+    },
+    {
+      "label": "authenticate()",
+      "file_type": "code",
+      "source_file": "backend/src/middleware/authMiddleware.ts",
+      "source_location": "L28",
       "id": "middleware_authmiddleware_authenticate",
       "community": 70,
       "norm_label": "authenticate()"
@@ -1195,7 +1222,7 @@
       "label": "authorize()",
       "file_type": "code",
       "source_file": "backend/src/middleware/authMiddleware.ts",
-      "source_location": "L34",
+      "source_location": "L55",
       "id": "middleware_authmiddleware_authorize",
       "community": 68,
       "norm_label": "authorize()"
@@ -1417,10 +1444,19 @@
       "norm_label": "createsetschema"
     },
     {
-      "label": "createDieSchema",
+      "label": "bulkCreateSetSchema",
       "file_type": "code",
       "source_file": "backend/src/lib/schemas.ts",
       "source_location": "L38",
+      "id": "lib_schemas_bulkcreatesetschema",
+      "community": 62,
+      "norm_label": "bulkcreatesetschema"
+    },
+    {
+      "label": "createDieSchema",
+      "file_type": "code",
+      "source_file": "backend/src/lib/schemas.ts",
+      "source_location": "L58",
       "id": "lib_schemas_createdieschema",
       "community": 62,
       "norm_label": "createdieschema"
@@ -1429,7 +1465,7 @@
       "label": "loginSchema",
       "file_type": "code",
       "source_file": "backend/src/lib/schemas.ts",
-      "source_location": "L65",
+      "source_location": "L85",
       "id": "lib_schemas_loginschema",
       "community": 62,
       "norm_label": "loginschema"
@@ -1438,7 +1474,7 @@
       "label": "registerSchema",
       "file_type": "code",
       "source_file": "backend/src/lib/schemas.ts",
-      "source_location": "L75",
+      "source_location": "L95",
       "id": "lib_schemas_registerschema",
       "community": 62,
       "norm_label": "registerschema"
@@ -1447,7 +1483,7 @@
       "label": "changePasswordSchema",
       "file_type": "code",
       "source_file": "backend/src/lib/schemas.ts",
-      "source_location": "L92",
+      "source_location": "L112",
       "id": "lib_schemas_changepasswordschema",
       "community": 62,
       "norm_label": "changepasswordschema"
@@ -3094,7 +3130,7 @@
       "label": "User",
       "file_type": "code",
       "source_file": "frontend/src/context/AuthContext.tsx",
-      "source_location": "L3",
+      "source_location": "L4",
       "id": "context_authcontext_user",
       "community": 1,
       "norm_label": "user"
@@ -3103,7 +3139,7 @@
       "label": "AuthContextType",
       "file_type": "code",
       "source_file": "frontend/src/context/AuthContext.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "id": "context_authcontext_authcontexttype",
       "community": 1,
       "norm_label": "authcontexttype"
@@ -3112,7 +3148,7 @@
       "label": "AuthContext",
       "file_type": "code",
       "source_file": "frontend/src/context/AuthContext.tsx",
-      "source_location": "L17",
+      "source_location": "L18",
       "id": "context_authcontext_authcontext",
       "community": 1,
       "norm_label": "authcontext"
@@ -3121,7 +3157,7 @@
       "label": "getStoredUser()",
       "file_type": "code",
       "source_file": "frontend/src/context/AuthContext.tsx",
-      "source_location": "L19",
+      "source_location": "L20",
       "id": "context_authcontext_getstoreduser",
       "community": 1,
       "norm_label": "getstoreduser()"
@@ -3130,7 +3166,7 @@
       "label": "AuthProvider()",
       "file_type": "code",
       "source_file": "frontend/src/context/AuthContext.tsx",
-      "source_location": "L31",
+      "source_location": "L32",
       "id": "context_authcontext_authprovider",
       "community": 1,
       "norm_label": "authprovider()"
@@ -3809,15 +3845,6 @@
       "id": "services_api_api",
       "community": 1,
       "norm_label": "api"
-    },
-    {
-      "label": "token",
-      "file_type": "code",
-      "source_file": "frontend/src/services/api.ts",
-      "source_location": "L8",
-      "id": "services_api_token",
-      "community": 1,
-      "norm_label": "token"
     },
     {
       "label": "GEMINI.md",
@@ -4687,10 +4714,19 @@
       "label": "updateDieSchema",
       "file_type": "code",
       "source_file": "backend/src/lib/schemas.ts",
-      "source_location": "L63",
+      "source_location": "L83",
       "id": "lib_schemas_updatedieschema",
       "community": 0,
       "norm_label": "updatedieschema"
+    },
+    {
+      "label": "token",
+      "file_type": "code",
+      "source_file": "frontend/src/services/api.ts",
+      "source_location": "L8",
+      "community": 1,
+      "norm_label": "token",
+      "id": "services_api_token"
     },
     {
       "label": "Walkthrough: Premium Dark SaaS Dashboard & Mobile Responsiveness Overhaul",
@@ -5912,7 +5948,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L1",
-      "community": 78,
+      "community": 1,
       "norm_label": "diespage.tsx",
       "id": "d_project_mmmmm_frontend_src_pages_diespage_tsx"
     },
@@ -5921,7 +5957,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L34",
-      "community": 78,
+      "community": 1,
       "norm_label": "fetchdies()",
       "id": "diespage_fetchdies"
     },
@@ -5930,7 +5966,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L50",
-      "community": 78,
+      "community": 1,
       "norm_label": "handlesubmit()",
       "id": "diespage_handlesubmit"
     },
@@ -5939,7 +5975,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L66",
-      "community": 78,
+      "community": 1,
       "norm_label": "handleimport()",
       "id": "diespage_handleimport"
     },
@@ -5948,7 +5984,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L88",
-      "community": 78,
+      "community": 1,
       "norm_label": "handledelete()",
       "id": "diespage_handledelete"
     },
@@ -5957,7 +5993,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L99",
-      "community": 78,
+      "community": 1,
       "norm_label": "openeditmodal()",
       "id": "diespage_openeditmodal"
     },
@@ -5966,7 +6002,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L105",
-      "community": 78,
+      "community": 1,
       "norm_label": "resetform()",
       "id": "diespage_resetform"
     },
@@ -7315,6 +7351,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/controllers/authController.ts",
+      "source_location": "L137",
+      "weight": 1.0,
+      "source": "backend_src_controllers_authcontroller_ts",
+      "target": "controllers_authcontroller_logout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/authController.ts",
       "source_location": "L128",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -7384,6 +7430,17 @@
       "weight": 1.0,
       "source": "controllers_authcontroller_login",
       "target": "lib_auditlogger_logaction"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/authRoutes.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_routes_authroutes_ts",
+      "target": "controllers_authcontroller_logout",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -7523,6 +7580,16 @@
       "target": "controllers_setcontroller_assigndietoset"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/setController.ts",
+      "source_location": "L134",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_controllers_setcontroller_ts",
+      "target": "controllers_setcontroller_bulkcreatesets"
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -7641,6 +7708,28 @@
       "source_location": "L126",
       "weight": 1.0,
       "source": "controllers_setcontroller_assigndietoset",
+      "target": "lib_auditlogger_logaction"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/setRoutes.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_setroutes_ts",
+      "target": "controllers_setcontroller_bulkcreatesets"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/controllers/setController.ts",
+      "source_location": "L186",
+      "weight": 1.0,
+      "source": "controllers_setcontroller_bulkcreatesets",
       "target": "lib_auditlogger_logaction"
     },
     {
@@ -9107,6 +9196,17 @@
       "target": "lib_schemas_updatesetschema"
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/setRoutes.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_routes_setroutes_ts",
+      "target": "lib_schemas_bulkcreatesetschema"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/routes/setRoutes.ts",
@@ -9154,6 +9254,16 @@
       "source_file": "backend/src/middleware/authMiddleware.ts",
       "source_location": "L13",
       "weight": 1.0,
+      "source": "backend_src_middleware_authmiddleware_ts",
+      "target": "middleware_authmiddleware_parsecookies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/middleware/authMiddleware.ts",
+      "source_location": "L13",
+      "weight": 1.0,
       "confidence_score": 1.0,
       "source": "backend_src_middleware_authmiddleware_ts",
       "target": "middleware_authmiddleware_authenticate"
@@ -9167,6 +9277,17 @@
       "confidence_score": 1.0,
       "source": "backend_src_middleware_authmiddleware_ts",
       "target": "middleware_authmiddleware_authorize"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/middleware/authMiddleware.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "middleware_authmiddleware_authenticate",
+      "target": "middleware_authmiddleware_parsecookies",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -9349,6 +9470,16 @@
       "confidence_score": 1.0,
       "source": "backend_src_lib_schemas_ts",
       "target": "lib_schemas_createsetschema"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/lib/schemas.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "backend_src_lib_schemas_ts",
+      "target": "lib_schemas_bulkcreatesetschema"
     },
     {
       "relation": "contains",
@@ -12274,6 +12405,17 @@
       "target": "context_authcontext_useauth"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/context/AuthContext.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_context_authcontext_tsx",
+      "target": "frontend_src_services_api_ts",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/context/AuthContext.tsx",
@@ -14778,9 +14920,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "walkthrough_md",
-      "target": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_overhaul",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_overhaul"
     },
     {
       "relation": "contains",
@@ -14798,9 +14940,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_overhaul",
-      "target": "dms_walkthrough_major_visual_overhaul_features",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_major_visual_overhaul_features"
     },
     {
       "relation": "contains",
@@ -14808,9 +14950,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_overhaul",
-      "target": "dms_walkthrough_mobile_tablet_viewport_fluidity",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_mobile_tablet_viewport_fluidity"
     },
     {
       "relation": "contains",
@@ -14818,9 +14960,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_overhaul",
-      "target": "dms_walkthrough_immersive_3d_visualizer_fixes_polishing",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_immersive_3d_visualizer_fixes_polishing"
     },
     {
       "relation": "contains",
@@ -14828,9 +14970,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L56",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_overhaul",
-      "target": "dms_walkthrough_settings_theme_unification_user_administration_audit_trails",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_settings_theme_unification_user_administration_audit_trails"
     },
     {
       "relation": "contains",
@@ -14838,9 +14980,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L86",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_walkthrough_premium_dark_saas_dashboard_overhaul",
-      "target": "dms_walkthrough_advanced_dms_platform_improvements_suggestions_2_3_4",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_advanced_dms_platform_improvements_suggestions_2_3_4"
     },
     {
       "relation": "contains",
@@ -14928,9 +15070,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L66",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_settings_theme_unification_user_administration_audit_trails",
-      "target": "dms_walkthrough_codeblock_1",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_codeblock_1"
     },
     {
       "relation": "contains",
@@ -14968,9 +15110,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L90",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_advanced_dms_platform_improvements_suggestions_2_3_4",
-      "target": "dms_walkthrough_1_feature_2_client_side_excel_pre_parsing_browser_validation",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_1_feature_2_client_side_excel_pre_parsing_browser_validation"
     },
     {
       "relation": "contains",
@@ -14978,9 +15120,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L95",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_advanced_dms_platform_improvements_suggestions_2_3_4",
-      "target": "dms_walkthrough_2_feature_3_structured_database_backed_audit_log_filters",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_2_feature_3_structured_database_backed_audit_log_filters"
     },
     {
       "relation": "contains",
@@ -14988,9 +15130,9 @@
       "source_file": "walkthrough.md",
       "source_location": "L101",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "dms_walkthrough_advanced_dms_platform_improvements_suggestions_2_3_4",
-      "target": "dms_walkthrough_3_feature_4_interactive_equipment_gantt_timeline",
-      "confidence_score": 1.0
+      "target": "dms_walkthrough_3_feature_4_interactive_equipment_gantt_timeline"
     },
     {
       "relation": "contains",
@@ -16849,5 +16991,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "b88a2832ff557b3b3c5bcf91518f162046dd227f"
+  "built_at_commit": "c682e759231b519ea39e8b60c7a1ce0b9d15301f"
 }

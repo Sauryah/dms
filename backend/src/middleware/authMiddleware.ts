@@ -10,10 +10,31 @@ export interface AuthRequest extends Request {
   };
 }
 
+const parseCookies = (cookieHeader: string | undefined): Record<string, string> => {
+  const cookies: Record<string, string> = {};
+  if (!cookieHeader) return cookies;
+  
+  cookieHeader.split(';').forEach((cookie) => {
+    const parts = cookie.split('=');
+    const name = parts[0].trim();
+    const value = parts.slice(1).join('=').trim();
+    if (name && value) {
+      cookies[name] = decodeURIComponent(value);
+    }
+  });
+  return cookies;
+};
+
 export const authenticate = (req: AuthRequest, res: Response, next: NextFunction) => {
   let token = req.headers.authorization?.split(' ')[1];
 
-  // Fallback to query parameter for EventSource support which doesn't support custom headers natively
+  // Read the token from secure HttpOnly cookie
+  const cookies = parseCookies(req.headers.cookie);
+  if (!token && cookies['dms_token']) {
+    token = cookies['dms_token'];
+  }
+
+  // Fallback to query parameter for backward-compatible EventSource support
   if (!token && req.query.token) {
     token = req.query.token as string;
   }
