@@ -7,6 +7,7 @@ import Breadcrumbs from '../components/Breadcrumbs';
 import SegmentedControl from '../components/SegmentedControl';
 import Skeleton from '../components/Skeleton';
 import * as XLSX from 'xlsx';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 
 interface Die {
   id: string;
@@ -681,7 +682,11 @@ const DiesPage: React.FC = () => {
                     </div>
                   )}
 
-                  <div className="table-container" style={{ maxHeight: '360px', overflowY: 'auto', border: '1px solid var(--border)', borderRadius: '12px', marginBottom: '1.5rem' }}>
+                  <ErrorBoundary
+                    fallbackTitle="Spreadsheet Preview Exception"
+                    fallbackMessage="An unexpected exception occurred while rendering the local Excel validation grid. Check column formats and values."
+                  >
+                    <div className="table-container" style={{ maxHeight: '360px', overflowY: 'auto', border: '1px solid var(--border)', borderRadius: '12px', marginBottom: '1.5rem' }}>
                     <table className="data-table">
                       <thead>
                         <tr>
@@ -827,6 +832,7 @@ const DiesPage: React.FC = () => {
                       </tbody>
                     </table>
                   </div>
+                </ErrorBoundary>
 
                   <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
                     <button type="button" className="btn btn-secondary" onClick={handleCancelPreview} style={{ minWidth: '120px' }}>

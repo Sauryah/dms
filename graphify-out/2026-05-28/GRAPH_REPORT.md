@@ -1,11 +1,11 @@
 # Graph Report - dms  (2026-05-28)
 
 ## Corpus Check
-- 72 files · ~45,344 words
+- 72 files · ~45,535 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 712 nodes · 1021 edges · 79 communities (62 shown, 17 thin omitted)
+- 714 nodes · 1026 edges · 78 communities (61 shown, 17 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 17 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
@@ -69,7 +69,6 @@
 - [[_COMMUNITY_Community 75|Community 75]]
 - [[_COMMUNITY_Community 76|Community 76]]
 - [[_COMMUNITY_Community 77|Community 77]]
-- [[_COMMUNITY_Community 78|Community 78]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `logAction()` - 24 edges
@@ -80,30 +79,30 @@
 6. `compilerOptions` - 13 edges
 7. `definitions` - 11 edges
 8. `🚀 Quick Start Guide (Docker)` - 10 edges
-9. `ToastContext` - 9 edges
-10. `Walkthrough: Premium Dark SaaS Dashboard & Mobile Responsiveness Overhaul` - 9 edges
+9. `authenticate()` - 9 edges
+10. `ToastContext` - 9 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `login()` --calls--> `handleSubmit()`  [INFERRED]
   D:/PROJECT/mmmmm/backend/src/controllers/authController.ts → frontend/src/pages/LoginPage.tsx
-- `fetchUsers()` --calls--> `handleDelete()`  [EXTRACTED]
-  frontend/src/pages/SettingsPage.tsx → D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx
 - `Backend Dependencies` --conceptually_related_to--> `Backend Service (Prod)`  [INFERRED]
   requirements.txt → docker-compose.yml
 - `exportAuditLogs()` --calls--> `logAction()`  [INFERRED]
   D:/PROJECT/mmmmm/backend/src/controllers/auditController.ts → D:/PROJECT/mmmmm/backend/src/lib/auditLogger.ts
 - `deleteDie()` --calls--> `logAction()`  [INFERRED]
   D:/PROJECT/mmmmm/backend/src/controllers/dieController.ts → D:/PROJECT/mmmmm/backend/src/lib/auditLogger.ts
+- `createMachine()` --calls--> `logAction()`  [INFERRED]
+  D:/PROJECT/mmmmm/backend/src/controllers/machineController.ts → D:/PROJECT/mmmmm/backend/src/lib/auditLogger.ts
 
-## Communities (79 total, 17 thin omitted)
+## Communities (78 total, 17 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.28
 Nodes (14): createDie(), deleteDie(), formatSizeString(), getDieById(), getDies(), getImportTemplate(), importDies(), importDiesConfirm() (+6 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.07
-Nodes (47): ActivityFeed(), AuditLog, BreadcrumbItem, Breadcrumbs(), SegmentedControlProps, SegmentedOption, Sidebar(), Skeleton() (+39 more)
+Cohesion: 0.06
+Nodes (52): ActivityFeed(), AuditLog, BreadcrumbItem, Breadcrumbs(), SegmentedControlProps, SegmentedOption, Sidebar(), Skeleton() (+44 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.15
@@ -186,8 +185,8 @@ Cohesion: 0.18
 Nodes (15): $ref, definitions, Machine, $ref, anyOf, $ref, type, auditLog (+7 more)
 
 ### Community 62 - "Community 62"
-Cohesion: 0.19
-Nodes (13): changePassword(), deleteUser(), getUsers(), login(), register(), bulkCreateSetSchema, changePasswordSchema, createDieSchema (+5 more)
+Cohesion: 0.18
+Nodes (14): changePassword(), deleteUser(), getUsers(), login(), logout(), register(), bulkCreateSetSchema, changePasswordSchema (+6 more)
 
 ### Community 63 - "Community 63"
 Cohesion: 0.24
@@ -218,8 +217,8 @@ Cohesion: 0.28
 Nodes (4): app, options, swaggerSpec, prismaErrorHandler()
 
 ### Community 70 - "Community 70"
-Cohesion: 0.27
-Nodes (5): universalSearch(), JWT_SECRET, authenticate(), AuthRequest, router
+Cohesion: 0.25
+Nodes (6): universalSearch(), JWT_SECRET, authenticate(), AuthRequest, parseCookies(), router
 
 ### Community 71 - "Community 71"
 Cohesion: 0.29
@@ -245,10 +244,6 @@ Nodes (17): 1. Client-Side Excel Pre-Parsing, 2. Structured Audit Log Filters, 3
 Cohesion: 0.27
 Nodes (7): exportAuditLogs(), getAuditLogs(), broadcastEvent(), sseClients, prisma, keepAlive, router
 
-### Community 78 - "Community 78"
-Cohesion: 0.48
-Nodes (5): fetchDies(), handleDelete(), handleImport(), handleSubmit(), resetForm()
-
 ## Knowledge Gaps
 - **278 isolated node(s):** `name`, `version`, `description`, `main`, `dev` (+273 more)
   These have ≤1 connection - possible missing edges or undocumented components.
@@ -264,7 +259,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **What connects `name`, `version`, `description` to the rest of the system?**
   _278 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.06559356136820925 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05860805860805861 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**
   _Cohesion score 0.0855614973262032 - nodes in this community are weakly interconnected._
 - **Should `Community 4` be split into smaller, more focused modules?**

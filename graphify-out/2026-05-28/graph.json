@@ -670,10 +670,19 @@
       "norm_label": "login()"
     },
     {
+      "label": "logout()",
+      "file_type": "code",
+      "source_file": "backend/src/controllers/authController.ts",
+      "source_location": "L137",
+      "id": "controllers_authcontroller_logout",
+      "community": 62,
+      "norm_label": "logout()"
+    },
+    {
       "label": "getUsers()",
       "file_type": "code",
       "source_file": "backend/src/controllers/authController.ts",
-      "source_location": "L128",
+      "source_location": "L151",
       "id": "controllers_authcontroller_getusers",
       "community": 62,
       "norm_label": "getusers()"
@@ -682,7 +691,7 @@
       "label": "deleteUser()",
       "file_type": "code",
       "source_file": "backend/src/controllers/authController.ts",
-      "source_location": "L143",
+      "source_location": "L166",
       "id": "controllers_authcontroller_deleteuser",
       "community": 62,
       "norm_label": "deleteuser()"
@@ -691,7 +700,7 @@
       "label": "changePassword()",
       "file_type": "code",
       "source_file": "backend/src/controllers/authController.ts",
-      "source_location": "L176",
+      "source_location": "L199",
       "id": "controllers_authcontroller_changepassword",
       "community": 62,
       "norm_label": "changepassword()"
@@ -1192,10 +1201,19 @@
       "norm_label": "authrequest"
     },
     {
-      "label": "authenticate()",
+      "label": "parseCookies()",
       "file_type": "code",
       "source_file": "backend/src/middleware/authMiddleware.ts",
       "source_location": "L13",
+      "id": "middleware_authmiddleware_parsecookies",
+      "community": 70,
+      "norm_label": "parsecookies()"
+    },
+    {
+      "label": "authenticate()",
+      "file_type": "code",
+      "source_file": "backend/src/middleware/authMiddleware.ts",
+      "source_location": "L28",
       "id": "middleware_authmiddleware_authenticate",
       "community": 70,
       "norm_label": "authenticate()"
@@ -1204,7 +1222,7 @@
       "label": "authorize()",
       "file_type": "code",
       "source_file": "backend/src/middleware/authMiddleware.ts",
-      "source_location": "L34",
+      "source_location": "L55",
       "id": "middleware_authmiddleware_authorize",
       "community": 68,
       "norm_label": "authorize()"
@@ -3112,7 +3130,7 @@
       "label": "User",
       "file_type": "code",
       "source_file": "frontend/src/context/AuthContext.tsx",
-      "source_location": "L3",
+      "source_location": "L4",
       "id": "context_authcontext_user",
       "community": 1,
       "norm_label": "user"
@@ -3121,7 +3139,7 @@
       "label": "AuthContextType",
       "file_type": "code",
       "source_file": "frontend/src/context/AuthContext.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "id": "context_authcontext_authcontexttype",
       "community": 1,
       "norm_label": "authcontexttype"
@@ -3130,7 +3148,7 @@
       "label": "AuthContext",
       "file_type": "code",
       "source_file": "frontend/src/context/AuthContext.tsx",
-      "source_location": "L17",
+      "source_location": "L18",
       "id": "context_authcontext_authcontext",
       "community": 1,
       "norm_label": "authcontext"
@@ -3139,7 +3157,7 @@
       "label": "getStoredUser()",
       "file_type": "code",
       "source_file": "frontend/src/context/AuthContext.tsx",
-      "source_location": "L19",
+      "source_location": "L20",
       "id": "context_authcontext_getstoreduser",
       "community": 1,
       "norm_label": "getstoreduser()"
@@ -3148,7 +3166,7 @@
       "label": "AuthProvider()",
       "file_type": "code",
       "source_file": "frontend/src/context/AuthContext.tsx",
-      "source_location": "L31",
+      "source_location": "L32",
       "id": "context_authcontext_authprovider",
       "community": 1,
       "norm_label": "authprovider()"
@@ -3827,15 +3845,6 @@
       "id": "services_api_api",
       "community": 1,
       "norm_label": "api"
-    },
-    {
-      "label": "token",
-      "file_type": "code",
-      "source_file": "frontend/src/services/api.ts",
-      "source_location": "L8",
-      "id": "services_api_token",
-      "community": 1,
-      "norm_label": "token"
     },
     {
       "label": "GEMINI.md",
@@ -4709,6 +4718,15 @@
       "id": "lib_schemas_updatedieschema",
       "community": 0,
       "norm_label": "updatedieschema"
+    },
+    {
+      "label": "token",
+      "file_type": "code",
+      "source_file": "frontend/src/services/api.ts",
+      "source_location": "L8",
+      "community": 1,
+      "norm_label": "token",
+      "id": "services_api_token"
     },
     {
       "label": "Walkthrough: Premium Dark SaaS Dashboard & Mobile Responsiveness Overhaul",
@@ -5930,7 +5948,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L1",
-      "community": 78,
+      "community": 1,
       "norm_label": "diespage.tsx",
       "id": "d_project_mmmmm_frontend_src_pages_diespage_tsx"
     },
@@ -5939,7 +5957,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L34",
-      "community": 78,
+      "community": 1,
       "norm_label": "fetchdies()",
       "id": "diespage_fetchdies"
     },
@@ -5948,7 +5966,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L50",
-      "community": 78,
+      "community": 1,
       "norm_label": "handlesubmit()",
       "id": "diespage_handlesubmit"
     },
@@ -5957,7 +5975,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L66",
-      "community": 78,
+      "community": 1,
       "norm_label": "handleimport()",
       "id": "diespage_handleimport"
     },
@@ -5966,7 +5984,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L88",
-      "community": 78,
+      "community": 1,
       "norm_label": "handledelete()",
       "id": "diespage_handledelete"
     },
@@ -5975,7 +5993,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L99",
-      "community": 78,
+      "community": 1,
       "norm_label": "openeditmodal()",
       "id": "diespage_openeditmodal"
     },
@@ -5984,7 +6002,7 @@
       "file_type": "code",
       "source_file": "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx",
       "source_location": "L105",
-      "community": 78,
+      "community": 1,
       "norm_label": "resetform()",
       "id": "diespage_resetform"
     },
@@ -7333,6 +7351,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/controllers/authController.ts",
+      "source_location": "L137",
+      "weight": 1.0,
+      "source": "backend_src_controllers_authcontroller_ts",
+      "target": "controllers_authcontroller_logout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/controllers/authController.ts",
       "source_location": "L128",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -7402,6 +7430,17 @@
       "weight": 1.0,
       "source": "controllers_authcontroller_login",
       "target": "lib_auditlogger_logaction"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/routes/authRoutes.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "backend_src_routes_authroutes_ts",
+      "target": "controllers_authcontroller_logout",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -7546,9 +7585,9 @@
       "source_file": "backend/src/controllers/setController.ts",
       "source_location": "L134",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_controllers_setcontroller_ts",
-      "target": "controllers_setcontroller_bulkcreatesets",
-      "confidence_score": 1.0
+      "target": "controllers_setcontroller_bulkcreatesets"
     },
     {
       "relation": "imports_from",
@@ -7678,9 +7717,9 @@
       "source_file": "backend/src/routes/setRoutes.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_setroutes_ts",
-      "target": "controllers_setcontroller_bulkcreatesets",
-      "confidence_score": 1.0
+      "target": "controllers_setcontroller_bulkcreatesets"
     },
     {
       "relation": "calls",
@@ -9163,9 +9202,9 @@
       "source_file": "backend/src/routes/setRoutes.ts",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_routes_setroutes_ts",
-      "target": "lib_schemas_bulkcreatesetschema",
-      "confidence_score": 1.0
+      "target": "lib_schemas_bulkcreatesetschema"
     },
     {
       "relation": "contains",
@@ -9215,6 +9254,16 @@
       "source_file": "backend/src/middleware/authMiddleware.ts",
       "source_location": "L13",
       "weight": 1.0,
+      "source": "backend_src_middleware_authmiddleware_ts",
+      "target": "middleware_authmiddleware_parsecookies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/middleware/authMiddleware.ts",
+      "source_location": "L13",
+      "weight": 1.0,
       "confidence_score": 1.0,
       "source": "backend_src_middleware_authmiddleware_ts",
       "target": "middleware_authmiddleware_authenticate"
@@ -9228,6 +9277,17 @@
       "confidence_score": 1.0,
       "source": "backend_src_middleware_authmiddleware_ts",
       "target": "middleware_authmiddleware_authorize"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/middleware/authMiddleware.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "middleware_authmiddleware_authenticate",
+      "target": "middleware_authmiddleware_parsecookies",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -9417,9 +9477,9 @@
       "source_file": "backend/src/lib/schemas.ts",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_lib_schemas_ts",
-      "target": "lib_schemas_bulkcreatesetschema",
-      "confidence_score": 1.0
+      "target": "lib_schemas_bulkcreatesetschema"
     },
     {
       "relation": "contains",
@@ -12343,6 +12403,17 @@
       "weight": 1.0,
       "source": "src_app_adminroute",
       "target": "context_authcontext_useauth"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/context/AuthContext.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_context_authcontext_tsx",
+      "target": "frontend_src_services_api_ts",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",

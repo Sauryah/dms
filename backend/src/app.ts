@@ -13,6 +13,7 @@ import authRoutes from './routes/authRoutes';
 import auditRoutes from './routes/auditRoutes';
 import devRoutes from './routes/devRoutes';
 import { prismaErrorHandler } from './middleware/prismaErrorHandler';
+import { apiLimiter } from './middleware/rateLimiter';
 
 dotenv.config();
 
@@ -49,6 +50,7 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
+app.use('/api', apiLimiter);
 app.use('/api/auth', authRoutes);
 app.use('/api/machines', machineRoutes);
 app.use('/api/sets', setRoutes);

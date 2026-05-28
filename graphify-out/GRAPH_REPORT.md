@@ -1,16 +1,16 @@
 # Graph Report - dms  (2026-05-28)
 
 ## Corpus Check
-- 72 files · ~45,535 words
+- 73 files · ~45,686 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 714 nodes · 1026 edges · 78 communities (61 shown, 17 thin omitted)
+- 714 nodes · 1032 edges · 84 communities (67 shown, 17 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 17 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c682e759`
+- Built from commit: `9cc9231b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -69,6 +69,12 @@
 - [[_COMMUNITY_Community 75|Community 75]]
 - [[_COMMUNITY_Community 76|Community 76]]
 - [[_COMMUNITY_Community 77|Community 77]]
+- [[_COMMUNITY_Community 78|Community 78]]
+- [[_COMMUNITY_Community 79|Community 79]]
+- [[_COMMUNITY_Community 80|Community 80]]
+- [[_COMMUNITY_Community 81|Community 81]]
+- [[_COMMUNITY_Community 82|Community 82]]
+- [[_COMMUNITY_Community 83|Community 83]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `logAction()` - 24 edges
@@ -78,31 +84,31 @@
 5. `logAction()` - 15 edges
 6. `compilerOptions` - 13 edges
 7. `definitions` - 11 edges
-8. `🚀 Quick Start Guide (Docker)` - 10 edges
-9. `authenticate()` - 9 edges
-10. `ToastContext` - 9 edges
+8. `ErrorBoundary` - 11 edges
+9. `🚀 Quick Start Guide (Docker)` - 10 edges
+10. `authenticate()` - 9 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `login()` --calls--> `handleSubmit()`  [INFERRED]
   D:/PROJECT/mmmmm/backend/src/controllers/authController.ts → frontend/src/pages/LoginPage.tsx
+- `fetchUsers()` --calls--> `handleDelete()`  [EXTRACTED]
+  frontend/src/pages/SettingsPage.tsx → D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx
 - `Backend Dependencies` --conceptually_related_to--> `Backend Service (Prod)`  [INFERRED]
   requirements.txt → docker-compose.yml
-- `exportAuditLogs()` --calls--> `logAction()`  [INFERRED]
-  D:/PROJECT/mmmmm/backend/src/controllers/auditController.ts → D:/PROJECT/mmmmm/backend/src/lib/auditLogger.ts
-- `deleteDie()` --calls--> `logAction()`  [INFERRED]
-  D:/PROJECT/mmmmm/backend/src/controllers/dieController.ts → D:/PROJECT/mmmmm/backend/src/lib/auditLogger.ts
-- `createMachine()` --calls--> `logAction()`  [INFERRED]
-  D:/PROJECT/mmmmm/backend/src/controllers/machineController.ts → D:/PROJECT/mmmmm/backend/src/lib/auditLogger.ts
+- `SettingsPage()` --calls--> `useAuth()`  [EXTRACTED]
+  frontend/src/pages/SettingsPage.tsx → frontend/src/context/AuthContext.tsx
+- `SetDetails()` --calls--> `useAuth()`  [EXTRACTED]
+  frontend/src/pages/SetDetails.tsx → frontend/src/context/AuthContext.tsx
 
-## Communities (78 total, 17 thin omitted)
+## Communities (84 total, 17 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.28
 Nodes (14): createDie(), deleteDie(), formatSizeString(), getDieById(), getDies(), getImportTemplate(), importDies(), importDiesConfirm() (+6 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.06
-Nodes (52): ActivityFeed(), AuditLog, BreadcrumbItem, Breadcrumbs(), SegmentedControlProps, SegmentedOption, Sidebar(), Skeleton() (+44 more)
+Cohesion: 0.16
+Nodes (14): Sidebar(), Topbar(), AuthContext, AuthContextType, AuthProvider(), useAuth(), User, LoginPage() (+6 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.15
@@ -125,8 +131,8 @@ Cohesion: 0.09
 Nodes (24): dependencies, bcryptjs, cors, dotenv, express, express-rate-limit, helmet, jsonwebtoken (+16 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.16
-Nodes (17): Codebase3DGraph(), Codebase3DGraphProps, CodeLink, CodeNode, SimNode, ErrorBoundary, Props, State (+9 more)
+Cohesion: 0.23
+Nodes (10): ErrorBoundary, Props, State, Fleet3DGraph(), Fleet3DGraphProps, GraphLink, GraphNode, SimNode (+2 more)
 
 ### Community 8 - "Community 8"
 Cohesion: 0.11
@@ -244,6 +250,30 @@ Nodes (17): 1. Client-Side Excel Pre-Parsing, 2. Structured Audit Log Filters, 3
 Cohesion: 0.27
 Nodes (7): exportAuditLogs(), getAuditLogs(), broadcastEvent(), sseClients, prisma, keepAlive, router
 
+### Community 78 - "Community 78"
+Cohesion: 0.19
+Nodes (15): Skeleton(), SkeletonProps, Toast, ToastContext, ToastContextType, ToastProvider(), ToastType, useToast() (+7 more)
+
+### Community 79 - "Community 79"
+Cohesion: 0.19
+Nodes (9): SegmentedControlProps, SegmentedOption, Set, SetsPage(), SettingsPage(), UserInfo, SegmentedControl(), fetchUsers() (+1 more)
+
+### Community 80 - "Community 80"
+Cohesion: 0.44
+Nodes (7): Codebase3DGraph(), Codebase3DGraphProps, CodeLink, CodeNode, SimNode, CodebaseGraphPage(), CodebaseGraphPage
+
+### Community 81 - "Community 81"
+Cohesion: 0.38
+Nodes (5): BreadcrumbItem, Breadcrumbs(), Die, Set, SetDetails()
+
+### Community 82 - "Community 82"
+Cohesion: 0.48
+Nodes (5): fetchDies(), handleDelete(), handleImport(), handleSubmit(), resetForm()
+
+### Community 83 - "Community 83"
+Cohesion: 0.47
+Nodes (4): ActivityFeed(), AuditLog, api, token
+
 ## Knowledge Gaps
 - **278 isolated node(s):** `name`, `version`, `description`, `main`, `dev` (+273 more)
   These have ≤1 connection - possible missing edges or undocumented components.
@@ -252,17 +282,17 @@ Nodes (7): exportAuditLogs(), getAuditLogs(), broadcastEvent(), sseClients, pris
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `LoginPage()` connect `Community 1` to `Community 3`?**
+- **Why does `LoginPage()` connect `Community 1` to `Community 3`, `Community 83`?**
   _High betweenness centrality (0.014) - this node is a cross-community bridge._
 - **Why does `handleSubmit()` connect `Community 3` to `Community 1`?**
   _High betweenness centrality (0.013) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `description` to the rest of the system?**
   _278 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.05860805860805861 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**
   _Cohesion score 0.0855614973262032 - nodes in this community are weakly interconnected._
 - **Should `Community 4` be split into smaller, more focused modules?**
   _Cohesion score 0.058823529411764705 - nodes in this community are weakly interconnected._
 - **Should `Community 5` be split into smaller, more focused modules?**
   _Cohesion score 0.06666666666666667 - nodes in this community are weakly interconnected._
+- **Should `Community 6` be split into smaller, more focused modules?**
+  _Cohesion score 0.08547008547008547 - nodes in this community are weakly interconnected._

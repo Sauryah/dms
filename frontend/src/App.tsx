@@ -13,6 +13,7 @@ import SearchPage from './pages/SearchPage';
 import LoginPage from './pages/LoginPage';
 import SettingsPage from './pages/SettingsPage';
 import './styles/App.css';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 // Lazy load heavy visualization pages to keep the core bundle lightweight and fast
 const FleetGraphPage = lazy(() => import('./pages/FleetGraphPage'));
@@ -82,36 +83,41 @@ const App: React.FC = () => {
     <AuthProvider>
       <ToastProvider>
         <Router>
-          <Suspense fallback={
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', background: 'var(--bg-main, #f8fafc)', color: 'var(--text-main, #1e293b)', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-              <div style={{ padding: '2rem', textAlign: 'center', background: 'white', borderRadius: '16px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)', border: '1px solid #e2e8f0' }}>
-                <div style={{ width: '40px', height: '40px', border: '3px solid #e2e8f0', borderTop: '3px solid #3b82f6', borderRadius: '50%', margin: '0 auto 1rem auto', animation: 'spin 1s linear infinite' }}></div>
-                <h3 style={{ margin: '0 0 0.25rem 0', fontWeight: 600 }}>Loading View</h3>
-                <p style={{ margin: 0, fontSize: '0.875rem', color: '#64748b' }}>Preparing interactive components...</p>
-                <style>{`
-                  @keyframes spin {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                  }
-                `}</style>
+          <ErrorBoundary
+            fallbackTitle="Application Context Exception"
+            fallbackMessage="A critical runtime or module chunk exception occurred while executing the Die Management System interface. Click below to reload the context."
+          >
+            <Suspense fallback={
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', background: 'var(--bg-main, #f8fafc)', color: 'var(--text-main, #1e293b)', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                <div style={{ padding: '2rem', textAlign: 'center', background: 'var(--white, white)', borderRadius: '16px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)', border: '1px solid var(--border, #e2e8f0)' }}>
+                  <div style={{ width: '40px', height: '40px', border: '3px solid var(--border, #e2e8f0)', borderTop: '3px solid var(--primary, #3b82f6)', borderRadius: '50%', margin: '0 auto 1rem auto', animation: 'spin 1s linear infinite' }}></div>
+                  <h3 style={{ margin: '0 0 0.25rem 0', fontWeight: 600, color: 'var(--text-main)' }}>Loading View</h3>
+                  <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--text-muted)' }}>Preparing interactive components...</p>
+                  <style>{`
+                    @keyframes spin {
+                      0% { transform: rotate(0deg); }
+                      100% { transform: rotate(360deg); }
+                    }
+                  `}</style>
+                </div>
               </div>
-            </div>
-          }>
-            <Routes>
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/" element={<ProtectedLayout><Dashboard /></ProtectedLayout>} />
-              <Route path="/machines" element={<ProtectedLayout><Dashboard /></ProtectedLayout>} />
-              <Route path="/machines/:id" element={<ProtectedLayout><MachineDetails /></ProtectedLayout>} />
-              <Route path="/sets" element={<ProtectedLayout><SetsPage /></ProtectedLayout>} />
-              <Route path="/sets/:id" element={<ProtectedLayout><SetDetails /></ProtectedLayout>} />
-              <Route path="/dies" element={<ProtectedLayout><DiesPage /></ProtectedLayout>} />
-              <Route path="/search" element={<ProtectedLayout><SearchPage /></ProtectedLayout>} />
-              <Route path="/topology" element={<AdminRoute><FleetGraphPage /></AdminRoute>} />
-              <Route path="/codebase" element={<AdminRoute><CodebaseGraphPage /></AdminRoute>} />
-              <Route path="/settings" element={<ProtectedLayout><SettingsPage /></ProtectedLayout>} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </Suspense>
+            }>
+              <Routes>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/" element={<ProtectedLayout><Dashboard /></ProtectedLayout>} />
+                <Route path="/machines" element={<ProtectedLayout><Dashboard /></ProtectedLayout>} />
+                <Route path="/machines/:id" element={<ProtectedLayout><MachineDetails /></ProtectedLayout>} />
+                <Route path="/sets" element={<ProtectedLayout><SetsPage /></ProtectedLayout>} />
+                <Route path="/sets/:id" element={<ProtectedLayout><SetDetails /></ProtectedLayout>} />
+                <Route path="/dies" element={<ProtectedLayout><DiesPage /></ProtectedLayout>} />
+                <Route path="/search" element={<ProtectedLayout><SearchPage /></ProtectedLayout>} />
+                <Route path="/topology" element={<AdminRoute><FleetGraphPage /></AdminRoute>} />
+                <Route path="/codebase" element={<AdminRoute><CodebaseGraphPage /></AdminRoute>} />
+                <Route path="/settings" element={<ProtectedLayout><SettingsPage /></ProtectedLayout>} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </Suspense>
+          </ErrorBoundary>
         </Router>
       </ToastProvider>
     </AuthProvider>

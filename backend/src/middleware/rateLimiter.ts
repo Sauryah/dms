@@ -35,3 +35,12 @@ export const devReindexLimiter = rateLimit({
   legacyHeaders: false,
   message: { error: 'Re-indexing is resource-intensive. Please try again later.' },
 });
+
+// Rapid search throttling (60 requests per 1 minute)
+export const searchLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 60,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many search requests. Please slow down.' },
+});

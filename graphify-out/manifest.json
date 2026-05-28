@@ -210,8 +210,8 @@
     "semantic_hash": "787e5a07efeb2bf6209d5937195f2f68"
   },
   "/home/sahil/Desktop/Projects/dms/frontend/src/App.tsx": {
-    "mtime": 1779898513.950177,
-    "ast_hash": "cb04a9663a6d1d1d5a24b1aca23e7887",
+    "mtime": 1779985391.031167,
+    "ast_hash": "34df2e1de57d722e5abebe4da3aeb6d4",
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/frontend/src/context/AuthContext.tsx": {
@@ -290,13 +290,13 @@
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/frontend/src/pages/Dashboard.tsx": {
-    "mtime": 1779982858.6308942,
-    "ast_hash": "617462f3bddbf413126a4f932b772e85",
+    "mtime": 1779985422.6291769,
+    "ast_hash": "b1d430401f7c555316dbdb93fd6ea0bf",
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/frontend/src/pages/DiesPage.tsx": {
-    "mtime": 1779937526.1344268,
-    "ast_hash": "322f24db8e3a7c60ab2d3225463cd59a",
+    "mtime": 1779985439.349182,
+    "ast_hash": "5b695facac32f1912a7572ed6ee1cc75",
     "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/frontend/src/pages/SetsPage.tsx": {
@@ -380,9 +380,9 @@
     "semantic_hash": "a4a669e53f09f202411310060985072a"
   },
   "/home/sahil/Desktop/Projects/dms/frontend/src/components/ErrorBoundary.tsx": {
-    "mtime": 1779807771.5727317,
-    "ast_hash": "3dc1d42107f7cad8360da0bee1a23a18",
-    "semantic_hash": "3dc1d42107f7cad8360da0bee1a23a18"
+    "mtime": 1779985373.0721614,
+    "ast_hash": "8ccc4cef516599f756df1c25776b5871",
+    "semantic_hash": ""
   },
   "/home/sahil/Desktop/Projects/dms/README.md": {
     "mtime": 1779902469.3258855,
@@ -407,6 +407,11 @@
   "/home/sahil/Desktop/Projects/dms/backend/prisma/migrations/20260528031543_add_audit_log/migration.sql": {
     "mtime": 1779938143.0,
     "ast_hash": "22711a6ecc84436133b41611a686d555",
+    "semantic_hash": ""
+  },
+  "/home/sahil/Desktop/Projects/dms/backend/prisma/migrations/20260528161004_add_audit_log_indices/migration.sql": {
+    "mtime": 1779984604.0,
+    "ast_hash": "038edd56cb121e1a358ef734df32dc5a",
     "semantic_hash": ""
   }
 }

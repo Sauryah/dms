@@ -7,6 +7,7 @@ import { AlertTriangle, Cpu, MapPin, X, Plus, Package, Disc, Search, Workflow, E
 import ActivityFeed from '../components/ActivityFeed';
 import SegmentedControl from '../components/SegmentedControl';
 import Skeleton from '../components/Skeleton';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 
 interface Machine {
   id: string;
@@ -398,7 +399,11 @@ const Dashboard: React.FC = () => {
         <div style={{ display: 'grid', gridTemplateColumns: '1.8fr 1fr', gap: '2.5rem', flexWrap: 'wrap' }}>
           
           {/* Gantt Chart lanes */}
-          <div style={{ borderRight: '1px solid var(--border)', paddingRight: '2.5rem' }}>
+          <ErrorBoundary
+            fallbackTitle="Utilization Telemetry Error"
+            fallbackMessage="The active machine Gantt lane rendering pipeline encountered an exception. Real-time stream payloads may contain malformed data."
+          >
+            <div style={{ borderRight: '1px solid var(--border)', paddingRight: '2.5rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
               <div>
                 <h3 style={{ margin: 0, fontSize: '1.125rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -474,10 +479,15 @@ const Dashboard: React.FC = () => {
                 <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>No machine utilization logs loaded.</div>
               )}
             </div>
-          </div>
+            </div>
+          </ErrorBoundary>
 
           {/* Vertical Recent Allocation tracker */}
-          <div>
+          <ErrorBoundary
+            fallbackTitle="Allocation Activity Feed Error"
+            fallbackMessage="The vertical tooling allocation event logs failed to render. Re-establishing secure EventSource stream context..."
+          >
+            <div>
             <h3 style={{ margin: 0, fontSize: '1.125rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.25rem' }}>
               <Workflow size={18} style={{ color: 'var(--primary)' }} /> Tooling Allocation History
             </h3>
@@ -531,7 +541,8 @@ const Dashboard: React.FC = () => {
                 <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.78rem' }}>No recent tooling allocation events found.</div>
               )}
             </div>
-          </div>
+            </div>
+          </ErrorBoundary>
 
         </div>
       </div>
