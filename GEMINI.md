@@ -1,6 +1,6 @@
 # DMS: Project Overview & Engineering Standards
 
-This document serves as the primary reference for the DMS (Die Management System) application architecture, data models, and operational procedures.
+This document serves as the primary reference for the DMS application architecture, data models, and operational procedures.
 
 ## 1. Application Hierarchy & Data Model
 The system follows a strict physical equipment hierarchy:

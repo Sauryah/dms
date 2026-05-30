@@ -85,7 +85,7 @@ const App: React.FC = () => {
         <Router>
           <ErrorBoundary
             fallbackTitle="Application Context Exception"
-            fallbackMessage="A critical runtime or module chunk exception occurred while executing the Die Management System interface. Click below to reload the context."
+            fallbackMessage="A critical runtime or module chunk exception occurred while executing the DMS interface. Click below to reload the context."
           >
             <Suspense fallback={
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', background: 'var(--bg-main, #f8fafc)', color: 'var(--text-main, #1e293b)', fontFamily: 'system-ui, -apple-system, sans-serif' }}>

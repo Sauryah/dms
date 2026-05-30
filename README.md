@@ -1,4 +1,4 @@
-# DMS (Die Management System)
+# DMS
 
 DMS is a professional, enterprise-grade application for managing industrial tools and dies. It features a hierarchical equipment dashboard (Machine → Set → Die), universal search with numeric range filtering, and bulk Excel import capabilities.
 

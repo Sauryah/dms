@@ -6,7 +6,7 @@ const options: swaggerJsdoc.Options = {
     info: {
       title: 'DMS API',
       version: '1.0.0',
-      description: 'API documentation for the DMS (Die Management System) fleet management system',
+      description: 'API documentation for the DMS fleet management system',
     },
     servers: [
       {
