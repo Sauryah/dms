@@ -6,7 +6,6 @@ import { Disc, Plus, X, Edit2, Trash2, Search, Upload, FileSpreadsheet, Download
 import Breadcrumbs from '../components/Breadcrumbs';
 import SegmentedControl from '../components/SegmentedControl';
 import Skeleton from '../components/Skeleton';
-import * as XLSX from 'xlsx';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 
 interface Die {
@@ -152,26 +151,7 @@ const DiesPage: React.FC = () => {
     }
   };
 
-  const parseSizeToFloat = (sizeStr: string): number => {
-    const numericPart = sizeStr.match(/[\d\.]+/);
-    if (numericPart) {
-      const val = parseFloat(numericPart[0]);
-      if (!isNaN(val)) return val;
-    }
-    return 0.0;
-  };
 
-  const formatSizeString = (sizeStr: string): string => {
-    const numericMatch = sizeStr.match(/[\d\.]+/);
-    if (numericMatch) {
-      const numVal = parseFloat(numericMatch[0]);
-      if (!isNaN(numVal)) {
-        const formattedNum = numVal.toFixed(3);
-        return sizeStr.replace(numericMatch[0], formattedNum);
-      }
-    }
-    return sizeStr;
-  };
 
   const handleImportPreview = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -190,7 +170,7 @@ const DiesPage: React.FC = () => {
         }
       }
 
-      // 2. Parse file using SheetJS (XLSX) in the browser
+      // 2. Read and parse file using the background Web Worker
       const reader = new FileReader();
       reader.onload = (event) => {
         try {
@@ -198,74 +178,45 @@ const DiesPage: React.FC = () => {
           if (!buffer) {
             throw new Error('Could not read file binary buffer');
           }
-          const data = new Uint8Array(buffer as ArrayBuffer);
-          const workbook = XLSX.read(data, { type: 'array' });
-          const sheetName = workbook.SheetNames[0];
-          const sheet = workbook.Sheets[sheetName];
-          const sheetData = XLSX.utils.sheet_to_json(sheet) as any[];
 
-          if (sheetData.length > 5000) {
-            setError('Import file is too large. Please limit imports to 5,000 rows or fewer.');
-            addToast('error', 'Validation Error', 'Excel spreadsheet contains more than 5,000 rows.');
-            setIsSubmitting(false);
-            return;
-          }
+          // Extract set names array to validate against in the background worker
+          const existingSetNames = Array.from(setMap.keys());
 
-          const parsedRows: any[] = [];
-          for (let i = 0; i < sheetData.length; i++) {
-            const row = sheetData[i];
-            const dieId = row['Die ID']?.toString().trim() || '';
-            const size = row['Size']?.toString().trim() || '';
-            const casing = row['Casing']?.toString().trim() || '';
-            const details = row['Details']?.toString().trim() || '';
-            const setName = row['Set Name']?.toString().trim() || '';
+          // Spawn modern Vite Web Worker
+          const worker = new Worker(
+            new URL('../workers/excelParser.worker.ts', import.meta.url),
+            { type: 'module' }
+          );
 
-            // Skip completely empty row
-            if (!dieId && !size && !casing && !details && !setName) {
-              continue;
+          worker.postMessage({
+            fileBuffer: buffer,
+            existingSetNames
+          });
+
+          worker.onmessage = (e) => {
+            const { success, parsedRows, error: workerError } = e.data;
+            worker.terminate();
+
+            if (success) {
+              setPreviewRows(parsedRows);
+              setIsPreviewMode(true);
+              addToast('info', 'File Parsed in Background', `Successfully parsed ${parsedRows.length} rows for review.`);
+            } else {
+              setError(workerError || 'Background parsing failed.');
+              addToast('error', 'Parsing Failed', workerError || 'Background parsing failed.');
             }
+            setIsSubmitting(false);
+          };
 
-            const formattedSize = size ? formatSizeString(size) : '';
-            const sizeValue = formattedSize ? parseSizeToFloat(formattedSize) : 0;
-
-            const dieIdError = !dieId 
-              ? 'Die ID is required' 
-              : (!/^[a-zA-Z0-9-_\s]+$/.test(dieId) ? 'Die ID contains invalid characters' : null);
-            const sizeError = !size 
-              ? 'Size is required' 
-              : (sizeValue <= 0 ? 'Invalid size dimensions' : null);
-            const casingError = !casing 
-              ? 'Casing is required' 
-              : (casing.length < 2 ? 'Casing must be at least 2 characters' : null);
-
-            const setNameWarning = (setName && !setMap.has(setName)) 
-              ? `Set Name "${setName}" does not match any existing database set` 
-              : null;
-
-            parsedRows.push({
-              key: i,
-              dieId,
-              size,
-              casing,
-              details,
-              setName,
-              errors: {
-                dieId: dieIdError,
-                size: sizeError,
-                casing: casingError
-              },
-              warnings: {
-                setName: setNameWarning
-              }
-            });
-          }
-
-          setPreviewRows(parsedRows);
-          setIsPreviewMode(true);
-          addToast('info', 'File Parsed Locally', `Successfully parsed ${parsedRows.length} rows for review.`);
-          setIsSubmitting(false);
+          worker.onerror = (err) => {
+            console.error('Web worker error:', err);
+            worker.terminate();
+            setError('Background worker error occurred.');
+            addToast('error', 'Worker Failure', 'The background parser encountered an unexpected error.');
+            setIsSubmitting(false);
+          };
         } catch (err: any) {
-          console.error('Error processing spreadsheet file', err);
+          console.error('Error starting spreadsheet worker', err);
           setError(err.message || 'Error processing spreadsheet file');
           addToast('error', 'Parsing Failed', err.message || 'Error processing spreadsheet file');
           setIsSubmitting(false);

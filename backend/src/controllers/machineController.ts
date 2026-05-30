@@ -1,6 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import prisma from '../lib/prisma';
 import { logAction } from '../lib/auditLogger';
+import { MachineRepository } from '../repositories/machineRepository';
+import { SetRepository } from '../repositories/setRepository';
+import { DieRepository } from '../repositories/dieRepository';
+import { AuditLogRepository } from '../repositories/auditLogRepository';
 
 /**
  * @swagger
@@ -89,29 +92,29 @@ export const getDashboardStats = async (req: Request, res: Response, next: NextF
       emptySetsPreview,
       unassignedDiesPreview
     ] = await Promise.all([
-      prisma.machine.count(),
-      prisma.set.count(),
-      prisma.die.count(),
-      prisma.set.count({ where: { machineId: null } }),
-      prisma.set.count({ where: { dies: { none: {} } } }),
-      prisma.die.count({ where: { setId: null } }),
-      prisma.machine.count({ where: { sets: { none: {} } } }),
-      prisma.machine.findMany({
+      MachineRepository.count(),
+      SetRepository.count(),
+      DieRepository.count(),
+      SetRepository.count({ machineId: null }),
+      SetRepository.count({ dies: { none: {} } }),
+      DieRepository.count({ setId: null }),
+      MachineRepository.count({ sets: { none: {} } }),
+      MachineRepository.findMany({
         where: { sets: { none: {} } },
         select: { id: true, name: true },
         take: 5
       }),
-      prisma.set.findMany({
+      SetRepository.findMany({
         where: { machineId: null },
         select: { id: true, name: true },
         take: 5
       }),
-      prisma.set.findMany({
+      SetRepository.findMany({
         where: { dies: { none: {} } },
         select: { id: true, name: true },
         take: 5
       }),
-      prisma.die.findMany({
+      DieRepository.findMany({
         where: { setId: null },
         select: { id: true, dieId: true },
         take: 5
@@ -140,7 +143,7 @@ export const getDashboardStats = async (req: Request, res: Response, next: NextF
 
 export const getMachines = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const machines = await prisma.machine.findMany({
+    const machines = await MachineRepository.findMany({
       include: {
         sets: {
           include: {
@@ -158,7 +161,7 @@ export const getMachines = async (req: Request, res: Response, next: NextFunctio
 export const getMachineById = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params as { id: string };
   try {
-    const machine = await prisma.machine.findUnique({
+    const machine = await MachineRepository.findUnique({
       where: { id },
       include: {
         sets: {
@@ -184,7 +187,7 @@ export const getMachineById = async (req: Request, res: Response, next: NextFunc
 export const createMachine = async (req: Request, res: Response, next: NextFunction) => {
   const { name, location } = req.body;
   try {
-    const machine = await prisma.machine.create({
+    const machine = await MachineRepository.create({
       data: { name, location },
     });
     const user = (req as any).user;
@@ -201,7 +204,7 @@ export const updateMachine = async (req: Request, res: Response, next: NextFunct
   const { id } = req.params as { id: string };
   const { name, location } = req.body;
   try {
-    const machine = await prisma.machine.update({
+    const machine = await MachineRepository.update({
       where: { id },
       data: { name, location },
     });
@@ -218,10 +221,10 @@ export const updateMachine = async (req: Request, res: Response, next: NextFunct
 export const deleteMachine = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params as { id: string };
   try {
-    const existing = await prisma.machine.findUnique({ where: { id } });
+    const existing = await MachineRepository.findUnique({ where: { id } });
     const machineName = existing ? existing.name : id;
 
-    await prisma.machine.delete({
+    await MachineRepository.delete({
       where: { id },
     });
     const user = (req as any).user;
@@ -238,13 +241,13 @@ export const assignSetToMachine = async (req: Request, res: Response, next: Next
   const { machineId, setId } = req.params as { machineId: string; setId: string };
   try {
     const [machineObj, setObj] = await Promise.all([
-      prisma.machine.findUnique({ where: { id: machineId } }),
-      prisma.set.findUnique({ where: { id: setId } }),
+      MachineRepository.findUnique({ where: { id: machineId }, include: { sets: true } }),
+      SetRepository.findUnique({ where: { id: setId } }),
     ]);
     const machineName = machineObj ? machineObj.name : machineId;
     const setName = setObj ? setObj.name : setId;
 
-    const machine = await prisma.machine.update({
+    const machine = await MachineRepository.update({
       where: { id: machineId },
       data: {
         sets: {
@@ -263,9 +266,35 @@ export const assignSetToMachine = async (req: Request, res: Response, next: Next
         },
       },
     });
+
     const user = (req as any).user;
     if (user) {
-      await logAction(user.id, user.username, 'ASSIGN_SET', machineName, `Assigned Set "${setName}" to Machine "${machineName}"`, req);
+      // Build auditing state diff JSON payload
+      const beforeSetsNames = machineObj && (machineObj as any).sets ? (machineObj as any).sets.map((s: any) => s.name) : [];
+      const afterSetsNames = machine && (machine as any).sets ? (machine as any).sets.map((s: any) => s.name) : [];
+      
+      const diffPayload = {
+        isDiff: true,
+        changeType: 'ALLOCATION_SWAP',
+        targetMachine: machineName,
+        before: {
+          sets: beforeSetsNames,
+          setsCount: beforeSetsNames.length
+        },
+        after: {
+          sets: afterSetsNames,
+          setsCount: afterSetsNames.length
+        }
+      };
+
+      await logAction(
+        user.id,
+        user.username,
+        'ASSIGN_SET',
+        machineName,
+        JSON.stringify(diffPayload),
+        req
+      );
     }
     res.json(machine);
   } catch (error) {
@@ -279,7 +308,7 @@ export const assignSetToMachine = async (req: Request, res: Response, next: Next
 export const getMachineTimeline = async (req: Request, res: Response, next: NextFunction) => {
   try {
     // 1. Fetch active utilization layout: machines, sets, and their dies
-    const machines = await prisma.machine.findMany({
+    const machines = await MachineRepository.findMany({
       include: {
         sets: {
           include: {
@@ -293,7 +322,7 @@ export const getMachineTimeline = async (req: Request, res: Response, next: Next
     });
 
     // 2. Fetch recent tooling allocation audit logs (mount/dismount/changes)
-    const history = await prisma.auditLog.findMany({
+    const history = await AuditLogRepository.findMany({
       where: {
         action: {
           in: ['ASSIGN_SET', 'ASSIGN_DIE', 'CREATE_MACHINE', 'DELETE_MACHINE', 'CREATE_SET', 'DELETE_SET'],

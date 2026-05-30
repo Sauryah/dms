@@ -63,6 +63,7 @@ const Dashboard: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [newMachine, setNewMachine] = useState({ name: '', location: '' });
   const [error, setError] = useState('');
+  const [sseStatus, setSseStatus] = useState<'connected' | 'reconnecting' | 'disconnected'>('disconnected');
   
   // Bulk Set Add & Assign States
   const [showBulkModal, setShowBulkModal] = useState(false);
@@ -77,6 +78,10 @@ const Dashboard: React.FC = () => {
   // Scale-Safe Pagination States (10 machines per view)
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+
+  // Interactive Floorplan Map States
+  const [selectedMachineId, setSelectedMachineId] = useState<string | null>(null);
+  const [floorplanView, setFloorplanView] = useState<'grid' | 'zone'>('grid');
 
   const { user } = useAuth();
   const { addToast } = useToast();
@@ -97,6 +102,11 @@ const Dashboard: React.FC = () => {
       setMachines(machinesRes.data);
       setStats(statsRes.data);
       setTimelineData(timelineRes.data);
+      
+      // Auto-select the first machine if nothing is selected yet
+      if (machinesRes.data && machinesRes.data.length > 0) {
+        setSelectedMachineId(prev => prev || machinesRes.data[0].id);
+      }
     } catch (error) {
       console.error('Failed to fetch dashboard data', error);
       addToast('error', 'Sync Failure', 'Failed to retrieve the latest inventory data.');
@@ -114,10 +124,18 @@ const Dashboard: React.FC = () => {
     const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
     const streamUrl = `${apiBase}/audit-logs/stream`;
     let eventSource: EventSource;
+    let reconnectDelay = 1000;
+    const maxDelay = 16000;
+    let timerId: number;
 
     const connectSSE = () => {
       console.log('Establishing connection to real-time dashboard SSE stream...');
       eventSource = new EventSource(streamUrl, { withCredentials: true });
+
+      eventSource.onopen = () => {
+        setSseStatus('connected');
+        reconnectDelay = 1000; // Reset delay
+      };
 
       eventSource.onmessage = (event) => {
         try {
@@ -143,11 +161,14 @@ const Dashboard: React.FC = () => {
       };
 
       eventSource.onerror = (err) => {
-        console.warn('Dashboard SSE stream disconnected, reconnecting in 5 seconds...', err);
+        setSseStatus('reconnecting');
+        console.warn(`Dashboard SSE stream disconnected, reconnecting in ${reconnectDelay / 1000}s...`, err);
         eventSource.close();
-        setTimeout(() => {
+        
+        timerId = window.setTimeout(() => {
+          reconnectDelay = Math.min(reconnectDelay * 2, maxDelay);
           connectSSE();
-        }, 5000);
+        }, reconnectDelay);
       };
     };
 
@@ -157,6 +178,8 @@ const Dashboard: React.FC = () => {
       if (eventSource) {
         eventSource.close();
       }
+      window.clearTimeout(timerId);
+      setSseStatus('disconnected');
     };
   }, []);
 
@@ -331,7 +354,15 @@ const Dashboard: React.FC = () => {
       <div className="page-header">
         <div>
           <h1 className="page-title">Equipment Dashboard</h1>
-          <p className="page-subtitle">Real-time overview of your facility's production assets</p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.25rem', flexWrap: 'wrap' }}>
+            <p className="page-subtitle" style={{ margin: 0 }}>Real-time overview of your facility's production assets</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(2, 6, 23, 0.4)', padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border)' }}>
+              <span className={`telemetry-dot dot-${sseStatus}`} />
+              <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.05em' }}>
+                Telemetry: {sseStatus}
+              </span>
+            </div>
+          </div>
         </div>
         <div style={{ display: 'flex', gap: '0.75rem' }}>
           {canModify && (
@@ -390,6 +421,476 @@ const Dashboard: React.FC = () => {
           <div>
             <strong>{attentionItemsCount}</strong>
             <span>Items needing attention</span>
+          </div>
+        </div>
+      </div>
+
+      {/* 📡 Facility Floorplan & Real-Time Telemetry Map */}
+      <div className="ops-panel" style={{ padding: '1.75rem', marginBottom: '2rem', background: 'var(--white)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+          <div>
+            <h3 style={{ margin: 0, fontSize: '1.125rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span style={{ display: 'inline-flex', position: 'relative' }}>
+                <Cpu size={18} style={{ color: 'var(--primary)' }} />
+                <span style={{ 
+                  position: 'absolute', 
+                  top: '-2px', 
+                  right: '-2px', 
+                  width: '6px', 
+                  height: '6px', 
+                  background: 'var(--success)', 
+                  borderRadius: '50%',
+                  animation: 'pulse 2s infinite' 
+                }} />
+              </span>
+              Facility Floorplan & Real-Time Telemetry
+            </h3>
+            <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              Interactive shop floor coordinate map of machines. Select any cell to read live telemetry.
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <button 
+              className="btn"
+              style={{ 
+                fontSize: '0.7rem', 
+                padding: '0.35rem 0.75rem', 
+                borderRadius: '6px',
+                background: floorplanView === 'grid' ? 'var(--primary)' : 'rgba(255, 255, 255, 0.05)',
+                color: '#fff',
+                border: floorplanView === 'grid' ? '1px solid var(--primary)' : '1px solid var(--border)'
+              }}
+              onClick={() => setFloorplanView('grid')}
+            >
+              Coordinate Grid
+            </button>
+            <button 
+              className="btn"
+              style={{ 
+                fontSize: '0.7rem', 
+                padding: '0.35rem 0.75rem', 
+                borderRadius: '6px',
+                background: floorplanView === 'zone' ? 'var(--primary)' : 'rgba(255, 255, 255, 0.05)',
+                color: '#fff',
+                border: floorplanView === 'zone' ? '1px solid var(--primary)' : '1px solid var(--border)'
+              }}
+              onClick={() => setFloorplanView('zone')}
+            >
+              Zone Groups
+            </button>
+          </div>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1.8fr 1fr', gap: '2rem', flexWrap: 'wrap' }}>
+          {/* Map Grid */}
+          <div style={{ 
+            background: 'rgba(2, 6, 23, 0.4)', 
+            border: '1px solid var(--border)', 
+            borderRadius: '10px', 
+            padding: '1.5rem',
+            position: 'relative',
+            minHeight: '340px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center'
+          }}>
+            {/* Tech grid mesh background */}
+            <div style={{ 
+              position: 'absolute', 
+              top: 0, 
+              left: 0, 
+              right: 0, 
+              bottom: 0, 
+              backgroundImage: 'radial-gradient(hsla(210, 40%, 98%, 0.05) 1px, transparent 1px)', 
+              backgroundSize: '16px 16px',
+              pointerEvents: 'none',
+              borderRadius: '10px'
+            }} />
+
+            {floorplanView === 'grid' ? (
+              <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(4, 1fr)', 
+                gridAutoRows: '90px', 
+                gap: '1rem',
+                position: 'relative',
+                zIndex: 1
+              }}>
+                {(() => {
+                  const totalSlots = Math.max(12, Math.ceil(machines.length / 4) * 4);
+                  const slots = Array.from({ length: totalSlots });
+                  return slots.map((_, index) => {
+                    const rowLabel = String.fromCharCode(65 + Math.floor(index / 4)); // A, B, C...
+                    const colLabel = (index % 4) + 1; // 1, 2, 3, 4
+                    const coordinate = `${rowLabel}${colLabel}`;
+                    const machine = machines[index];
+
+                    if (machine) {
+                      // Calculate machine health/utilization status
+                      const hasSets = machine.sets && machine.sets.length > 0;
+                      const hasEmptySets = hasSets && (machine.sets || []).some((s: any) => !s.dies || s.dies.length === 0);
+                      const isOperational = hasSets && !hasEmptySets;
+                      const isSelected = machine.id === selectedMachineId;
+
+                      let statusColor = 'hsl(217, 100%, 61%)'; // Cobalt Blue (standby / idle)
+                      let statusText = 'Standby';
+                      let glowShadow = '0 0 10px rgba(59, 130, 246, 0.2)';
+                      let borderStyle = '1px solid var(--border)';
+
+                      if (isOperational) {
+                        statusColor = 'hsl(142, 70%, 45%)'; // Emerald Green
+                        statusText = 'Operational';
+                        glowShadow = '0 0 12px hsla(142, 70%, 45%, 0.25)';
+                      } else if (!hasSets) {
+                        statusColor = 'hsl(0, 84%, 60%)'; // Ruby Red (Offline / No sets)
+                        statusText = 'No Sets Mounted';
+                        glowShadow = '0 0 12px hsla(0, 84%, 60%, 0.25)';
+                      } else if (hasEmptySets) {
+                        statusColor = 'hsl(38, 92%, 50%)'; // Amber (Empty sets)
+                        statusText = 'Degraded (Empty Toolsets)';
+                        glowShadow = '0 0 12px hsla(38, 92%, 50%, 0.25)';
+                      }
+
+                      if (isSelected) {
+                        borderStyle = `2px solid ${statusColor}`;
+                        glowShadow = `0 0 20px ${statusColor}`;
+                      }
+
+                      return (
+                        <div 
+                          key={machine.id}
+                          onClick={() => setSelectedMachineId(machine.id)}
+                          style={{
+                            background: isSelected ? 'rgba(2, 6, 23, 0.75)' : 'rgba(2, 6, 23, 0.35)',
+                            border: borderStyle,
+                            borderRadius: '8px',
+                            padding: '0.75rem',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                            boxShadow: glowShadow,
+                            position: 'relative',
+                            overflow: 'hidden'
+                          }}
+                          className="floorplan-cell"
+                          title={`Machine: ${machine.name} | Status: ${statusText}`}
+                        >
+                          {/* Pulsing state indicator dot in top-right */}
+                          <div style={{
+                            position: 'absolute',
+                            top: '8px',
+                            right: '8px',
+                            width: '8px',
+                            height: '8px',
+                            background: statusColor,
+                            borderRadius: '50%',
+                            boxShadow: `0 0 8px ${statusColor}`,
+                            animation: isOperational ? 'pulse 2s infinite' : 'none'
+                          }} />
+
+                          {/* Coordinate label background watermark */}
+                          <div style={{
+                            position: 'absolute',
+                            bottom: '-4px',
+                            right: '2px',
+                            fontSize: '1.75rem',
+                            fontWeight: 900,
+                            color: 'rgba(255, 255, 255, 0.02)',
+                            userSelect: 'none',
+                            pointerEvents: 'none'
+                          }}>
+                            {coordinate}
+                          </div>
+
+                          <div>
+                            <div style={{ fontSize: '0.625rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                              BAY {coordinate}
+                            </div>
+                            <div style={{ fontWeight: 700, fontSize: '0.8rem', color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginTop: '0.1rem' }}>
+                              {machine.name}
+                            </div>
+                          </div>
+
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.4rem' }}>
+                            <span style={{ fontSize: '0.625rem', color: statusColor, fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+                              <span style={{ width: '4px', height: '4px', background: statusColor, borderRadius: '50%' }} />
+                              {machine.sets?.length || 0} Sets Active
+                            </span>
+                            <span style={{ fontSize: '0.55rem', color: 'var(--text-muted)' }}>
+                              {machine.location ? machine.location.split('-')[1]?.trim() || machine.location : 'Zone A'}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    } else {
+                      // Render empty mesh cell
+                      return (
+                        <div 
+                          key={`empty-${coordinate}`}
+                          style={{
+                            border: '1px dashed rgba(255, 255, 255, 0.06)',
+                            borderRadius: '8px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: 'rgba(255, 255, 255, 0.08)',
+                            fontSize: '0.75rem',
+                            fontWeight: 700,
+                            userSelect: 'none'
+                          }}
+                        >
+                          {coordinate}
+                        </div>
+                      );
+                    }
+                  });
+                })()}
+              </div>
+            ) : (
+              // Zone groups view (grouped by location name)
+              <div style={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                gap: '1.25rem', 
+                position: 'relative', 
+                zIndex: 1,
+                maxHeight: '340px',
+                overflowY: 'auto',
+                paddingRight: '0.5rem'
+              }}>
+                {(() => {
+                  // Group machines by location prefix
+                  const zones: { [key: string]: Machine[] } = {};
+                  machines.forEach(m => {
+                    const zoneName = m.location ? m.location.split('-')[0].trim() : 'Unassigned Zone';
+                    if (!zones[zoneName]) zones[zoneName] = [];
+                    zones[zoneName].push(m);
+                  });
+
+                  if (Object.keys(zones).length === 0) {
+                    return <div style={{ color: 'var(--text-muted)', fontStyle: 'italic', textAlign: 'center' }}>No zone groupings available.</div>;
+                  }
+
+                  return Object.entries(zones).map(([zoneName, zoneMachines]) => (
+                    <div key={zoneName} style={{ background: 'rgba(2, 6, 23, 0.2)', padding: '0.85rem', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                      <div style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--primary)', marginBottom: '0.65rem', borderBottom: '1px solid rgba(255, 255, 255, 0.05)', paddingBottom: '0.25rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        📍 {zoneName} ({zoneMachines.length} Assets)
+                      </div>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
+                        {zoneMachines.map(m => {
+                          const hasSets = m.sets && m.sets.length > 0;
+                          const hasEmptySets = hasSets && (m.sets || []).some((s: any) => !s.dies || s.dies.length === 0);
+                          const isOperational = hasSets && !hasEmptySets;
+                          const isSelected = m.id === selectedMachineId;
+
+                          let statusColor = 'hsl(217, 100%, 61%)';
+                          if (isOperational) statusColor = 'hsl(142, 70%, 45%)';
+                          else if (!hasSets) statusColor = 'hsl(0, 84%, 60%)';
+                          else if (hasEmptySets) statusColor = 'hsl(38, 92%, 50%)';
+
+                          return (
+                            <div
+                              key={m.id}
+                              onClick={() => setSelectedMachineId(m.id)}
+                              style={{
+                                background: isSelected ? 'rgba(2, 6, 23, 0.6)' : 'rgba(2, 6, 23, 0.25)',
+                                border: isSelected ? `1.5px solid ${statusColor}` : '1px solid var(--border)',
+                                padding: '0.5rem 0.65rem',
+                                borderRadius: '6px',
+                                cursor: 'pointer',
+                                transition: 'all 0.2s',
+                                boxShadow: isSelected ? `0 0 12px ${statusColor}` : 'none'
+                              }}
+                            >
+                              <div style={{ fontWeight: 700, fontSize: '0.75rem', color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                {m.name}
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.25rem', fontSize: '0.625rem' }}>
+                                <span style={{ color: statusColor, fontWeight: 600 }}>{m.sets?.length || 0} Sets</span>
+                                <span style={{ color: 'var(--text-muted)' }}>{m.location?.split('-')[1]?.trim() || ''}</span>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ));
+                })()}
+              </div>
+            )}
+          </div>
+
+          {/* Telemetry Sidebar Details */}
+          <div style={{ 
+            background: 'rgba(2, 6, 23, 0.25)', 
+            border: '1px solid var(--border)', 
+            borderRadius: '10px', 
+            padding: '1.25rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            minHeight: '340px'
+          }}>
+            {(() => {
+              const selectedMachine = machines.find(m => m.id === selectedMachineId);
+              if (!selectedMachine) {
+                return (
+                  <div style={{ 
+                    flex: 1, 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    color: 'var(--text-muted)',
+                    textAlign: 'center',
+                    padding: '2rem'
+                  }}>
+                    <Cpu size={32} style={{ color: 'var(--border)', marginBottom: '0.75rem' }} />
+                    <span style={{ fontSize: '0.75rem', fontWeight: 600 }}>SELECT NODE FOR TELEMETRY</span>
+                    <span style={{ fontSize: '0.65rem', marginTop: '0.2rem' }}>Hover or click any active coordinate grid module to analyze layout metrics.</span>
+                  </div>
+                );
+              }
+
+              const hasSets = selectedMachine.sets && selectedMachine.sets.length > 0;
+              const emptySets = selectedMachine.sets ? selectedMachine.sets.filter((s: any) => !s.dies || s.dies.length === 0) : [];
+              const hasEmptySets = emptySets.length > 0;
+              const isOperational = hasSets && !hasEmptySets;
+
+              let statusText = 'Standby (Operational)';
+              let statusClass = 'badge-blue';
+              let statusDesc = 'All mounted toolsets are loaded with operational dies.';
+              if (isOperational) {
+                statusText = 'Operational';
+                statusClass = 'badge-green';
+                statusDesc = 'Active production flow running standard industrial processes.';
+              } else if (!hasSets) {
+                statusText = 'Offline (Critical)';
+                statusClass = 'badge-red';
+                statusDesc = 'Asset has zero toolsets mounted. Production queue halted.';
+              } else if (hasEmptySets) {
+                statusText = 'Degraded (Warning)';
+                statusClass = 'badge-warning';
+                statusDesc = `${emptySets.length} toolsets have zero dies assigned. Maintenance required.`;
+              }
+
+              return (
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+                  <div>
+                    {/* Header */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid var(--border)', paddingBottom: '0.75rem', marginBottom: '0.75rem' }}>
+                      <div style={{ minWidth: 0, flex: 1, paddingRight: '0.5rem' }}>
+                        <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 800, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{selectedMachine.name}</h4>
+                        <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.25rem', marginTop: '0.15rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          <MapPin size={10} /> {selectedMachine.location || 'Unknown Lane'}
+                        </div>
+                      </div>
+                      <span className={`badge ${statusClass}`} style={{ fontSize: '0.65rem', padding: '0.2rem 0.5rem', flexShrink: 0 }}>
+                        {statusText}
+                      </span>
+                    </div>
+
+                    {/* Status Description Box */}
+                    <div style={{ background: 'rgba(2, 6, 23, 0.4)', border: '1px solid var(--border)', padding: '0.65rem 0.75rem', borderRadius: '6px', marginBottom: '0.85rem' }}>
+                      <div style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.03em', marginBottom: '0.15rem' }}>
+                        Telemetry Status
+                      </div>
+                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'var(--text-main)', lineHeight: '1.3' }}>
+                        {statusDesc}
+                      </p>
+                    </div>
+
+                    {/* Mount Info */}
+                    <div style={{ marginBottom: '0.85rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.35rem' }}>
+                        <span>Toolset Allocation</span>
+                        <span>{selectedMachine.sets?.length || 0} Mounted</span>
+                      </div>
+
+                      {hasSets ? (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', maxHeight: '120px', overflowY: 'auto', paddingRight: '0.25rem' }}>
+                          {selectedMachine.sets?.map((s: any) => {
+                            const dieCount = s.dies?.length || 0;
+                            return (
+                              <div 
+                                key={s.id} 
+                                onClick={() => navigate(`/sets/${s.id}`)}
+                                style={{ 
+                                  display: 'flex', 
+                                  justifyContent: 'space-between', 
+                                  alignItems: 'center', 
+                                  background: 'rgba(255, 255, 255, 0.02)', 
+                                  border: '1px solid var(--border)', 
+                                  padding: '0.4rem 0.5rem', 
+                                  borderRadius: '5px',
+                                  cursor: 'pointer',
+                                  fontSize: '0.72rem',
+                                  transition: 'background 0.2s'
+                                }}
+                                className="telemetry-set-row"
+                              >
+                                <span style={{ fontWeight: 600, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.name}</span>
+                                <span className={`badge ${dieCount > 0 ? 'badge-neutral' : 'badge-red'}`} style={{ fontSize: '0.6rem', border: 'none', padding: '0.05rem 0.35rem', flexShrink: 0 }}>
+                                  {dieCount} Dies
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <div style={{ padding: '0.75rem', background: 'rgba(239, 68, 68, 0.05)', border: '1px dashed hsla(0, 84%, 60%, 0.2)', borderRadius: '6px', textAlign: 'center', fontSize: '0.7rem', color: 'var(--danger)', fontStyle: 'italic' }}>
+                          ⚠️ Critical Warning: Production line halted. Mount a toolset immediately.
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Actions footer */}
+                  <div style={{ borderTop: '1px solid var(--border)', paddingTop: '0.75rem', display: 'flex', gap: '0.5rem' }}>
+                    <button 
+                      className="btn" 
+                      onClick={() => navigate(`/machines/${selectedMachine.id}`)}
+                      style={{ 
+                        flex: 1, 
+                        fontSize: '0.7rem', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center', 
+                        gap: '0.3rem', 
+                        padding: '0.45rem 0.75rem',
+                        borderRadius: '6px',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        border: '1px solid var(--border)',
+                        color: '#fff'
+                      }}
+                    >
+                      Inspect Node <ExternalLink size={12} />
+                    </button>
+                    {canModify && (
+                      <button 
+                        className="btn btn-primary"
+                        onClick={() => {
+                          setSelectedBulkMachine(selectedMachine.id);
+                          setShowBulkModal(true);
+                        }}
+                        style={{ 
+                          fontSize: '0.7rem', 
+                          padding: '0.45rem 0.75rem',
+                          borderRadius: '6px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.2rem'
+                        }}
+                      >
+                        <Plus size={12} /> Toolset
+                      </button>
+                    )}
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         </div>
       </div>

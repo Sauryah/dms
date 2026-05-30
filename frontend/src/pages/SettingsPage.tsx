@@ -26,6 +26,7 @@ const SettingsPage: React.FC = () => {
 
   // Audit Logs States
   const [auditLogs, setAuditLogs] = useState<any[]>([]);
+  const [sseStatus, setSseStatus] = useState<'connected' | 'reconnecting' | 'disconnected'>('disconnected');
   const [logsLoading, setLogsLoading] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [logSearch, setLogSearch] = useState('');
@@ -145,10 +146,18 @@ const SettingsPage: React.FC = () => {
     const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
     const streamUrl = `${apiBase}/audit-logs/stream`;
     let eventSource: EventSource;
+    let reconnectDelay = 1000;
+    const maxDelay = 16000;
+    let timerId: number;
 
     const connectSSE = () => {
       console.log('Establishing connection to real-time audit logs SSE stream...');
       eventSource = new EventSource(streamUrl, { withCredentials: true });
+
+      eventSource.onopen = () => {
+        setSseStatus('connected');
+        reconnectDelay = 1000; // Reset delay
+      };
 
       eventSource.onmessage = (event) => {
         try {
@@ -180,15 +189,17 @@ const SettingsPage: React.FC = () => {
       };
 
       eventSource.onerror = (err) => {
-        console.warn('Real-time audit log stream disconnected or failed. Retrying in 5 seconds...', err);
+        setSseStatus('reconnecting');
+        console.warn(`Real-time audit log stream disconnected or failed. Reconnecting in ${reconnectDelay / 1000}s...`, err);
         eventSource.close();
         
-        // Reconnection logic with linear backoff
-        setTimeout(() => {
+        // Reconnection logic with exponential backoff
+        timerId = window.setTimeout(() => {
           if (isAdmin && activeTab === 'audit') {
+            reconnectDelay = Math.min(reconnectDelay * 2, maxDelay);
             connectSSE();
           }
-        }, 5000);
+        }, reconnectDelay);
       };
     };
 
@@ -199,6 +210,8 @@ const SettingsPage: React.FC = () => {
         console.log('Cleaning up SSE stream connection');
         eventSource.close();
       }
+      window.clearTimeout(timerId);
+      setSseStatus('disconnected');
     };
   }, [isAdmin, activeTab, logsPage, actorFilter, actionFilter, logSearch]);
 
@@ -568,7 +581,15 @@ const SettingsPage: React.FC = () => {
               <h2 className="section-title" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
                 <FileText size={24} style={{ color: 'var(--primary)' }} /> Audit Trails & Compliance Logs
               </h2>
-              <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>Monitor administrative logins, Excel file ingests, and inventory operations</p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.25rem', flexWrap: 'wrap' }}>
+                <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', margin: 0 }}>Monitor administrative logins, Excel file ingests, and inventory operations</p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(2, 6, 23, 0.4)', padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid var(--border)' }}>
+                  <span className={`telemetry-dot dot-${sseStatus}`} />
+                  <span style={{ fontSize: '0.65rem', textTransform: 'uppercase', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.05em' }}>
+                    Telemetry: {sseStatus}
+                  </span>
+                </div>
+              </div>
             </div>
             <div style={{ display: 'flex', gap: '0.75rem' }}>
               <button className="btn btn-secondary" onClick={fetchAuditLogs} disabled={logsLoading} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', height: '2.5rem' }}>
@@ -917,7 +938,74 @@ const SettingsPage: React.FC = () => {
               <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1rem', marginTop: '0.5rem' }}>
                 <strong style={{ display: 'block', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>Event Details:</strong>
                 <div style={{ background: 'rgba(2, 6, 23, 0.34)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border)', lineHeight: 1.5, color: 'var(--text-main)' }}>
-                  {selectedLog.details}
+                  {(() => {
+                    try {
+                      if (selectedLog.details && selectedLog.details.trim().startsWith('{')) {
+                        const parsed = JSON.parse(selectedLog.details);
+                        if (parsed && parsed.isDiff) {
+                          const isSwap = parsed.changeType === 'ALLOCATION_SWAP';
+                          const isDieMapping = parsed.changeType === 'DIE_MAPPING';
+                          
+                          const beforeItems = isSwap ? (parsed.before.sets || []) : (isDieMapping ? (parsed.before.dies || []) : []);
+                          const afterItems = isSwap ? (parsed.after.sets || []) : (isDieMapping ? (parsed.after.dies || []) : []);
+                          
+                          // Find items removed and items added
+                          const removed = beforeItems.filter((i: string) => !afterItems.includes(i));
+                          const added = afterItems.filter((i: string) => !beforeItems.includes(i));
+                          const unchanged = beforeItems.filter((i: string) => afterItems.includes(i));
+                          
+                          return (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                              <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--primary)', letterSpacing: '0.05em', fontWeight: 600 }}>
+                                configuration state transition
+                              </div>
+                              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '0.75rem' }}>
+                                <div>
+                                  <div style={{ color: 'var(--text-muted)', fontSize: '0.75rem', marginBottom: '0.25rem' }}>BEFORE:</div>
+                                  <span className="badge badge-neutral" style={{ padding: '0.1rem 0.3rem', fontSize: '0.7rem' }}>
+                                    {isSwap ? `${parsed.before.setsCount} Toolsets` : `${parsed.before.diesCount} Dies`}
+                                  </span>
+                                </div>
+                                <div>
+                                  <div style={{ color: 'var(--text-muted)', fontSize: '0.75rem', marginBottom: '0.25rem' }}>AFTER:</div>
+                                  <span className="badge badge-primary" style={{ padding: '0.1rem 0.3rem', fontSize: '0.7rem' }}>
+                                    {isSwap ? `${parsed.after.setsCount} Toolsets` : `${parsed.after.diesCount} Dies`}
+                                  </span>
+                                </div>
+                              </div>
+                              
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)' }}>MAPPING CHANGES:</div>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                                  {unchanged.map((item: string) => (
+                                    <span key={item} style={{ fontSize: '0.72rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', padding: '0.2rem 0.4rem', borderRadius: '4px', color: 'var(--text-muted)' }}>
+                                      {item}
+                                    </span>
+                                  ))}
+                                  {removed.map((item: string) => (
+                                    <span key={item} style={{ fontSize: '0.72rem', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid var(--danger)', padding: '0.2rem 0.4rem', borderRadius: '4px', color: 'var(--danger)', display: 'inline-flex', alignItems: 'center', gap: '0.2rem' }}>
+                                      - {item}
+                                    </span>
+                                  ))}
+                                  {added.map((item: string) => (
+                                    <span key={item} style={{ fontSize: '0.72rem', background: 'rgba(34, 197, 94, 0.1)', border: '1px solid var(--success)', padding: '0.2rem 0.4rem', borderRadius: '4px', color: 'var(--success)', display: 'inline-flex', alignItems: 'center', gap: '0.2rem' }}>
+                                      + {item}
+                                    </span>
+                                  ))}
+                                  {beforeItems.length === 0 && afterItems.length === 0 && (
+                                    <span style={{ fontStyle: 'italic', color: 'var(--text-muted)', fontSize: '0.75rem' }}>Empty Configuration</span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        }
+                      }
+                    } catch (e) {
+                      // Fallback to normal rendering if JSON parse fails
+                    }
+                    return selectedLog.details;
+                  })()}
                 </div>
               </div>
 

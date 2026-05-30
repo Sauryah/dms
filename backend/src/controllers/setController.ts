@@ -100,7 +100,7 @@ export const assignDieToSet = async (req: Request, res: Response, next: NextFunc
   const { setId, dieId } = req.params as { setId: string; dieId: string };
   try {
     const [setObj, dieObj] = await Promise.all([
-      prisma.set.findUnique({ where: { id: setId } }),
+      prisma.set.findUnique({ where: { id: setId }, include: { dies: true } }),
       prisma.die.findUnique({ where: { id: dieId } }),
     ]);
     const setName = setObj ? setObj.name : setId;
@@ -123,7 +123,32 @@ export const assignDieToSet = async (req: Request, res: Response, next: NextFunc
     });
     const user = (req as any).user;
     if (user) {
-      await logAction(user.id, user.username, 'ASSIGN_DIE', setName, `Assigned Die "${dieName}" to Set "${setName}"`, req);
+      // Build auditing state diff JSON payload
+      const beforeDiesNames = setObj && (setObj as any).dies ? (setObj as any).dies.map((d: any) => d.dieId) : [];
+      const afterDiesNames = set && (set as any).dies ? (set as any).dies.map((d: any) => d.dieId) : [];
+
+      const diffPayload = {
+        isDiff: true,
+        changeType: 'DIE_MAPPING',
+        targetSet: setName,
+        before: {
+          dies: beforeDiesNames,
+          diesCount: beforeDiesNames.length
+        },
+        after: {
+          dies: afterDiesNames,
+          diesCount: afterDiesNames.length
+        }
+      };
+
+      await logAction(
+        user.id,
+        user.username,
+        'ASSIGN_DIE',
+        setName,
+        JSON.stringify(diffPayload),
+        req
+      );
     }
     res.json(set);
   } catch (error) {

@@ -1,0 +1,814 @@
+{
+  "communities": {
+    "0": [
+      "backend_src_app_ts",
+      "backend_src_app_ts_src_app_app",
+      "backend_src_controllers_auditcontroller_ts",
+      "backend_src_controllers_authcontroller_ts",
+      "backend_src_controllers_diecontroller_ts",
+      "backend_src_controllers_machinecontroller_ts",
+      "backend_src_controllers_searchcontroller_ts",
+      "backend_src_controllers_setcontroller_ts",
+      "backend_src_index_ts",
+      "backend_src_lib_auditlogger_ts",
+      "backend_src_lib_config_ts",
+      "backend_src_lib_prisma_ts",
+      "backend_src_lib_schemas_ts",
+      "backend_src_lib_swagger_ts",
+      "backend_src_middleware_authmiddleware_ts",
+      "backend_src_middleware_ratelimiter_ts",
+      "backend_src_middleware_validationmiddleware_ts",
+      "backend_src_routes_auditroutes_ts",
+      "backend_src_routes_authroutes_ts",
+      "backend_src_routes_devroutes_ts",
+      "backend_src_routes_dieroutes_ts",
+      "backend_src_routes_machineroutes_ts",
+      "backend_src_routes_searchroutes_ts",
+      "backend_src_routes_setroutes_ts",
+      "controllers_auditcontroller_exportauditlogs",
+      "controllers_auditcontroller_getauditlogs",
+      "controllers_authcontroller_deleteuser",
+      "controllers_authcontroller_getusers",
+      "controllers_authcontroller_login",
+      "controllers_authcontroller_register",
+      "controllers_diecontroller_createdie",
+      "controllers_diecontroller_deletedie",
+      "controllers_diecontroller_formatsizestring",
+      "controllers_diecontroller_getdiebyid",
+      "controllers_diecontroller_getdies",
+      "controllers_diecontroller_getimporttemplate",
+      "controllers_diecontroller_importdies",
+      "controllers_diecontroller_parsesizetofloat",
+      "controllers_diecontroller_updatedie",
+      "controllers_machinecontroller_assignsettomachine",
+      "controllers_machinecontroller_createmachine",
+      "controllers_machinecontroller_deletemachine",
+      "controllers_machinecontroller_getmachinebyid",
+      "controllers_machinecontroller_getmachines",
+      "controllers_machinecontroller_updatemachine",
+      "controllers_setcontroller_assigndietoset",
+      "controllers_setcontroller_createset",
+      "controllers_setcontroller_deleteset",
+      "controllers_setcontroller_getsetbyid",
+      "controllers_setcontroller_getsets",
+      "controllers_setcontroller_updateset",
+      "lib_auditlogger_logaction",
+      "lib_config_getrequiredenv",
+      "lib_config_jwt_secret",
+      "lib_prisma_prisma",
+      "lib_schemas_createdieschema",
+      "lib_schemas_createmachineschema",
+      "lib_schemas_createsetschema",
+      "lib_schemas_loginschema",
+      "lib_schemas_registerschema",
+      "lib_schemas_updatedieschema",
+      "lib_schemas_updatemachineschema",
+      "lib_schemas_updatesetschema",
+      "lib_swagger_options",
+      "lib_swagger_swaggerspec",
+      "middleware_authmiddleware_authenticate",
+      "middleware_authmiddleware_authorize",
+      "middleware_authmiddleware_authrequest",
+      "middleware_ratelimiter_apilimiter",
+      "middleware_ratelimiter_authlimiter",
+      "middleware_ratelimiter_devreindexlimiter",
+      "middleware_ratelimiter_importlimiter",
+      "middleware_validationmiddleware_validatebody",
+      "prismaerrorhandler_prismaerrorhandler",
+      "routes_auditroutes_router",
+      "routes_authroutes_router",
+      "routes_devroutes_graphdata",
+      "routes_devroutes_graphjsonpath",
+      "routes_devroutes_rawdata",
+      "routes_devroutes_router",
+      "routes_dieroutes_router",
+      "routes_dieroutes_upload",
+      "routes_machineroutes_router",
+      "routes_searchroutes_router",
+      "routes_setroutes_router"
+    ],
+    "1": [
+      "components_activityfeed_activityfeed",
+      "components_activityfeed_auditlog",
+      "components_breadcrumbs_breadcrumbitem",
+      "components_breadcrumbs_breadcrumbs",
+      "components_segmentedcontrol_segmentedcontrolprops",
+      "components_segmentedcontrol_segmentedoption",
+      "components_sidebar_sidebar",
+      "components_skeleton_skeleton",
+      "components_skeleton_skeletonprops",
+      "components_topbar_topbar",
+      "context_authcontext_authcontext",
+      "context_authcontext_authprovider",
+      "context_authcontext_getstoreduser",
+      "context_authcontext_useauth",
+      "context_authcontext_user",
+      "context_toastcontext_toast",
+      "context_toastcontext_toastcontext",
+      "context_toastcontext_toastcontexttype",
+      "context_toastcontext_toastprovider",
+      "context_toastcontext_toasttype",
+      "context_toastcontext_usetoast",
+      "d_project_mmmmm_frontend_src_components_segmentedcontrol_tsx",
+      "frontend_src_app_tsx",
+      "frontend_src_app_tsx_src_app_app",
+      "frontend_src_components_sidebar_tsx",
+      "frontend_src_components_topbar_tsx",
+      "frontend_src_context_authcontext_tsx",
+      "frontend_src_main_tsx",
+      "frontend_src_pages_dashboard_tsx",
+      "frontend_src_pages_diespage_tsx",
+      "frontend_src_pages_setdetails_tsx",
+      "frontend_src_pages_setspage_tsx",
+      "frontend_src_pages_settingspage_tsx",
+      "frontend_src_services_api_ts",
+      "pages_dashboard_dashboard",
+      "pages_dashboard_diesummary",
+      "pages_dashboard_machine",
+      "pages_dashboard_setsummary",
+      "pages_diespage_die",
+      "pages_diespage_diespage",
+      "pages_loginpage_loginpage",
+      "pages_machinedetails_machine",
+      "pages_machinedetails_machinedetails",
+      "pages_machinedetails_set",
+      "pages_searchpage_searchpage",
+      "pages_setdetails_die",
+      "pages_setdetails_set",
+      "pages_setdetails_setdetails",
+      "pages_setspage_set",
+      "pages_setspage_setspage",
+      "pages_settingspage_settingspage",
+      "pages_settingspage_userinfo",
+      "searchpage_handlesearch",
+      "segmentedcontrol_segmentedcontrol",
+      "services_api_api",
+      "services_api_token",
+      "settingspage_fetchusers",
+      "settingspage_handlesubmit",
+      "src_app_adminroute",
+      "src_app_protectedlayout"
+    ],
+    "2": [
+      "backend_prisma_json_schema_json_schema_json",
+      "json_schema_json_schema_createdat_format",
+      "json_schema_json_schema_definitions",
+      "json_schema_json_schema_die_ref",
+      "json_schema_json_schema_dies_items",
+      "json_schema_json_schema_properties",
+      "json_schema_json_schema_properties_action",
+      "json_schema_json_schema_properties_actorid",
+      "json_schema_json_schema_properties_actorname",
+      "json_schema_json_schema_properties_auditlog",
+      "json_schema_json_schema_properties_casing",
+      "json_schema_json_schema_properties_createdat",
+      "json_schema_json_schema_properties_description",
+      "json_schema_json_schema_properties_details",
+      "json_schema_json_schema_properties_die",
+      "json_schema_json_schema_properties_dieid",
+      "json_schema_json_schema_properties_dies",
+      "json_schema_json_schema_properties_id",
+      "json_schema_json_schema_properties_ipaddress",
+      "json_schema_json_schema_properties_location",
+      "json_schema_json_schema_properties_machine",
+      "json_schema_json_schema_properties_name",
+      "json_schema_json_schema_properties_passwordhash",
+      "json_schema_json_schema_properties_role",
+      "json_schema_json_schema_properties_set",
+      "json_schema_json_schema_properties_sets",
+      "json_schema_json_schema_properties_size",
+      "json_schema_json_schema_properties_sizevalue",
+      "json_schema_json_schema_properties_target",
+      "json_schema_json_schema_properties_user",
+      "json_schema_json_schema_properties_useragent",
+      "json_schema_json_schema_properties_username",
+      "json_schema_json_schema_role_default",
+      "json_schema_json_schema_role_enum",
+      "json_schema_json_schema_schema",
+      "json_schema_json_schema_set_anyof",
+      "json_schema_json_schema_type"
+    ],
+    "3": [
+      "auditcontroller_exportauditlogs",
+      "auditcontroller_getauditlogs",
+      "auditlogger_logaction",
+      "authcontroller_deleteuser",
+      "authcontroller_getusers",
+      "authcontroller_login",
+      "authcontroller_register",
+      "d_project_mmmmm_backend_src_controllers_auditcontroller_ts",
+      "d_project_mmmmm_backend_src_controllers_authcontroller_ts",
+      "d_project_mmmmm_backend_src_controllers_diecontroller_ts",
+      "d_project_mmmmm_backend_src_controllers_machinecontroller_ts",
+      "d_project_mmmmm_backend_src_controllers_setcontroller_ts",
+      "d_project_mmmmm_backend_src_lib_auditlogger_ts",
+      "diecontroller_createdie",
+      "diecontroller_deletedie",
+      "diecontroller_formatsizestring",
+      "diecontroller_getdiebyid",
+      "diecontroller_getdies",
+      "diecontroller_importdies",
+      "diecontroller_parsesizetofloat",
+      "diecontroller_updatedie",
+      "loginpage_handlesubmit",
+      "machinecontroller_assignsettomachine",
+      "machinecontroller_createmachine",
+      "machinecontroller_deletemachine",
+      "machinecontroller_getmachinebyid",
+      "machinecontroller_getmachines",
+      "machinecontroller_updatemachine",
+      "setcontroller_assigndietoset",
+      "setcontroller_createset",
+      "setcontroller_deleteset",
+      "setcontroller_getsetbyid",
+      "setcontroller_getsets",
+      "setcontroller_updateset"
+    ],
+    "4": [
+      "backend_package_author",
+      "backend_package_description",
+      "backend_package_devdependencies",
+      "backend_package_devdependencies_is_thirteen",
+      "backend_package_devdependencies_mermaid_js_mermaid_cli",
+      "backend_package_devdependencies_nodemon",
+      "backend_package_devdependencies_prisma_dbml_generator",
+      "backend_package_devdependencies_prisma_erd_generator",
+      "backend_package_devdependencies_prisma_json_schema_generator",
+      "backend_package_devdependencies_types_bcryptjs",
+      "backend_package_devdependencies_types_better_sqlite3",
+      "backend_package_devdependencies_types_cors",
+      "backend_package_devdependencies_types_express",
+      "backend_package_devdependencies_types_jsonwebtoken",
+      "backend_package_devdependencies_types_morgan",
+      "backend_package_devdependencies_types_multer",
+      "backend_package_devdependencies_types_node",
+      "backend_package_devdependencies_types_swagger_jsdoc",
+      "backend_package_devdependencies_types_swagger_ui_express",
+      "backend_package_devdependencies_typescript",
+      "backend_package_json",
+      "backend_package_keywords",
+      "backend_package_license",
+      "backend_package_main",
+      "backend_package_name",
+      "backend_package_prisma",
+      "backend_package_prisma_seed",
+      "backend_package_scripts",
+      "backend_package_scripts_build",
+      "backend_package_scripts_dev",
+      "backend_package_scripts_start",
+      "backend_package_scripts_test",
+      "backend_package_type",
+      "backend_package_version"
+    ],
+    "5": [
+      "frontend_package_dependencies",
+      "frontend_package_dependencies_axios",
+      "frontend_package_dependencies_lucide_react",
+      "frontend_package_dependencies_react",
+      "frontend_package_dependencies_react_dom",
+      "frontend_package_dependencies_react_router_dom",
+      "frontend_package_devdependencies",
+      "frontend_package_devdependencies_eslint",
+      "frontend_package_devdependencies_eslint_js",
+      "frontend_package_devdependencies_eslint_plugin_react_hooks",
+      "frontend_package_devdependencies_eslint_plugin_react_refresh",
+      "frontend_package_devdependencies_globals",
+      "frontend_package_devdependencies_types_node",
+      "frontend_package_devdependencies_types_react",
+      "frontend_package_devdependencies_typescript",
+      "frontend_package_devdependencies_typescript_eslint",
+      "frontend_package_devdependencies_vite",
+      "frontend_package_devdependencies_vitejs_plugin_react",
+      "frontend_package_json",
+      "frontend_package_name",
+      "frontend_package_private",
+      "frontend_package_scripts",
+      "frontend_package_scripts_build",
+      "frontend_package_scripts_dev",
+      "frontend_package_scripts_lint",
+      "frontend_package_scripts_preview",
+      "frontend_package_type",
+      "frontend_package_version"
+    ],
+    "6": [
+      "backend_package_dependencies",
+      "backend_package_dependencies_bcryptjs",
+      "backend_package_dependencies_cors",
+      "backend_package_dependencies_dotenv",
+      "backend_package_dependencies_express",
+      "backend_package_dependencies_express_rate_limit",
+      "backend_package_dependencies_helmet",
+      "backend_package_dependencies_jsonwebtoken",
+      "backend_package_dependencies_morgan",
+      "backend_package_dependencies_multer",
+      "backend_package_dependencies_swagger_jsdoc",
+      "backend_package_dependencies_swagger_ui_express",
+      "backend_package_dependencies_ts_node",
+      "backend_package_dependencies_xlsx",
+      "backend_package_dependencies_zod",
+      "backend_prisma_seed_js",
+      "backend_prisma_seed_js_prisma_seed_main",
+      "backend_prisma_seed_js_prisma_seed_prisma",
+      "d_project_mmmmm_backend_prisma_seed_ts",
+      "prisma_seed_bcrypt",
+      "prisma_seed_prismaclient",
+      "seed_ensuredie",
+      "seed_ensuremachine",
+      "seed_ensureset",
+      "seed_ensureuser",
+      "seed_main"
+    ],
+    "7": [
+      "components_codebase3dgraph_codebase3dgraph",
+      "components_codebase3dgraph_codelink",
+      "components_codebase3dgraph_codenode",
+      "components_codebase3dgraph_simnode",
+      "components_errorboundary_errorboundary",
+      "components_errorboundary_errorboundary_componentdidcatch",
+      "components_errorboundary_errorboundary_getderivedstatefromerror",
+      "components_errorboundary_errorboundary_render",
+      "components_errorboundary_props",
+      "components_errorboundary_state",
+      "components_fleet3dgraph_fleet3dgraph",
+      "components_fleet3dgraph_fleet3dgraphprops",
+      "components_fleet3dgraph_graphlink",
+      "components_fleet3dgraph_graphnode",
+      "components_fleet3dgraph_simnode",
+      "frontend_src_components_errorboundary_tsx",
+      "pages_codebasegraphpage_codebasegraphpage",
+      "pages_fleetgraphpage_fleetgraphpage",
+      "src_app_codebasegraphpage",
+      "src_app_fleetgraphpage"
+    ],
+    "8": [
+      "frontend_tsconfig_app_compileroptions",
+      "frontend_tsconfig_app_compileroptions_allowimportingtsextensions",
+      "frontend_tsconfig_app_compileroptions_erasablesyntaxonly",
+      "frontend_tsconfig_app_compileroptions_jsx",
+      "frontend_tsconfig_app_compileroptions_lib",
+      "frontend_tsconfig_app_compileroptions_module",
+      "frontend_tsconfig_app_compileroptions_moduledetection",
+      "frontend_tsconfig_app_compileroptions_moduleresolution",
+      "frontend_tsconfig_app_compileroptions_noemit",
+      "frontend_tsconfig_app_compileroptions_nofallthroughcasesinswitch",
+      "frontend_tsconfig_app_compileroptions_nounusedlocals",
+      "frontend_tsconfig_app_compileroptions_nounusedparameters",
+      "frontend_tsconfig_app_compileroptions_skiplibcheck",
+      "frontend_tsconfig_app_compileroptions_target",
+      "frontend_tsconfig_app_compileroptions_tsbuildinfofile",
+      "frontend_tsconfig_app_compileroptions_types",
+      "frontend_tsconfig_app_compileroptions_verbatimmodulesyntax",
+      "frontend_tsconfig_app_include",
+      "frontend_tsconfig_app_json"
+    ],
+    "9": [
+      "frontend_tsconfig_node_compileroptions",
+      "frontend_tsconfig_node_compileroptions_allowimportingtsextensions",
+      "frontend_tsconfig_node_compileroptions_erasablesyntaxonly",
+      "frontend_tsconfig_node_compileroptions_lib",
+      "frontend_tsconfig_node_compileroptions_module",
+      "frontend_tsconfig_node_compileroptions_moduledetection",
+      "frontend_tsconfig_node_compileroptions_moduleresolution",
+      "frontend_tsconfig_node_compileroptions_noemit",
+      "frontend_tsconfig_node_compileroptions_nofallthroughcasesinswitch",
+      "frontend_tsconfig_node_compileroptions_nounusedlocals",
+      "frontend_tsconfig_node_compileroptions_nounusedparameters",
+      "frontend_tsconfig_node_compileroptions_skiplibcheck",
+      "frontend_tsconfig_node_compileroptions_target",
+      "frontend_tsconfig_node_compileroptions_tsbuildinfofile",
+      "frontend_tsconfig_node_compileroptions_types",
+      "frontend_tsconfig_node_compileroptions_verbatimmodulesyntax",
+      "frontend_tsconfig_node_include",
+      "frontend_tsconfig_node_json"
+    ],
+    "10": [
+      "backend_tsconfig_compileroptions",
+      "backend_tsconfig_compileroptions_esmoduleinterop",
+      "backend_tsconfig_compileroptions_forceconsistentcasinginfilenames",
+      "backend_tsconfig_compileroptions_lib",
+      "backend_tsconfig_compileroptions_module",
+      "backend_tsconfig_compileroptions_moduleresolution",
+      "backend_tsconfig_compileroptions_outdir",
+      "backend_tsconfig_compileroptions_resolvejsonmodule",
+      "backend_tsconfig_compileroptions_rootdir",
+      "backend_tsconfig_compileroptions_skiplibcheck",
+      "backend_tsconfig_compileroptions_strict",
+      "backend_tsconfig_compileroptions_target",
+      "backend_tsconfig_compileroptions_types",
+      "backend_tsconfig_exclude",
+      "backend_tsconfig_include",
+      "backend_tsconfig_json"
+    ],
+    "11": [
+      "d_project_mmmmm_frontend_src_pages_machinedetails_tsx",
+      "d_project_mmmmm_frontend_src_pages_setdetails_tsx",
+      "machinedetails_fetchavailablesets",
+      "machinedetails_fetchmachine",
+      "machinedetails_handleassignset",
+      "machinedetails_handledelete",
+      "machinedetails_openassignmodal",
+      "setdetails_fetchavailabledies",
+      "setdetails_fetchset",
+      "setdetails_handleassigndie",
+      "setdetails_handledelete",
+      "setdetails_handleupdate",
+      "setdetails_openassignmodal",
+      "setdetails_openeditdiemodal"
+    ],
+    "12": [
+      "d_project_mmmmm_frontend_src_components_fleet3dgraph_tsx",
+      "fleet3dgraph_handlecanvasclick",
+      "fleet3dgraph_handlemousedown",
+      "fleet3dgraph_handlemousemove",
+      "fleet3dgraph_handlemouseup",
+      "fleet3dgraph_handlewheel",
+      "fleet3dgraph_resetcamera",
+      "fleet3dgraph_resizecanvas",
+      "fleet3dgraph_tick",
+      "fleet3dgraph_zoomby"
+    ],
+    "13": [
+      "codebase3dgraph_handlecanvasclick",
+      "codebase3dgraph_handlemousedown",
+      "codebase3dgraph_handlemousemove",
+      "codebase3dgraph_handlemouseup",
+      "codebase3dgraph_handlewheel",
+      "codebase3dgraph_resizecanvas",
+      "codebase3dgraph_tick",
+      "d_project_mmmmm_frontend_src_components_codebase3dgraph_tsx"
+    ],
+    "14": [
+      "activityfeed_fetchlogs",
+      "activityfeed_formatlogdate",
+      "activityfeed_getactionicon",
+      "activityfeed_getfriendlyuseragent",
+      "activityfeed_gettargeticon",
+      "activityfeed_handleexport",
+      "d_project_mmmmm_frontend_src_components_activityfeed_tsx"
+    ],
+    "15": [
+      "backend_prisma_seed_ts",
+      "backend_prisma_seed_ts_prisma_seed_main",
+      "backend_prisma_seed_ts_prisma_seed_prisma",
+      "prisma_seed_ensuredie",
+      "prisma_seed_ensuremachine",
+      "prisma_seed_ensureset",
+      "prisma_seed_ensureuser"
+    ],
+    "16": [
+      "d_project_mmmmm_frontend_src_pages_diespage_tsx",
+      "diespage_fetchdies",
+      "diespage_handledelete",
+      "diespage_handleimport",
+      "diespage_handlesubmit",
+      "diespage_openeditmodal",
+      "diespage_resetform"
+    ],
+    "17": [
+      "app_app",
+      "app_protectedlayout",
+      "authcontext_getstoreduser",
+      "authcontext_useauth",
+      "d_project_mmmmm_frontend_src_app_tsx",
+      "d_project_mmmmm_frontend_src_context_authcontext_tsx"
+    ],
+    "18": [
+      "frontend_readme_codeblock_1",
+      "frontend_readme_codeblock_2",
+      "frontend_readme_expanding_the_eslint_configuration",
+      "frontend_readme_md",
+      "frontend_readme_react_compiler",
+      "frontend_readme_react_typescript_vite"
+    ],
+    "19": [
+      "d_project_mmmmm_frontend_src_pages_fleetgraphpage_tsx",
+      "fleetgraphpage_fetchdata",
+      "fleetgraphpage_getgraphdata",
+      "fleetgraphpage_getselectednodedetails",
+      "fleetgraphpage_handlenodeclick"
+    ],
+    "20": [
+      "backend_prisma_formatexistingdies_ts",
+      "prisma_formatexistingdies_formatsizestring",
+      "prisma_formatexistingdies_main",
+      "prisma_formatexistingdies_parsesizetofloat",
+      "prisma_formatexistingdies_prisma"
+    ],
+    "21": [
+      "d_project_mmmmm_backend_prisma_formatexistingdies_ts",
+      "formatexistingdies_formatsizestring",
+      "formatexistingdies_main",
+      "formatexistingdies_parsesizetofloat"
+    ],
+    "22": [
+      "backend_prisma_populatesizevalue_ts",
+      "populatesizevalue_main",
+      "populatesizevalue_parsesizetofloat",
+      "prisma_populatesizevalue_prisma"
+    ],
+    "23": [
+      "codebasegraphpage_fetchgraph",
+      "codebasegraphpage_handlereindex",
+      "d_project_mmmmm_frontend_src_pages_codebasegraphpage_tsx"
+    ],
+    "24": [
+      "authmiddleware_authenticate",
+      "authmiddleware_authorize",
+      "d_project_mmmmm_backend_src_middleware_authmiddleware_ts"
+    ],
+    "25": [
+      "d_project_mmmmm_frontend_src_pages_setspage_tsx",
+      "setspage_fetchsets",
+      "setspage_handlecreateset"
+    ],
+    "26": [
+      "d_project_mmmmm_frontend_src_pages_dashboard_tsx",
+      "dashboard_fetchdata",
+      "dashboard_handlecreatemachine"
+    ],
+    "27": [
+      "docker_compose_backend",
+      "docker_compose_frontend",
+      "requirements_backend_deps"
+    ],
+    "28": [
+      "frontend/src/assets/hero.png",
+      "hero_bottom_layer",
+      "hero_top_layer"
+    ],
+    "29": [
+      "frontend_tsconfig_files",
+      "frontend_tsconfig_json",
+      "frontend_tsconfig_references"
+    ],
+    "30": [
+      "config_getrequiredenv",
+      "d_project_mmmmm_backend_src_lib_config_ts"
+    ],
+    "31": [
+      "docker_compose_dev_backend",
+      "docker_compose_dev_frontend"
+    ],
+    "32": [
+      "d_project_mmmmm_backend_src_controllers_searchcontroller_ts",
+      "searchcontroller_universalsearch"
+    ],
+    "33": [
+      "d_project_mmmmm_backend_src_middleware_validationmiddleware_ts",
+      "validationmiddleware_validatebody"
+    ],
+    "34": [
+      "backend_prisma_config_ts"
+    ],
+    "35": [
+      "frontend_vite_config_ts"
+    ],
+    "36": [
+      "frontend_eslint_config_js"
+    ],
+    "37": [
+      "d_project_mmmmm_backend_src_app_ts"
+    ],
+    "38": [
+      "d_project_mmmmm_backend_src_lib_schemas_ts"
+    ],
+    "39": [
+      "d_project_mmmmm_backend_src_routes_auditroutes_ts"
+    ],
+    "40": [
+      "d_project_mmmmm_backend_src_routes_authroutes_ts"
+    ],
+    "41": [
+      "d_project_mmmmm_backend_src_routes_devroutes_ts"
+    ],
+    "42": [
+      "d_project_mmmmm_backend_src_routes_dieroutes_ts"
+    ],
+    "43": [
+      "d_project_mmmmm_backend_src_routes_machineroutes_ts"
+    ],
+    "44": [
+      "d_project_mmmmm_backend_src_routes_setroutes_ts"
+    ],
+    "45": [
+      "d_project_mmmmm_frontend_src_components_breadcrumbs_tsx"
+    ],
+    "46": [
+      "d_project_mmmmm_frontend_src_components_sidebar_tsx"
+    ],
+    "47": [
+      "d_project_mmmmm_frontend_src_services_api_ts"
+    ],
+    "48": [
+      "readme_tech_stack"
+    ],
+    "49": [
+      "favicon_file"
+    ],
+    "50": [
+      "frontend/public/icons.svg"
+    ],
+    "51": [
+      "bluesky-icon"
+    ],
+    "52": [
+      "discord-icon"
+    ],
+    "53": [
+      "documentation-icon"
+    ],
+    "54": [
+      "github-icon"
+    ],
+    "55": [
+      "social-icon"
+    ],
+    "56": [
+      "x-icon"
+    ],
+    "57": [
+      "frontend/src/assets/react.svg"
+    ],
+    "58": [
+      "vite_svg"
+    ],
+    "59": [
+      "requirements_frontend_deps"
+    ]
+  },
+  "cohesion": {
+    "0": 0.05238095238095238,
+    "1": 0.06271186440677966,
+    "2": 0.11261261261261261,
+    "3": 0.0855614973262032,
+    "4": 0.06060606060606061,
+    "5": 0.07142857142857142,
+    "6": 0.08923076923076922,
+    "7": 0.13157894736842105,
+    "8": 0.10526315789473684,
+    "9": 0.1111111111111111,
+    "10": 0.125,
+    "11": 0.18681318681318682,
+    "12": 0.2,
+    "13": 0.25,
+    "14": 0.2857142857142857,
+    "15": 0.47619047619047616,
+    "16": 0.47619047619047616,
+    "17": 0.3333333333333333,
+    "18": 0.3333333333333333,
+    "19": 0.4,
+    "20": 0.6,
+    "21": 0.8333333333333334,
+    "22": 0.6666666666666666,
+    "23": 0.6666666666666666,
+    "24": 0.6666666666666666,
+    "25": 1.0,
+    "26": 1.0,
+    "27": 0.6666666666666666,
+    "28": 1.0,
+    "29": 0.6666666666666666,
+    "30": 1.0,
+    "31": 1.0,
+    "32": 1.0,
+    "33": 1.0,
+    "34": 1.0,
+    "35": 1.0,
+    "36": 1.0,
+    "37": 1.0,
+    "38": 1.0,
+    "39": 1.0,
+    "40": 1.0,
+    "41": 1.0,
+    "42": 1.0,
+    "43": 1.0,
+    "44": 1.0,
+    "45": 1.0,
+    "46": 1.0,
+    "47": 1.0,
+    "48": 1.0,
+    "49": 1.0,
+    "50": 1.0,
+    "51": 1.0,
+    "52": 1.0,
+    "53": 1.0,
+    "54": 1.0,
+    "55": 1.0,
+    "56": 1.0,
+    "57": 1.0,
+    "58": 1.0,
+    "59": 1.0
+  },
+  "gods": [
+    {
+      "id": "lib_auditlogger_logaction",
+      "label": "logAction()",
+      "degree": 20
+    },
+    {
+      "id": "context_authcontext_useauth",
+      "label": "useAuth()",
+      "degree": 20
+    },
+    {
+      "id": "frontend_tsconfig_app_compileroptions",
+      "label": "compilerOptions",
+      "degree": 17
+    },
+    {
+      "id": "frontend_tsconfig_node_compileroptions",
+      "label": "compilerOptions",
+      "degree": 16
+    },
+    {
+      "id": "auditlogger_logaction",
+      "label": "logAction()",
+      "degree": 15
+    },
+    {
+      "id": "backend_tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 13
+    },
+    {
+      "id": "middleware_authmiddleware_authenticate",
+      "label": "authenticate()",
+      "degree": 8
+    },
+    {
+      "id": "src_app_fleetgraphpage",
+      "label": "FleetGraphPage",
+      "degree": 8
+    },
+    {
+      "id": "src_app_codebasegraphpage",
+      "label": "CodebaseGraphPage",
+      "degree": 8
+    },
+    {
+      "id": "context_toastcontext_toastcontext",
+      "label": "ToastContext",
+      "degree": 8
+    }
+  ],
+  "surprises": [
+    {
+      "source": "login()",
+      "target": "handleSubmit()",
+      "source_files": [
+        "D:/PROJECT/mmmmm/backend/src/controllers/authController.ts",
+        "frontend/src/pages/LoginPage.tsx"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories"
+    },
+    {
+      "source": "fetchUsers()",
+      "target": "handleDelete()",
+      "source_files": [
+        "frontend/src/pages/SettingsPage.tsx",
+        "D:/PROJECT/mmmmm/frontend/src/pages/DiesPage.tsx"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "Backend Dependencies",
+      "target": "Backend Service (Prod)",
+      "source_files": [
+        "requirements.txt",
+        "docker-compose.yml"
+      ],
+      "confidence": "INFERRED",
+      "relation": "conceptually_related_to",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories"
+    },
+    {
+      "source": "exportAuditLogs()",
+      "target": "logAction()",
+      "source_files": [
+        "D:/PROJECT/mmmmm/backend/src/controllers/auditController.ts",
+        "D:/PROJECT/mmmmm/backend/src/lib/auditLogger.ts"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source; peripheral node `exportAuditLogs()` unexpectedly reaches hub `logAction()`"
+    },
+    {
+      "source": "deleteDie()",
+      "target": "logAction()",
+      "source_files": [
+        "D:/PROJECT/mmmmm/backend/src/controllers/dieController.ts",
+        "D:/PROJECT/mmmmm/backend/src/lib/auditLogger.ts"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source; peripheral node `deleteDie()` unexpectedly reaches hub `logAction()`"
+    }
+  ],
+  "tokens": {
+    "input": 32258,
+    "output": 1917
+  }
+}
