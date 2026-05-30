@@ -21,6 +21,7 @@ interface Codebase3DGraphProps {
   links: CodeLink[];
   highlightQuery: string;
   onNodeClick: (node: CodeNode) => void;
+  traceNodeIds?: string[];
 }
 
 interface SimNode {
@@ -45,6 +46,7 @@ const Codebase3DGraph: React.FC<Codebase3DGraphProps> = ({
   links,
   highlightQuery,
   onNodeClick,
+  traceNodeIds,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -397,14 +399,30 @@ const Codebase3DGraph: React.FC<Codebase3DGraphProps> = ({
       });
 
       // Inject data packet flows
+      const isTraceActive = traceNodeIds && traceNodeIds.length > 0;
       if (packetRef.current.length < simLinks.length && Math.random() < 0.1) {
+        let chosenLinkIndex = Math.floor(Math.random() * simLinks.length);
+        if (isTraceActive && traceNodeIds) {
+          const traceLinks = simLinks.map((l, i) => ({ l, i })).filter(
+            item => traceNodeIds.includes(item.l.source) && traceNodeIds.includes(item.l.target)
+          );
+          if (traceLinks.length > 0 && Math.random() < 0.7) {
+            chosenLinkIndex = traceLinks[Math.floor(Math.random() * traceLinks.length)].i;
+          }
+        }
         packetRef.current.push({
-          linkIndex: Math.floor(Math.random() * simLinks.length),
+          linkIndex: chosenLinkIndex,
           progress: 0,
           speed: 0.01 + Math.random() * 0.015
         });
       }
-      packetRef.current.forEach(p => p.progress += p.speed);
+      
+      packetRef.current.forEach(p => {
+        const link = simLinks[p.linkIndex];
+        const isTraceLink = link && isTraceActive && traceNodeIds && traceNodeIds.includes(link.source) && traceNodeIds.includes(link.target);
+        const multiplier = isTraceLink ? 2.0 : 1.0;
+        p.progress += p.speed * multiplier;
+      });
       packetRef.current = packetRef.current.filter(p => p.progress < 1.0);
 
       // Depth sorted render items
@@ -433,16 +451,30 @@ const Codebase3DGraph: React.FC<Codebase3DGraphProps> = ({
             ctx.moveTo(u.sx, u.sy);
             ctx.lineTo(v.sx, v.sy);
 
-            const highlightActive = highlightQuery.trim() !== '';
-            if (highlightActive && (u.isHighlighted || v.isHighlighted)) {
-              ctx.strokeStyle = `rgba(34, 211, 238, ${Math.min(0.95, alpha * 2.4)})`;
-              ctx.lineWidth = 1.5;
-            } else if (u.isFunction || v.isFunction) {
-              ctx.strokeStyle = `rgba(167, 139, 250, ${alpha * 0.46})`;
-              ctx.lineWidth = 0.5;
+            const uInTrace = traceNodeIds && traceNodeIds.includes(u.id);
+            const vInTrace = traceNodeIds && traceNodeIds.includes(v.id);
+            const isLinkInTrace = isTraceActive && uInTrace && vInTrace;
+
+            if (isTraceActive) {
+              if (isLinkInTrace) {
+                ctx.strokeStyle = 'rgba(34, 211, 238, 0.9)';
+                ctx.lineWidth = 2.2;
+              } else {
+                ctx.strokeStyle = 'rgba(148, 163, 184, 0.02)';
+                ctx.lineWidth = 0.5;
+              }
             } else {
-              ctx.strokeStyle = `rgba(148, 163, 184, ${alpha})`;
-              ctx.lineWidth = 0.75;
+              const highlightActive = highlightQuery.trim() !== '';
+              if (highlightActive && (u.isHighlighted || v.isHighlighted)) {
+                ctx.strokeStyle = `rgba(34, 211, 238, ${Math.min(0.95, alpha * 2.4)})`;
+                ctx.lineWidth = 1.5;
+              } else if (u.isFunction || v.isFunction) {
+                ctx.strokeStyle = `rgba(167, 139, 250, ${alpha * 0.46})`;
+                ctx.lineWidth = 0.5;
+              } else {
+                ctx.strokeStyle = `rgba(148, 163, 184, ${alpha})`;
+                ctx.lineWidth = 0.75;
+              }
             }
             ctx.stroke();
           }
@@ -459,11 +491,13 @@ const Codebase3DGraph: React.FC<Codebase3DGraphProps> = ({
             type: 'packet',
             depth: packetDepth,
             draw: () => {
-              const pulseSize = 1.5 + Math.sin(p.progress * Math.PI) * 1.5;
-              const opacity = Math.sin(p.progress * Math.PI) * 0.6;
+              const isTraceLink = isTraceActive && traceNodeIds && traceNodeIds.includes(link.source) && traceNodeIds.includes(link.target);
+              const pulseSize = (isTraceLink ? 2.2 : 1.5) + Math.sin(p.progress * Math.PI) * (isTraceLink ? 2.2 : 1.5);
+              const opacity = Math.sin(p.progress * Math.PI) * (isTraceLink ? 0.95 : 0.6);
+              
               ctx.beginPath();
               ctx.arc(px, py, pulseSize, 0, Math.PI * 2);
-              ctx.fillStyle = `rgba(34, 211, 238, ${opacity})`;
+              ctx.fillStyle = isTraceLink ? `rgba(34, 211, 238, ${opacity})` : `rgba(167, 139, 250, ${opacity})`;
               ctx.fill();
             }
           });
@@ -479,10 +513,13 @@ const Codebase3DGraph: React.FC<Codebase3DGraphProps> = ({
           type: 'node',
           depth: n.rz,
           draw: () => {
+            const isInTrace = traceNodeIds && traceNodeIds.includes(n.id);
             const highlightActive = highlightQuery.trim() !== '';
             let opacity = 1.0;
             
-            if (highlightActive && !n.isHighlighted) {
+            if (isTraceActive) {
+              opacity = isInTrace ? 1.0 : 0.06;
+            } else if (highlightActive && !n.isHighlighted) {
               opacity = 0.2;
             }
 
@@ -533,24 +570,32 @@ const Codebase3DGraph: React.FC<Codebase3DGraphProps> = ({
 
             // Glow Aura ring on select or match
             const isHovered = hoveredNode && hoveredNode.id === n.id;
-            if (n.isHighlighted || isHovered) {
+            const drawGlowRing = n.isHighlighted || isHovered || (isTraceActive && isInTrace);
+            if (drawGlowRing) {
+              const glowColor = (isTraceActive && isInTrace) ? '#22d3ee' : colorCore;
+              const glowBg = (isTraceActive && isInTrace) ? 'rgba(34, 211, 238, 0.35)' : colorGlow;
+              const glowWidth = (isTraceActive && isInTrace) ? 2.2 : (isHovered ? 2.2 : 1.2);
+
               ctx.beginPath();
               ctx.arc(n.sx, n.sy, projectedRadius + 5, 0, Math.PI * 2);
-              ctx.strokeStyle = colorCore;
-              ctx.lineWidth = isHovered ? 2.2 : 1.2;
+              ctx.strokeStyle = glowColor;
+              ctx.lineWidth = glowWidth;
               ctx.stroke();
 
               ctx.beginPath();
               ctx.arc(n.sx, n.sy, projectedRadius + 10, 0, Math.PI * 2);
-              ctx.fillStyle = colorGlow;
+              ctx.fillStyle = glowBg;
               ctx.fill();
             }
 
             // Labels - draw files and hovered functions
-            if (!n.isFunction || isHovered || n.isHighlighted) {
+            const shouldDrawLabel = isTraceActive
+              ? isInTrace
+              : (!n.isFunction || isHovered || n.isHighlighted);
+            if (shouldDrawLabel) {
               const fontSize = !n.isFunction ? 10 : 8;
               ctx.font = `${!n.isFunction ? '600' : '400'} ${Math.max(8, Math.min(12, fontSize * n.scale))}px Inter, system-ui`;
-              ctx.fillStyle = isHovered ? '#f8fafc' : '#cbd5e1';
+              ctx.fillStyle = isHovered ? '#f8fafc' : ((isTraceActive && isInTrace) ? '#22d3ee' : '#cbd5e1');
               ctx.textAlign = 'center';
 
               ctx.fillText(n.label, n.sx, n.sy + projectedRadius + 11);
@@ -572,7 +617,7 @@ const Codebase3DGraph: React.FC<Codebase3DGraphProps> = ({
       cancelAnimationFrame(animationId);
       window.removeEventListener('resize', resizeCanvas);
     };
-  }, [highlightQuery, hoveredNode]);
+  }, [highlightQuery, hoveredNode, traceNodeIds]);
 
   return (
     <div 

@@ -17,6 +17,48 @@ const CodebaseGraphPage: React.FC = () => {
   // Search & Navigation States
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedNode, setSelectedNode] = useState<CodeNode | null>(null);
+  const [traceNodeIds, setTraceNodeIds] = useState<string[]>([]);
+
+  // Bidirectional BFS path trace up to 3 levels deep
+  const computeTracePath = (startNodeId: string, links: CodeLink[]): string[] => {
+    const visited = new Set<string>();
+    visited.add(startNodeId);
+    let currentLayer = [startNodeId];
+
+    for (let level = 0; level < 3; level++) {
+      const nextLayer: string[] = [];
+      for (const nodeId of currentLayer) {
+        for (const link of links) {
+          if (link.source === nodeId) {
+            const targetId = link.target;
+            if (!visited.has(targetId)) {
+              visited.add(targetId);
+              nextLayer.push(targetId);
+            }
+          }
+          if (link.target === nodeId) {
+            const sourceId = link.source;
+            if (!visited.has(sourceId)) {
+              visited.add(sourceId);
+              nextLayer.push(sourceId);
+            }
+          }
+        }
+      }
+      currentLayer = nextLayer;
+      if (currentLayer.length === 0) break;
+    }
+
+    return Array.from(visited);
+  };
+
+  const handleTracePath = () => {
+    if (!selectedNode) return;
+    console.log(`[DMS Codebase] Running bidirectional BFS path trace from node: ${selectedNode.label} (${selectedNode.id})`);
+    const path = computeTracePath(selectedNode.id, links);
+    console.log(`[DMS Codebase] Trace completed. Highlighted execution path nodes:`, path);
+    setTraceNodeIds(path);
+  };
 
   const fetchGraph = async () => {
     try {
@@ -74,6 +116,7 @@ const CodebaseGraphPage: React.FC = () => {
       setNodes(graphData.nodes || []);
       setLinks(parsedLinks);
       setSelectedNode(null);
+      setTraceNodeIds([]);
       alert('Codebase re-indexed successfully in real-time!');
     } catch (error: any) {
       console.error('Failed to trigger codebase re-index', error);
@@ -182,6 +225,7 @@ const CodebaseGraphPage: React.FC = () => {
               links={links}
               highlightQuery={searchQuery}
               onNodeClick={(node) => setSelectedNode(node)}
+              traceNodeIds={traceNodeIds}
             />
           </ErrorBoundary>
         )}
@@ -201,6 +245,20 @@ const CodebaseGraphPage: React.FC = () => {
                 <X size={14} />
               </button>
             )}
+          </div>
+        )}
+
+        {/* Trace Mode Active floating status badge */}
+        {!loading && traceNodeIds.length > 0 && (
+          <div className="studio-trace-badge">
+            <div className="trace-badge-core">
+              <span className="trace-pulse-dot" />
+              <span>Trace Mode Active</span>
+              <small>({traceNodeIds.length} nodes highlighted)</small>
+            </div>
+            <button onClick={() => setTraceNodeIds([])} className="trace-badge-clear" title="Clear trace path">
+              <X size={13} />
+            </button>
           </div>
         )}
 
@@ -233,6 +291,13 @@ const CodebaseGraphPage: React.FC = () => {
                 <span className={selectedNode.label.includes('(') ? 'studio-pill studio-pill-violet' : 'studio-pill studio-pill-amber'}>
                   {selectedNode.label.includes('(') ? 'FUNCTION / DECLARATION' : 'SOURCE MODULE'}
                 </span>
+                <button
+                  onClick={handleTracePath}
+                  className="studio-trace-button"
+                >
+                  <GitBranch size={13} />
+                  Trace Execution Path
+                </button>
               </div>
 
               {/* Filesystem coordinates */}
@@ -696,6 +761,98 @@ const CodebaseGraphPage: React.FC = () => {
         }
         .spin-anim {
           animation: spin 1.5s linear infinite;
+        }
+
+        .studio-trace-button {
+          margin-top: 10px;
+          width: 100%;
+          min-height: 34px;
+          border-radius: 6px;
+          border: 1px dashed rgba(34, 211, 238, 0.4);
+          color: #22d3ee;
+          background: rgba(6, 182, 212, 0.08);
+          font-weight: 700;
+          font-size: 0.75rem;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          cursor: pointer;
+          transition: border-color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+        }
+
+        .studio-trace-button:hover {
+          border-color: #22d3ee;
+          background: rgba(6, 182, 212, 0.18);
+          box-shadow: 0 0 12px rgba(34, 211, 238, 0.24);
+        }
+
+        .studio-trace-badge {
+          position: absolute;
+          top: 140px;
+          left: 20px;
+          z-index: 18;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 8px 12px;
+          border-radius: 8px;
+          border: 1px solid rgba(34, 211, 238, 0.38);
+          background: rgba(9, 14, 22, 0.88);
+          backdrop-filter: blur(18px);
+          box-shadow: 0 0 15px rgba(34, 211, 238, 0.15);
+          pointer-events: auto;
+          animation: slideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .trace-badge-core {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 0.72rem;
+          font-family: Inter, system-ui;
+        }
+
+        .trace-badge-core span:nth-child(2) {
+          font-weight: 800;
+          color: #22d3ee;
+        }
+
+        .trace-badge-core small {
+          color: #94a3b8;
+        }
+
+        .trace-pulse-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #22d3ee;
+          box-shadow: 0 0 8px #22d3ee;
+          animation: pulse 1.6s infinite alternate;
+        }
+
+        .trace-badge-clear {
+          border: 0;
+          outline: 0;
+          background: transparent;
+          color: #94a3b8;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 2px;
+          border-radius: 4px;
+          transition: background 0.12s, color 0.12s;
+        }
+
+        .trace-badge-clear:hover {
+          background: rgba(244, 63, 94, 0.15);
+          color: #f43f5e;
+        }
+
+        @keyframes pulse {
+          0% { transform: scale(0.85); box-shadow: 0 0 4px rgba(34, 211, 238, 0.6); }
+          100% { transform: scale(1.15); box-shadow: 0 0 10px rgba(34, 211, 238, 0.95); }
         }
 
         @media (max-width: 880px) {
