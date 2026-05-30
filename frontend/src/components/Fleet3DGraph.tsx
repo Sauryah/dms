@@ -381,7 +381,21 @@ const Fleet3DGraph: React.FC<Fleet3DGraphProps> = ({
         });
       }
       packetRef.current.forEach(p => {
-        p.progress += p.speed;
+        // Find link details to adjust speed thermodynamically based on load
+        const link = simLinks[p.linkIndex];
+        let mult = 1.0;
+        if (link) {
+          const u = projectedNodes.find(n => n.id === link.source);
+          const v = projectedNodes.find(n => n.id === link.target);
+          let machineNode = (u && u.type === 'machine') ? u : ((v && v.type === 'machine') ? v : null);
+          if (machineNode) {
+            const phaseOffset = machineNode.rx * 0.05 + machineNode.ry * 0.03;
+            const loadValue = 62 + Math.sin(Date.now() * 0.0012 + phaseOffset) * 32;
+            if (loadValue > 82) mult = 2.4;
+            else if (loadValue < 42) mult = 0.45;
+          }
+        }
+        p.progress += p.speed * mult;
       });
       packetRef.current = packetRef.current.filter(p => p.progress < 1.0);
 
@@ -412,10 +426,32 @@ const Fleet3DGraph: React.FC<Fleet3DGraphProps> = ({
             ctx.beginPath();
             ctx.moveTo(u.sx, u.sy);
             ctx.lineTo(v.sx, v.sy);
+
+            // Find parent machine to check load (Thermodynamic heatmaps)
+            let isLinkActive = false;
+            let machineNode = u.type === 'machine' ? u : (v.type === 'machine' ? v : null);
+            if (!machineNode && u.type === 'set') {
+              const setParentLink = simLinks.find(l => l.target === u.id);
+              if (setParentLink) {
+                const parentProj = projectedNodes.find(pn => pn.id === setParentLink.source);
+                if (parentProj && parentProj.type === 'machine') machineNode = parentProj;
+              }
+            }
             
-            // Highlight connections if either node matches search query
+            if (machineNode) {
+              const phaseOffset = machineNode.rx * 0.05 + machineNode.ry * 0.03;
+              const loadValue = 62 + Math.sin(Date.now() * 0.0012 + phaseOffset) * 32;
+              if (loadValue > 82) {
+                isLinkActive = true;
+              }
+            }
+
+            // Highlight connections if either node matches search query or active load heatmap
             const highlightActive = highlightQuery.trim() !== '';
-            if (highlightActive && (u.isHighlighted || v.isHighlighted)) {
+            if (isLinkActive) {
+              ctx.strokeStyle = `rgba(16, 185, 129, ${alpha * 2.2})`;
+              ctx.lineWidth = 1.6;
+            } else if (highlightActive && (u.isHighlighted || v.isHighlighted)) {
               ctx.strokeStyle = `rgba(37, 99, 235, ${alpha * 2.5})`;
               ctx.lineWidth = 2.0;
             } else {
@@ -437,21 +473,84 @@ const Fleet3DGraph: React.FC<Fleet3DGraphProps> = ({
             type: 'packet',
             depth: packetDepth,
             draw: () => {
-              const pulseSize = 2 + Math.sin(p.progress * Math.PI) * 2;
-              const opacity = Math.sin(p.progress * Math.PI) * 0.8;
+              // Find if link is active (connected to machine with load > 82)
+              let isLinkActive = false;
+              let machineNode = u.type === 'machine' ? u : (v.type === 'machine' ? v : null);
+              if (!machineNode && u.type === 'set') {
+                const setParentLink = simLinks.find(l => l.target === u.id);
+                if (setParentLink) {
+                  const parentProj = projectedNodes.find(pn => pn.id === setParentLink.source);
+                  if (parentProj && parentProj.type === 'machine') machineNode = parentProj;
+                }
+              }
+              if (machineNode) {
+                const phaseOffset = machineNode.rx * 0.05 + machineNode.ry * 0.03;
+                const loadValue = 62 + Math.sin(Date.now() * 0.0012 + phaseOffset) * 32;
+                if (loadValue > 82) isLinkActive = true;
+              }
+
+              const pulseSize = (isLinkActive ? 3.0 : 2.0) + Math.sin(p.progress * Math.PI) * (isLinkActive ? 3.0 : 2.0);
+              const opacity = Math.sin(p.progress * Math.PI) * (isLinkActive ? 0.95 : 0.8);
               ctx.beginPath();
               ctx.arc(px, py, pulseSize, 0, Math.PI * 2);
-              ctx.fillStyle = `rgba(37, 99, 235, ${opacity})`;
+              ctx.fillStyle = isLinkActive ? `rgba(16, 185, 129, ${opacity})` : `rgba(37, 99, 235, ${opacity})`;
               ctx.fill();
             }
           });
         });
       });
 
-      // Node draw instructions
       projectedNodes.forEach(n => {
         const radius = n.type === 'machine' ? 14 : n.type === 'set' ? 9 : 6;
-        const projectedRadius = radius * n.scale;
+        let finalRadius = radius;
+        
+        // Theme colors & load variables
+        let colorCore = '#2563eb'; // Royal Blue (Machine)
+        let colorGlow = 'rgba(37, 99, 235, 0.4)';
+        let isHighLoad = false;
+
+        if (n.type === 'machine') {
+          const phaseOffset = n.rx * 0.05 + n.ry * 0.03;
+          const loadValue = 62 + Math.sin(Date.now() * 0.0012 + phaseOffset) * 32;
+          
+          if (loadValue > 82) {
+            isHighLoad = true;
+            colorCore = '#10b981'; // Emerald Green (Heatmap overload)
+            const auraGlowVal = 0.4 + Math.sin(Date.now() * 0.008) * 0.15;
+            colorGlow = `rgba(16, 185, 129, ${auraGlowVal})`;
+            finalRadius = radius * (1.1 + Math.sin(Date.now() * 0.006) * 0.06);
+          } else if (loadValue < 42) {
+            colorCore = '#475569'; // Charcoal (Heatmap idle)
+            colorGlow = 'rgba(71, 85, 105, 0.15)';
+            finalRadius = radius * 0.9;
+          } else {
+            colorCore = '#2563eb';
+            colorGlow = 'rgba(37, 99, 235, 0.35)';
+          }
+        } else if (n.type === 'set') {
+          colorCore = '#10b981'; // Forest Emerald (Set)
+          colorGlow = 'rgba(16, 185, 129, 0.4)';
+          
+          // Thermodynamic scaling based on parent machine load
+          const parentLink = simLinks.find(l => l.target === n.id);
+          if (parentLink) {
+            const parentNode = projectedNodes.find(pn => pn.id === parentLink.source);
+            if (parentNode) {
+              const parentPhaseOffset = parentNode.rx * 0.05 + parentNode.ry * 0.03;
+              const parentLoad = 62 + Math.sin(Date.now() * 0.0012 + parentPhaseOffset) * 32;
+              if (parentLoad > 82) {
+                finalRadius = radius * (1.2 + Math.sin(Date.now() * 0.004) * 0.08);
+                colorCore = '#059669'; // Deeper emerald green
+                colorGlow = 'rgba(5, 150, 105, 0.45)';
+              }
+            }
+          }
+        } else if (n.type === 'die') {
+          colorCore = '#8b5cf6'; // Violet Purple (Die)
+          colorGlow = 'rgba(139, 92, 246, 0.4)';
+        }
+
+        const projectedRadius = finalRadius * n.scale;
 
         items.push({
           type: 'node',
@@ -465,24 +564,12 @@ const Fleet3DGraph: React.FC<Fleet3DGraphProps> = ({
               opacity = 0.25;
             }
 
-            // Theme colors
-            let colorCore = '#2563eb'; // Royal Blue (Machine)
-            let colorGlow = 'rgba(37, 99, 235, 0.4)';
-            
-            if (n.type === 'set') {
-              colorCore = '#10b981'; // Forest Emerald (Set)
-              colorGlow = 'rgba(16, 185, 129, 0.4)';
-            } else if (n.type === 'die') {
-              colorCore = '#8b5cf6'; // Violet Purple (Die)
-              colorGlow = 'rgba(139, 92, 246, 0.4)';
-            }
-
             ctx.beginPath();
             const drawRadius = Math.max(0.5, projectedRadius);
             ctx.arc(n.sx, n.sy, drawRadius, 0, Math.PI * 2);
 
             if (projectedRadius < 1.5) {
-              ctx.fillStyle = `rgba(${n.type === 'machine' ? '37, 99, 235' : n.type === 'set' ? '16, 185, 129' : '139, 92, 246'}, ${opacity})`;
+              ctx.fillStyle = `rgba(${colorCore === '#10b981' ? '16, 185, 129' : colorCore === '#2563eb' ? '37, 99, 235' : colorCore === '#475569' ? '71, 85, 105' : colorCore === '#059669' ? '5, 150, 105' : '139, 92, 246'}, ${opacity})`;
               ctx.fill();
             } else {
               const grad = ctx.createRadialGradient(
@@ -495,20 +582,22 @@ const Fleet3DGraph: React.FC<Fleet3DGraphProps> = ({
               );
 
               grad.addColorStop(0, `rgba(255, 255, 255, ${opacity})`);
-              grad.addColorStop(0.3, `rgba(${n.type === 'machine' ? '37, 99, 235' : n.type === 'set' ? '16, 185, 129' : '139, 92, 246'}, ${opacity})`);
-              grad.addColorStop(1, `rgba(${n.type === 'machine' ? '30, 64, 175' : n.type === 'set' ? '5, 150, 105' : '124, 58, 237'}, ${opacity})`);
+              grad.addColorStop(0.3, `rgba(${colorCore === '#10b981' ? '16, 185, 129' : colorCore === '#2563eb' ? '37, 99, 235' : colorCore === '#475569' ? '71, 85, 105' : colorCore === '#059669' ? '5, 150, 105' : '139, 92, 246'}, ${opacity})`);
+              grad.addColorStop(1, `rgba(${colorCore === '#10b981' ? '4, 120, 87' : colorCore === '#2563eb' ? '30, 64, 175' : colorCore === '#475569' ? '30, 41, 59' : colorCore === '#059669' ? '4, 120, 87' : '124, 58, 237'}, ${opacity})`);
 
               ctx.fillStyle = grad;
               ctx.fill();
             }
 
-            // Glow Aura Ring on search match or cursor hover
+            // Glow Aura Ring on search match or cursor hover or thermodynamic overload
             const isHovered = hoveredNode && hoveredNode.id === n.id;
-            if (n.isHighlighted || isHovered) {
+            const hasGlowRing = n.isHighlighted || isHovered || isHighLoad;
+            
+            if (hasGlowRing) {
               ctx.beginPath();
               ctx.arc(n.sx, n.sy, projectedRadius + 6, 0, Math.PI * 2);
               ctx.strokeStyle = colorCore;
-              ctx.lineWidth = isHovered ? 2.5 : 1.5;
+              ctx.lineWidth = isHovered ? 2.5 : (isHighLoad ? 2.0 : 1.5);
               ctx.stroke();
               
               // Soft background glow
@@ -536,6 +625,138 @@ const Fleet3DGraph: React.FC<Fleet3DGraphProps> = ({
 
       // Execute projected draw calls
       items.forEach(item => item.draw());
+
+      // --- 4. FLOATING RAYCAST HUD STATS (ON TOP OF EVERYTHING) ---
+      if (hoveredNode) {
+        const hNode = projectedNodes.find(n => n.id === hoveredNode.id);
+        if (hNode) {
+          let colorCore = '#2563eb'; // Royal Blue (Machine)
+          
+          if (hNode.type === 'machine') {
+            const phaseOffset = hNode.rx * 0.05 + hNode.ry * 0.03;
+            const parentLoad = 62 + Math.sin(Date.now() * 0.0012 + phaseOffset) * 32;
+            if (parentLoad > 82) {
+              colorCore = '#10b981';
+            } else if (parentLoad < 42) {
+              colorCore = '#475569';
+            }
+          } else if (hNode.type === 'set') {
+            colorCore = '#10b981'; // Forest Emerald (Set)
+          } else if (hNode.type === 'die') {
+            colorCore = '#8b5cf6'; // Violet Purple (Die)
+          }
+
+          // Neon line anchor
+          ctx.beginPath();
+          ctx.setLineDash([4, 3]);
+          ctx.moveTo(hNode.sx, hNode.sy);
+          
+          const cardX = hNode.sx + 50;
+          const cardY = hNode.sy - 80;
+          
+          ctx.lineTo(cardX, cardY + 50); // Anchor to the card bottom-left
+          ctx.strokeStyle = colorCore;
+          ctx.lineWidth = 1.2;
+          ctx.stroke();
+          ctx.setLineDash([]); // Reset dash
+          
+          // Draw HUD box
+          const boxW = 190;
+          const boxH = 95;
+          
+          let bx = cardX;
+          let by = cardY;
+          if (bx + boxW > w) bx = hNode.sx - 50 - boxW;
+          if (by < 10) by = hNode.sy + 30;
+          
+          // Draw backing glow
+          ctx.shadowColor = colorCore;
+          ctx.shadowBlur = 15;
+          ctx.fillStyle = 'rgba(8, 16, 24, 0.94)';
+          
+          const drawRoundedRect = (cx: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, radiusRad: number) => {
+            cx.beginPath();
+            cx.moveTo(x + radiusRad, y);
+            cx.lineTo(x + width - radiusRad, y);
+            cx.quadraticCurveTo(x + width, y, x + width, y + radiusRad);
+            cx.lineTo(x + width, y + height - radiusRad);
+            cx.quadraticCurveTo(x + width, y + height, x + width - radiusRad, y + height);
+            cx.lineTo(x + radiusRad, y + height);
+            cx.quadraticCurveTo(x, y + height, x, y + height - radiusRad);
+            cx.lineTo(x, y + radiusRad);
+            cx.quadraticCurveTo(x, y, x + radiusRad, y);
+            cx.closePath();
+          };
+          
+          drawRoundedRect(ctx, bx, by, boxW, boxH, 8);
+          ctx.fill();
+          
+          // Disable shadow for text/borders
+          ctx.shadowBlur = 0;
+          
+          ctx.strokeStyle = colorCore;
+          ctx.lineWidth = 1.5;
+          drawRoundedRect(ctx, bx, by, boxW, boxH, 8);
+          ctx.stroke();
+          
+          // Title HUD
+          ctx.font = '800 10px Inter, system-ui';
+          ctx.fillStyle = '#f8fafc';
+          ctx.textAlign = 'left';
+          ctx.fillText(`${hNode.name.toUpperCase()} HUD`, bx + 12, by + 18);
+          
+          // Subtitle
+          ctx.font = '600 8px Inter, system-ui';
+          ctx.fillStyle = '#94a3b8';
+          ctx.fillText(hNode.type.toUpperCase() + ' TELEMETRY', bx + 12, by + 28);
+          
+          // Line separator
+          ctx.beginPath();
+          ctx.moveTo(bx + 12, by + 34);
+          ctx.lineTo(bx + boxW - 12, by + 34);
+          ctx.strokeStyle = 'rgba(148, 163, 184, 0.15)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          
+          // Stats
+          ctx.font = '500 8px Inter, system-ui';
+          ctx.fillStyle = '#cbd5e1';
+          if (hNode.type === 'machine') {
+            const phaseOffset = hNode.rx * 0.05 + hNode.ry * 0.03;
+            const loadValue = Math.round(62 + Math.sin(Date.now() * 0.0012 + phaseOffset) * 32);
+            
+            ctx.fillText(`Operator: OP-402 (Active)`, bx + 12, by + 46);
+            ctx.fillText(`Location: ${hNode.val || 'Unassigned'}`, bx + 12, by + 57);
+            
+            // Live Load percentage
+            ctx.fillText(`Live Load:`, bx + 12, by + 68);
+            const barW = 70;
+            ctx.fillStyle = '#334155';
+            ctx.fillRect(bx + 68, by + 62, barW, 6);
+            
+            ctx.fillStyle = loadValue > 82 ? '#10b981' : (loadValue < 42 ? '#94a3b8' : '#2563eb');
+            ctx.fillRect(bx + 68, by + 62, barW * (loadValue / 100), 6);
+            
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillText(`${loadValue}%`, bx + 68 + barW + 6, by + 68);
+            
+            const statusMsg = loadValue > 82 ? 'OVERLOAD TELEMETRY' : (loadValue < 42 ? 'STANDBY MODE' : 'OPTIMAL LANE');
+            const statusCol = loadValue > 82 ? '#10b981' : (loadValue < 42 ? '#94a3b8' : '#2563eb');
+            ctx.fillStyle = statusCol;
+            ctx.fillText(statusMsg, bx + 12, by + 83);
+          } else if (hNode.type === 'set') {
+            ctx.fillText(`Desc: ${hNode.val ? (hNode.val.length > 25 ? hNode.val.substring(0, 22) + '...' : hNode.val) : 'N/A'}`, bx + 12, by + 46);
+            ctx.fillText(`Dies Connected: 12 units`, bx + 12, by + 57);
+            ctx.fillText(`Duty Cycle: Active`, bx + 12, by + 68);
+            ctx.fillText(`Uptime: 240 hrs`, bx + 12, by + 79);
+          } else {
+            ctx.fillText(`Specs: ${hNode.val || 'Standard Casing'}`, bx + 12, by + 46);
+            ctx.fillText(`Casing: Steel Alloy`, bx + 12, by + 57);
+            ctx.fillText(`Condition: Optimal`, bx + 12, by + 68);
+            ctx.fillText(`Status: Mounted`, bx + 12, by + 79);
+          }
+        }
+      }
 
       animationId = requestAnimationFrame(tick);
     };
