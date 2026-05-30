@@ -8,6 +8,7 @@ import {
   assignSetToMachine,
   getDashboardStats,
   getMachineTimeline,
+  getMachineAnalytics,
 } from '../controllers/machineController';
 import { authenticate, authorize } from '../middleware/authMiddleware';
 import { validateBody } from '../middleware/validationMiddleware';
@@ -20,6 +21,7 @@ router.use(authenticate);
 
 router.get('/stats', getDashboardStats);
 router.get('/timeline', getMachineTimeline);
+router.get('/analytics', getMachineAnalytics);
 router.get('/', getMachines);
 router.get('/:id', getMachineById);
 

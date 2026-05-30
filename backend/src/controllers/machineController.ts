@@ -342,3 +342,54 @@ export const getMachineTimeline = async (req: Request, res: Response, next: Next
     next(error);
   }
 };
+
+/**
+ * Compiles telemetry database metrics (casings, machine active rates, recent actions) for analytics.
+ */
+export const getMachineAnalytics = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const [casingDistribution, totalMachinesCount, activeMachinesCount, recentActivities] = await Promise.all([
+      DieRepository.findMany({
+        select: { casing: true },
+      }),
+      MachineRepository.count(),
+      MachineRepository.count({
+        sets: {
+          some: {}
+        }
+      }),
+      AuditLogRepository.findMany({
+        orderBy: { createdAt: 'desc' },
+        take: 100
+      })
+    ]);
+
+    // Group casings in JS
+    const casingMap: Record<string, number> = {};
+    for (const die of casingDistribution) {
+      const casing = (die.casing || 'Unknown').trim();
+      casingMap[casing] = (casingMap[casing] || 0) + 1;
+    }
+    const casings = Object.entries(casingMap).map(([name, count]) => ({ name, count }));
+
+    // Group activities
+    const activityMap: Record<string, number> = {};
+    for (const log of recentActivities) {
+      const action = log.action || 'Unknown';
+      activityMap[action] = (activityMap[action] || 0) + 1;
+    }
+    const activities = Object.entries(activityMap).map(([action, count]) => ({ action, count }));
+
+    res.json({
+      casings,
+      utilization: {
+        total: totalMachinesCount,
+        active: activeMachinesCount,
+        idle: totalMachinesCount - activeMachinesCount
+      },
+      activities
+    });
+  } catch (error) {
+    next(error);
+  }
+};

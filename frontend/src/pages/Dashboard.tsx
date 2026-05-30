@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
-import { AlertTriangle, Cpu, MapPin, X, Plus, Package, Disc, Search, Workflow, ExternalLink, Settings, ChevronLeft, ChevronRight } from 'lucide-react';
+import { AlertTriangle, Cpu, MapPin, X, Plus, Package, Disc, Search, Workflow, ExternalLink, Settings, ChevronLeft, ChevronRight, Orbit } from 'lucide-react';
 import ActivityFeed from '../components/ActivityFeed';
 import SegmentedControl from '../components/SegmentedControl';
 import Skeleton from '../components/Skeleton';
@@ -74,6 +74,24 @@ const Dashboard: React.FC = () => {
   const [unassignedDiesList, setUnassignedDiesList] = useState<any[]>([]);
   const [bulkError, setBulkError] = useState('');
   const [submittingBulk, setSubmittingBulk] = useState(false);
+
+  // Advanced Telemetry Analytics States
+  const [analyticsData, setAnalyticsData] = useState<any | null>(null);
+  const [showAnalyticsModal, setShowAnalyticsModal] = useState(false);
+  const [analyticsLoading, setAnalyticsLoading] = useState(false);
+
+  const fetchAnalytics = async () => {
+    try {
+      setAnalyticsLoading(true);
+      const res = await api.get('/machines/analytics');
+      setAnalyticsData(res.data);
+    } catch (err) {
+      console.error('Failed to load telemetry analytics:', err);
+      addToast('error', 'Telemetry Failed', 'Could not query the real-time analytics data pipeline.');
+    } finally {
+      setAnalyticsLoading(false);
+    }
+  };
   
   // Scale-Safe Pagination States (10 machines per view)
   const [currentPage, setCurrentPage] = useState(1);
@@ -365,6 +383,16 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
         <div style={{ display: 'flex', gap: '0.75rem' }}>
+          <button 
+            className="btn btn-secondary" 
+            onClick={() => {
+              fetchAnalytics();
+              setShowAnalyticsModal(true);
+            }}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', border: '1px solid var(--primary-hover)', background: 'rgba(59, 130, 246, 0.1)' }}
+          >
+            <Orbit size={18} style={{ color: 'var(--primary)' }} /> Fleet Analytics
+          </button>
           {canModify && (
             <button 
               className="btn btn-secondary" 
@@ -1558,6 +1586,126 @@ const Dashboard: React.FC = () => {
               </div>
 
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Fleet Analytics Modal */}
+      {showAnalyticsModal && (
+        <div className="modal-overlay" style={{ zIndex: 1100 }}>
+          <div className="modal-content" style={{ maxWidth: '620px', padding: '2rem' }}>
+            <div className="flex-between" style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--border)', paddingBottom: '1rem' }}>
+              <h2 className="section-title" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.25rem' }}>
+                <Orbit size={20} style={{ color: 'var(--primary)' }} /> Fleet Telemetry Analytics
+              </h2>
+              <button onClick={() => setShowAnalyticsModal(false)} className="btn btn-ghost" style={{ padding: '0.25rem' }}><X size={20} /></button>
+            </div>
+
+            {analyticsLoading ? (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '3rem 0' }}>
+                <div style={{ width: '32px', height: '32px', border: '3px solid var(--border)', borderTop: '3px solid var(--primary)', borderRadius: '50%', animation: 'spin 1s linear infinite', marginBottom: '1rem' }}></div>
+                <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Aggregating shop floor logs...</div>
+              </div>
+            ) : analyticsData ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', fontSize: '0.875rem' }}>
+                {/* Uptime Utilization Gauge */}
+                <div style={{ background: 'rgba(2, 6, 23, 0.3)', padding: '1.25rem', borderRadius: '12px', border: '1px solid var(--border)' }}>
+                  <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--primary)', letterSpacing: '0.05em', fontWeight: 700, marginBottom: '0.75rem' }}>
+                    active fleet utilization
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+                    <div style={{ position: 'relative', width: '70px', height: '70px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {/* Circular Gauge */}
+                      <svg width="70" height="70" viewBox="0 0 36 36">
+                        <path
+                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                          fill="none"
+                          stroke="rgba(255,255,255,0.06)"
+                          strokeWidth="3.5"
+                        />
+                        <path
+                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                          fill="none"
+                          stroke="var(--primary)"
+                          strokeWidth="3.5"
+                          strokeDasharray={`${Math.round((analyticsData.utilization.active / (analyticsData.utilization.total || 1)) * 100)}, 100`}
+                        />
+                      </svg>
+                      <span style={{ position: 'absolute', fontSize: '0.85rem', fontWeight: 800 }}>
+                        {Math.round((analyticsData.utilization.active / (analyticsData.utilization.total || 1)) * 100)}%
+                      </span>
+                    </div>
+                    <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem', textAlign: 'center' }}>
+                      <div>
+                        <div style={{ color: 'var(--text-muted)', fontSize: '0.7rem' }}>ACTIVE</div>
+                        <strong style={{ fontSize: '1.125rem', color: 'var(--success)' }}>{analyticsData.utilization.active}</strong>
+                      </div>
+                      <div>
+                        <div style={{ color: 'var(--text-muted)', fontSize: '0.7rem' }}>STANDBY</div>
+                        <strong style={{ fontSize: '1.125rem', color: 'var(--primary)' }}>{analyticsData.utilization.idle}</strong>
+                      </div>
+                      <div>
+                        <div style={{ color: 'var(--text-muted)', fontSize: '0.7rem' }}>TOTAL</div>
+                        <strong style={{ fontSize: '1.125rem' }}>{analyticsData.utilization.total}</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Casings Distribution list */}
+                <div>
+                  <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', letterSpacing: '0.05em', fontWeight: 700, marginBottom: '0.75rem' }}>
+                    Die Casing Material Distribution
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                    {analyticsData.casings && analyticsData.casings.length > 0 ? (
+                      analyticsData.casings.map((c: any) => {
+                        const totalDies = analyticsData.casings.reduce((sum: number, curr: any) => sum + curr.count, 0);
+                        const pct = Math.round((c.count / (totalDies || 1)) * 100);
+                        return (
+                          <div key={c.name}>
+                            <div className="flex-between" style={{ fontSize: '0.78rem', marginBottom: '0.25rem' }}>
+                              <span>{c.name} Casing</span>
+                              <span style={{ fontWeight: 600 }}>{c.count} items ({pct}%)</span>
+                            </div>
+                            <div style={{ height: '6px', background: 'rgba(255,255,255,0.05)', borderRadius: '99px', overflow: 'hidden' }}>
+                              <div style={{ height: '100%', width: `${pct}%`, background: 'var(--primary)', borderRadius: '99px', boxShadow: '0 0 8px var(--primary)' }}></div>
+                            </div>
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <div style={{ fontStyle: 'italic', color: 'var(--text-muted)', fontSize: '0.78rem' }}>No dies casing records registered.</div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Recent Activities Profile */}
+                <div>
+                  <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)', letterSpacing: '0.05em', fontWeight: 700, marginBottom: '0.75rem' }}>
+                    Operational Activity Profile (Last 100 logs)
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', maxHeight: '180px', overflowY: 'auto', paddingRight: '0.25rem' }}>
+                    {analyticsData.activities && analyticsData.activities.length > 0 ? (
+                      analyticsData.activities.map((act: any) => (
+                        <div key={act.action} className="flex-between" style={{ padding: '0.5rem 0.75rem', background: 'rgba(255,255,255,0.02)', borderRadius: '6px', border: '1px solid var(--border)' }}>
+                          <span style={{ fontSize: '0.75rem', fontFamily: 'monospace', fontWeight: 600 }}>{act.action}</span>
+                          <span className="badge badge-neutral" style={{ padding: '0.15rem 0.4rem', fontSize: '0.7rem' }}>{act.count} logs</span>
+                        </div>
+                      ))
+                    ) : (
+                      <div style={{ fontStyle: 'italic', color: 'var(--text-muted)', fontSize: '0.78rem' }}>No recent audit activity.</div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div style={{ color: 'var(--danger)', fontSize: '0.85rem', textAlign: 'center', padding: '1rem 0' }}>
+                Failed to resolve analytics pipeline payload.
+              </div>
+            )}
+
+            <button className="btn btn-secondary" onClick={() => setShowAnalyticsModal(false)} style={{ width: '100%', marginTop: '2rem', height: '2.5rem' }}>Close Analytics</button>
           </div>
         </div>
       )}
