@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import prisma from '../lib/prisma';
 import { logAction } from '../lib/auditLogger';
 import { JWT_SECRET } from '../lib/config';
+import { TokenBlacklist } from '../lib/tokenBlacklist';
 
 export const register = async (req: Request, res: Response, next: NextFunction) => {
   const { username, password, role, confirmPassword } = req.body;
@@ -136,6 +137,20 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
 export const logout = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const authReq = req as any;
+    const token = authReq.token;
+
+    if (token) {
+      try {
+        const decoded = jwt.decode(token) as any;
+        if (decoded && decoded.exp) {
+          TokenBlacklist.blacklist(token, decoded.exp, 0); // Blacklist immediately (0 grace period)
+        }
+      } catch (decodeErr) {
+        console.error('Failed to blacklist token during logout:', decodeErr);
+      }
+    }
+
     const isProduction = process.env.NODE_ENV === 'production';
     res.clearCookie('dms_token', {
       httpOnly: true,
@@ -230,6 +245,27 @@ export const changePassword = async (req: Request, res: Response, next: NextFunc
     await prisma.user.update({
       where: { id: user.id },
       data: { passwordHash: hashedPassword }
+    });
+
+    // Invalidate the current session token immediately
+    const token = authReq.token;
+    if (token) {
+      try {
+        const decoded = jwt.decode(token) as any;
+        if (decoded && decoded.exp) {
+          TokenBlacklist.blacklist(token, decoded.exp, 0); // Revoke immediately
+        }
+      } catch (err) {
+        console.error('Failed to blacklist token during password change:', err);
+      }
+    }
+
+    // Clear session cookies
+    const isProduction = process.env.NODE_ENV === 'production';
+    res.clearCookie('dms_token', {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: 'strict'
     });
 
     // Log successful password change in audit trail

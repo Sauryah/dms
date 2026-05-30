@@ -88,7 +88,10 @@ For safety, operators should periodically back up their database file:
 
 ## 5. Development Maintenance
 *   **Prisma Client:** Always regenerate the client after schema changes using `npx prisma generate`. In Docker, ensure the backend is rebuilt without cache to synchronize the client.
-*   **Authentication:** Uses JWT. Resetting the database or changing User IDs will invalidate existing browser sessions, requiring a re-login.
+*   **Authentication:** Uses hardened JWT session structures:
+    *   **HttpOnly Cookie Isolation:** Access tokens reside strictly inside browser-managed, cryptographically isolated `HttpOnly`, `SameSite=Strict`, `Secure` cookies. They are completely immune to browser-side XSS malicious scripts retrieval.
+    *   **Sliding Session Cookie Rotation:** The backend automatically rotates the JWT session cookie if 50% or more of its lifetime has elapsed, transparently extending the user's active session without manual client-side coding.
+    *   **Immediate JWT Invalidation (Blacklisting):** Actively revokes session tokens on logout and password change using an O(1) in-memory signature blacklist. It uses a 30-second grace period on rotations to prevent race conditions with concurrent in-flight requests.
 
 ### Database Migration Roadmap (SQLite ➔ PostgreSQL)
 DMS is designed with a database-agnostic architecture. Switching to a production-grade database like PostgreSQL can be done with minimal modifications:
