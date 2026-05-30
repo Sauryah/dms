@@ -1,0 +1,9 @@
+# pgloader configuration for importing SQLite data directly to PostgreSQL
+# @concept Database Migration (GEMINI.md section 5)
+load database
+     from sqlite:///app/data/prod.db
+     into postgresql://dms_user:dms_password@dms-postgres:5432/dms_prod
+
+ with include no drop, create tables, create indexes, reset sequences
+
+  set work_mem to '16MB', maintenance_work_mem to '512MB';

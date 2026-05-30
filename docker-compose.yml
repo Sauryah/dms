@@ -40,8 +40,30 @@ services:
     networks:
       - dms-network
 
+  postgres:
+    image: postgres:16-alpine
+    container_name: dms-postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=dms_user
+      - POSTGRES_PASSWORD=dms_password
+      - POSTGRES_DB=dms_prod
+    ports:
+      - "5432:5432"
+    volumes:
+      - dms-pgdata:/var/lib/postgresql/data
+    networks:
+      - dms-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dms_user -d dms_prod"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   dms-db:
+    driver: local
+  dms-pgdata:
     driver: local
 
 networks:
