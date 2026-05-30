@@ -135,10 +135,35 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
   }
 };
 
+const parseCookies = (cookieHeader: string | undefined): Record<string, string> => {
+  const cookies: Record<string, string> = {};
+  if (!cookieHeader) return cookies;
+  
+  cookieHeader.split(';').forEach((cookie) => {
+    const parts = cookie.split('=');
+    const name = parts[0].trim();
+    const value = parts.slice(1).join('=').trim();
+    if (name && value) {
+      cookies[name] = decodeURIComponent(value);
+    }
+  });
+  return cookies;
+};
+
 export const logout = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const authReq = req as any;
-    const token = authReq.token;
+    let token = authReq.token;
+
+    // Resilient fallback: manually extract token if auth middleware was bypassed
+    if (!token) {
+      const cookies = parseCookies(req.headers.cookie);
+      if (cookies['dms_token']) {
+        token = cookies['dms_token'];
+      } else if (req.headers.authorization?.startsWith('Bearer ')) {
+        token = req.headers.authorization.split(' ')[1];
+      }
+    }
 
     if (token) {
       try {
