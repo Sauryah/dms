@@ -18,6 +18,9 @@ interface Fleet3DGraphProps {
   links: GraphLink[];
   highlightQuery: string;
   onNodeClick: (node: GraphNode) => void;
+  repulsion?: number;
+  springStrength?: number;
+  gravity?: number;
 }
 
 interface SimNode {
@@ -38,6 +41,9 @@ const Fleet3DGraph: React.FC<Fleet3DGraphProps> = ({
   links,
   highlightQuery,
   onNodeClick,
+  repulsion: repulsionProp,
+  springStrength: springStrengthProp,
+  gravity: gravityProp,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -243,9 +249,9 @@ const Fleet3DGraph: React.FC<Fleet3DGraphProps> = ({
       const simNodes = simNodesRef.current;
       const simLinks = simLinksRef.current;
 
-      const repulsion = 4000;
-      const springStrength = 0.015;
-      const gravity = 0.008;
+      const repulsion = repulsionProp ?? 4000;
+      const springStrength = springStrengthProp ?? 0.015;
+      const gravity = gravityProp ?? 0.008;
       const friction = 0.85;
 
       // Force 1: Coulomb Repulsion (push nodes apart)
@@ -767,7 +773,7 @@ const Fleet3DGraph: React.FC<Fleet3DGraphProps> = ({
       cancelAnimationFrame(animationId);
       window.removeEventListener('resize', resizeCanvas);
     };
-  }, [highlightQuery, hoveredNode]);
+  }, [highlightQuery, hoveredNode, repulsionProp, springStrengthProp, gravityProp]);
 
   return (
     <div 

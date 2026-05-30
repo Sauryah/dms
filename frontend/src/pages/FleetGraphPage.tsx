@@ -4,7 +4,7 @@ import api from '../services/api';
 import Fleet3DGraph from '../components/Fleet3DGraph';
 import type { GraphNode, GraphLink } from '../components/Fleet3DGraph';
 import { ErrorBoundary } from '../components/ErrorBoundary';
-import { ArrowLeft, Network, Search, X, Cpu, Package, Disc, MapPin, ChevronRight, Info } from 'lucide-react';
+import { ArrowLeft, Network, Search, X, Cpu, Package, Disc, MapPin, ChevronRight, Info, Sliders } from 'lucide-react';
 
 const FleetGraphPage: React.FC = () => {
   const [machines, setMachines] = useState<any[]>([]);
@@ -18,6 +18,11 @@ const FleetGraphPage: React.FC = () => {
   const [selectedSetDies, setSelectedSetDies] = useState<any[]>([]);
   const [loadingDies, setLoadingDies] = useState(false);
   const navigate = useNavigate();
+
+  // Physics Sandbox States
+  const [repulsion, setRepulsion] = useState(4000);
+  const [springStrength, setSpringStrength] = useState(0.015);
+  const [gravity, setGravity] = useState(0.008);
 
   const fetchData = async () => {
     try {
@@ -188,6 +193,9 @@ const FleetGraphPage: React.FC = () => {
             links={links}
             highlightQuery={searchQuery}
             onNodeClick={handleNodeClick}
+            repulsion={repulsion}
+            springStrength={springStrength}
+            gravity={gravity}
           />
         </ErrorBoundary>
 
@@ -206,6 +214,74 @@ const FleetGraphPage: React.FC = () => {
             </button>
           )}
         </div>
+
+        {/* Physics Sandbox Control Panel */}
+        {!loading && (
+          <div className="fleet-physics-sandbox">
+            <div className="sandbox-header">
+              <Sliders size={13} />
+              <span>Physics Control Room</span>
+            </div>
+            
+            <div className="sandbox-body">
+              <div className="sandbox-control-group">
+                <div className="control-label">
+                  <span>Node Repulsion</span>
+                  <code>{repulsion}</code>
+                </div>
+                <input
+                  type="range"
+                  min="1000"
+                  max="10000"
+                  step="200"
+                  value={repulsion}
+                  onChange={(e) => setRepulsion(Number(e.target.value))}
+                />
+              </div>
+
+              <div className="sandbox-control-group">
+                <div className="control-label">
+                  <span>Spring Tension</span>
+                  <code>{springStrength.toFixed(3)}</code>
+                </div>
+                <input
+                  type="range"
+                  min="0.002"
+                  max="0.05"
+                  step="0.001"
+                  value={springStrength}
+                  onChange={(e) => setSpringStrength(Number(e.target.value))}
+                />
+              </div>
+
+              <div className="sandbox-control-group">
+                <div className="control-label">
+                  <span>Gravity Pull</span>
+                  <code>{gravity.toFixed(3)}</code>
+                </div>
+                <input
+                  type="range"
+                  min="0.001"
+                  max="0.03"
+                  step="0.001"
+                  value={gravity}
+                  onChange={(e) => setGravity(Number(e.target.value))}
+                />
+              </div>
+
+              <button
+                onClick={() => {
+                  setRepulsion(4000);
+                  setSpringStrength(0.015);
+                  setGravity(0.008);
+                }}
+                className="sandbox-reset-button"
+              >
+                Reset Physics Defaults
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Frosted glass details Peek Drawer overlay */}
         {selectedNode && details && (
@@ -600,6 +676,95 @@ const FleetGraphPage: React.FC = () => {
           background: rgba(6, 182, 212, 0.04) !important;
         }
 
+        .fleet-physics-sandbox {
+          position: absolute;
+          top: 156px;
+          left: 20px;
+          z-index: 18;
+          width: min(290px, calc(100vw - 40px));
+          border-radius: 8px;
+          border: 1px solid rgba(148, 163, 184, 0.24);
+          background: rgba(8, 16, 24, 0.82);
+          backdrop-filter: blur(18px);
+          box-shadow: 0 18px 55px rgba(0, 0, 0, 0.3);
+          padding: 12px 14px;
+          pointer-events: auto;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          font-family: Inter, system-ui;
+        }
+
+        .sandbox-header {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: #fbbf24;
+          font-size: 0.72rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+          padding-bottom: 6px;
+        }
+
+        .sandbox-body {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .sandbox-control-group {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .control-label {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 0.68rem;
+          color: #94a3b8;
+        }
+
+        .control-label code {
+          background: rgba(34, 211, 238, 0.14);
+          color: #22d3ee;
+          padding: 1px 4px;
+          border-radius: 4px;
+          font-size: 0.65rem;
+          font-family: monospace;
+        }
+
+        .sandbox-control-group input[type="range"] {
+          width: 100%;
+          height: 4px;
+          border-radius: 2px;
+          background: #1e293b;
+          accent-color: #22d3ee;
+          cursor: pointer;
+        }
+
+        .sandbox-reset-button {
+          margin-top: 4px;
+          width: 100%;
+          min-height: 28px;
+          border-radius: 5px;
+          border: 1px solid rgba(148, 163, 184, 0.24);
+          color: #e2e8f0;
+          background: rgba(15, 23, 42, 0.72);
+          font-size: 0.7rem;
+          font-weight: 700;
+          cursor: pointer;
+          transition: background 0.16s, border-color 0.16s;
+        }
+
+        .sandbox-reset-button:hover {
+          border-color: rgba(34, 211, 238, 0.5);
+          background: rgba(20, 31, 46, 0.94);
+        }
+
         @media (max-width: 860px) {
           .fleet-topbar {
             flex-direction: column;
@@ -612,6 +777,11 @@ const FleetGraphPage: React.FC = () => {
 
           .fleet-search {
             top: 150px;
+          }
+
+          .fleet-physics-sandbox {
+            top: 216px;
+            width: calc(100vw - 40px);
           }
 
           .fleet-inspector {
