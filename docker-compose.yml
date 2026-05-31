@@ -10,7 +10,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - DATABASE_URL=file:/app/data/prod.db
+      - DATABASE_URL=postgresql://dms_user:dms_password@dms-postgres:5432/dms_prod?schema=public
       - PORT=5000
       - JWT_SECRET=${JWT_SECRET}
     volumes:
@@ -41,7 +41,7 @@ services:
       - dms-network
 
   postgres:
-    image: postgres:16-alpine
+    image: postgres:18-alpine
     container_name: dms-postgres
     restart: always
     environment:
@@ -51,7 +51,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - dms-pgdata:/var/lib/postgresql/data
+      - dms-pgdata:/var/lib/postgresql
     networks:
       - dms-network
     healthcheck:

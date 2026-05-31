@@ -30,7 +30,7 @@ Users can bulk-import dies using an Excel spreadsheet (`.xlsx` or `.xls`).
 The application is containerized using Docker Compose.
 *   **Frontend:** Nginx on Port 80.
 *   **Backend:** Express API on Port 5000.
-*   **Database:** SQLite stored in a persistent Docker volume (`dms-db`) at `/app/data/prod.db`.
+*   **Database:** PostgreSQL 18 database server (running `postgres:18-alpine` container) with persistent volume (`dms-pgdata`) mapped to `/var/lib/postgresql`. The historic SQLite volume (`dms-db`) is retained at `/app/data` to facilitate automatic porting.
 
 **Launch Command:**
 ```bash
@@ -53,8 +53,9 @@ To access the app from other computers on the same network:
 
 ### Zero-Data-Loss Upgrades & Persistence
 When pulling codebase updates from GitHub, database data is fully protected and automatically migrated:
-1.  **Named Volume Mapping:** All production data resides inside the named volume `dms-db`. Running `git pull` or rebuilding containers leaves this volume untouched.
+1.  **Named Volume Mapping:** All PostgreSQL production data resides inside the named volume `dms-pgdata`. Running `git pull` or rebuilding containers leaves this volume untouched.
 2.  **Auto-Migration on Boot:** The backend container's entrypoint command runs `npx prisma migrate deploy` automatically before starting the server. This safely applies schema structural updates (such as new columns/tables) to the existing database without erasing old records.
+3.  **Zero-Touch SQLite Ingest:** When transitioning to PostgreSQL, the backend detects if a historical SQLite database (`/app/data/prod.db`) is present inside the old `dms-db` volume. On the very first boot, it automatically ports all users, audit logs, and equipment data into PostgreSQL 18, writing a `.migrated_to_postgres` marker to prevent duplicate runs.
 
 **Standard Upgrade Steps:**
 ```bash
@@ -93,33 +94,12 @@ For safety, operators should periodically back up their database file:
     *   **Sliding Session Cookie Rotation:** The backend automatically rotates the JWT session cookie if 50% or more of its lifetime has elapsed, transparently extending the user's active session without manual client-side coding.
     *   **Immediate JWT Invalidation (Blacklisting):** Actively revokes session tokens on logout and password change using an O(1) in-memory signature blacklist. It uses a 30-second grace period on rotations to prevent race conditions with concurrent in-flight requests.
 
-### Database Migration Roadmap (SQLite ➔ PostgreSQL)
-DMS is designed with a database-agnostic architecture. Switching to a production-grade database like PostgreSQL can be done with minimal modifications:
-
-1. **Update Prisma Provider:**
-   Modify `backend/prisma/schema.prisma` to set the datasource provider:
-   ```prisma
-   datasource db {
-     provider = "postgresql"
-     url      = env("DATABASE_URL")
-   }
-   ```
-2. **Update Connection String:**
-   Update the `DATABASE_URL` parameter in the `.env` root configuration file:
-   ```env
-   DATABASE_URL="postgresql://[USER]:[PASSWORD]@[HOST]:[PORT]/[DATABASE]?schema=public"
-   ```
-3. **Execute Prisma Command Actions:**
-   Run the matching Prisma migration generator:
-   ```bash
-   npx prisma generate
-   npx prisma migrate dev --name init_postgres
-   ```
-4. **Data Porting (SQLite ➔ PostgreSQL):**
-   To safely load existing data from the SQLite database (`prod.db`) directly into PostgreSQL, use the `pgloader` utility tool:
-   ```bash
-   pgloader sqlite:///app/data/prod.db postgresql://[USER]:[PASSWORD]@[HOST]:[PORT]/[DATABASE]
-   ```
+### Completed Database Migration (SQLite ➔ PostgreSQL 18)
+The DMS application database tier has been successfully upgraded to **PostgreSQL 18** to support high-performance concurrency.
+* **Prisma Provider:** Modified `backend/prisma/schema.prisma` to use `"postgresql"`.
+* **Prisma Schema Migrations:** SQLite migrations were safely archived in `backend/prisma/migrations_sqlite`, and a clean initial PostgreSQL schema migration was applied.
+* **Conditional Client Optimizations:** Wrapped SQLite WAL mode and busy timeout queries in `backend/src/lib/prisma.ts` so they only execute when SQLite databases are loaded.
+* **Zero-Data-Loss Migration Service:** Built an automated migration engine (`autoMigration.ts`) to seamlessly transition existing clients' SQLite data to PostgreSQL 18 on container start.
 
 ## 6. Developer Experience (DX)
 

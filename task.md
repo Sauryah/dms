@@ -14,6 +14,20 @@
   - `[x]` Mount route in `timelineRoutes.ts` and register in Express server `app.ts`
   - `[x]` Construct interactive horizontal Gantt chart in `Dashboard.tsx` (Machines as lanes, Sets as floating cobalt capsules)
   - `[x]` Construct vertical allocation history timeline in `Dashboard.tsx` with real-time SSE stream prepending
+- `[x]` Feature 5: Component Deconstruction & State Separation
+  - `[x]` Extract equipment Gantt chart and allocation history into `GanttTimelineVisualizer.tsx`
+  - `[x]` Extract shop floor map, zones, and details sidebar into `FacilityFloorplanMap.tsx`
+  - `[x]` Extract Excel pre-parser modal and web worker from `DiesPage.tsx` into `ExcelImportModal.tsx`
+  - `[x]` Extract user creation and administrator controls from `SettingsPage.tsx` into `UserAdminSettings.tsx`
+  - `[x]` Extract compliance logging, SSE streaming, and JSON diff transitions into `AuditTrailSettings.tsx`
+  - `[x]` Clean unused imports, interfaces, and variables inside parent pages to ensure compile safety
+- `[x]` Feature 6: Production PostgreSQL 18 Setup & Auto-Migration
+  - `[x]` Migrate database datasource provider in `schema.prisma` from `sqlite` to `postgresql`
+  - `[x]` Configure PostgreSQL 18 container in `docker-compose.yml` with correct `/var/lib/postgresql` volume mount path
+  - `[x]` Generate clean initial PostgreSQL database schema migrations
+  - `[x]` Seed default administrator and viewer accounts into PostgreSQL database
+  - `[x]` Implement an automatic, zero-data-loss database migration hook (`autoMigration.ts`) in the backend to port SQLite records to PostgreSQL on first boot
+  - `[x]` Ensure SQLite WAL/busy timeout configuration is only executed when running SQLite databases
 - `[x]` Verification & Compilation Check
   - `[x]` Run container compilation builds via Docker Compose
   - `[x]` Verify TypeScript compile safety and correct AST synchronization
