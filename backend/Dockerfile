@@ -45,9 +45,9 @@ COPY --from=production-builder /app/prisma ./prisma
 COPY --from=production-builder /app/node_modules ./node_modules
 COPY --from=production-builder /app/graphify-out ./graphify-out
 
-# Create a directory for the persistent SQLite database and set permissions
+# Create directories for data and backups and install postgresql-client
 USER root
-RUN mkdir -p /app/data && chown -R node:node /app/data
+RUN apk add --no-cache postgresql-client && mkdir -p /app/data /app/backups && chown -R node:node /app/data /app/backups
 USER node
 
 EXPOSE 5000

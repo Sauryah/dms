@@ -1,5 +1,5 @@
 // Set the test database URL and mock JWT secret before importing anything else
-process.env.DATABASE_URL = 'file:./test.db';
+process.env.DATABASE_URL = 'postgresql://dms_user:dms_password@localhost:5432/dms_prod?schema=test_auth';
 process.env.JWT_SECRET = 'test_secret_key_123_456_789';
 
 // Mock Swagger modules to bypass Jest NodeNext resolution bugs in third-party libraries
@@ -45,15 +45,9 @@ describe('Authentication Hardening Integration Tests', () => {
   let adminToken: string;
 
   beforeAll(async () => {
-    // Force clean and push prisma schema to test.db
-    const dbPath = path.join(__dirname, '../../test.db');
-    if (fs.existsSync(dbPath)) {
-      try { fs.unlinkSync(dbPath); } catch {}
-    }
-    
     // Setup test database schema
     execSync('npx prisma db push --skip-generate', {
-      env: { ...process.env, DATABASE_URL: 'file:./test.db' },
+      env: { ...process.env, DATABASE_URL: 'postgresql://dms_user:dms_password@localhost:5432/dms_prod?schema=test_auth' },
       stdio: 'ignore'
     });
 
@@ -67,25 +61,21 @@ describe('Authentication Hardening Integration Tests', () => {
         role: 'ADMIN'
       }
     });
-  });
+  }, 30000);
 
   afterAll(async () => {
     // Destroy blacklist timer to prevent Jest hang
     TokenBlacklist.destroy();
     
+    // Drop the test schema to clean up
+    try {
+      await prisma.$executeRawUnsafe('DROP SCHEMA IF EXISTS "test_auth" CASCADE;');
+    } catch (err) {
+      console.warn('Failed to drop schema test_auth:', err);
+    }
+
     // Close prisma connection
     await prisma.$disconnect();
-
-    // Clean up test database files
-    const dbPath = path.join(__dirname, '../../test.db');
-    const walPath = path.join(__dirname, '../../test.db-wal');
-    const shmPath = path.join(__dirname, '../../test.db-shm');
-    
-    setTimeout(() => {
-      try { if (fs.existsSync(dbPath)) fs.unlinkSync(dbPath); } catch {}
-      try { if (fs.existsSync(walPath)) fs.unlinkSync(walPath); } catch {}
-      try { if (fs.existsSync(shmPath)) fs.unlinkSync(shmPath); } catch {}
-    }, 500);
   });
 
   describe('POST /api/auth/login', () => {

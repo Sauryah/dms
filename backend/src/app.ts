@@ -12,6 +12,7 @@ import searchRoutes from './routes/searchRoutes';
 import authRoutes from './routes/authRoutes';
 import auditRoutes from './routes/auditRoutes';
 import devRoutes from './routes/devRoutes';
+import lockRoutes from './routes/lockRoutes';
 import { prismaErrorHandler } from './middleware/prismaErrorHandler';
 import { apiLimiter } from './middleware/rateLimiter';
 
@@ -58,6 +59,7 @@ app.use('/api/dies', dieRoutes);
 app.use('/api/search', searchRoutes);
 app.use('/api/audit-logs', auditRoutes);
 app.use('/api/dev', devRoutes);
+app.use('/api/locks', lockRoutes);
 
 // Global Error Handler
 app.use(prismaErrorHandler);

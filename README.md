@@ -73,8 +73,9 @@ Once the setup is complete, you can access the app at:
 DMS is built to support risk-free, seamless updates without any data loss.
 
 ### 1. How it works:
-* **Persistent Named Volumes:** All user data (machines, tools, dies, audit logs, and users) resides in a local named Docker volume (`dms-db`). Pulling codebase updates from GitHub does not affect this volume.
+* **Persistent Named Volumes:** All user data resides in a local named PostgreSQL Docker volume (`dms-pgdata`). Pulling codebase updates from GitHub does not affect this volume.
 * **Auto-Schema Migrations:** Whenever you pull code changes and restart the container stack, the backend automatically runs `npx prisma migrate deploy` to safely apply structural table updates to your existing database.
+* **Zero-Touch SQLite Ingest:** When transitioning from an older installation, the backend automatically detects any historical SQLite database (`/app/data/prod.db`), parses all historical records, and imports them seamlessly into PostgreSQL 18 on first boot.
 
 ### 2. Standard Upgrade Steps:
 To pull updates and rebuild:
@@ -87,35 +88,21 @@ docker compose up -d --build
 ```
 
 ### 3. Database Backup & Restore:
-For safety before pulling major updates, you can copy the live SQLite database directly out of the container:
+DMS features an automated daily compressed backup system running at 2:00 AM (configured via the `db-backup` cron container) with a 14-day rotation policy. Administrators can also manage snapshots directly via the Settings Panel:
 
-* **Export (Backup) Database:**
-  ```bash
-  docker cp dms-backend:/app/data/prod.db ./prod_backup_$(date +%F).db
-  ```
-* **Import (Restore) Database:**
-  ```bash
-  # Restore the backup file back into the container
-  docker cp ./prod_backup.db dms-backend:/app/data/prod.db
-  # Restart the backend to load the restored data
-  docker compose restart backend
-  ```
+* **Trigger Manual Backup:** Admin Panel ➔ Settings ➔ Backups ➔ click "Create Backup" (or call `POST /api/database/backup`).
+* **Restore Database:** Choose a snapshot in the Admin Panel and click "Restore" (or call `POST /api/database/restore`).
 
 ---
 
-## 🗄️ Migrating to PostgreSQL (Optional)
+## 🗄️ PostgreSQL 18 Production Architecture
 
-DMS is built on top of **Prisma ORM**, making it database-agnostic. If you need to migrate your production dataset from SQLite to PostgreSQL:
+The DMS stack is built on high-concurrency **PostgreSQL 18** and fully containerized via Docker Compose.
 
-1. **Change the Provider:** Update `backend/prisma/schema.prisma` to use `postgresql` instead of `sqlite`.
-2. **Update the Connection String:** Set the `DATABASE_URL` environment variable inside your `.env` file with your PostgreSQL connection parameters.
-3. **Run Migrations:** Execute `npx prisma generate` and `npx prisma migrate dev` to initialize your database tables in PostgreSQL.
-4. **Port Existing Data:** Use `pgloader` to copy data directly from the SQLite `prod.db` file to your PostgreSQL server without any data loss:
-   ```bash
-   pgloader sqlite:///app/data/prod.db postgresql://[USER]:[PASSWORD]@[HOST]:[PORT]/[DATABASE]
-   ```
+* **Database Engine:** runs on `postgres:18-alpine` inside the `dms-postgres` container.
+* **ORM:** Prisma Client generated and synchronized with environment schemas.
+* **API Isolation:** The backend includes a dedicated unit and integration testing suite powered by Jest and supertest, utilizing dynamic PostgreSQL schema namespaces (e.g. `?schema=test`) to isolate test runs cleanly without affecting production tables.
 
-For the complete, step-by-step migration blueprint, refer to **[GEMINI.md](GEMINI.md)**.
 
 ---
 

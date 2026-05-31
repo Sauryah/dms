@@ -15,6 +15,7 @@ services:
       - JWT_SECRET=${JWT_SECRET}
     volumes:
       - dms-db:/app/data
+      - ./backups:/app/backups
     networks:
       - dms-network
     healthcheck:
@@ -59,6 +60,24 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  db-backup:
+    image: postgres:18-alpine
+    container_name: dms-db-backup
+    restart: always
+    environment:
+      - POSTGRES_USER=dms_user
+      - POSTGRES_PASSWORD=dms_password
+      - POSTGRES_DB=dms_prod
+      - PGHOST=dms-postgres
+    volumes:
+      - ./backups:/app/backups
+    entrypoint: ["sh", "-c", "echo '0 2 * * * pg_dump -U dms_user -h dms-postgres -d dms_prod -F c -b -v -f /app/backups/auto_backup_$$(date +\\%F_\\%H-\\%M-\\%S).dump && find /app/backups -type f -mtime +14 -delete' > /etc/crontabs/root && crond -f -l 2"]
+    networks:
+      - dms-network
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 volumes:
   dms-db:

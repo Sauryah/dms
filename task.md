@@ -31,3 +31,11 @@
 - `[x]` Verification & Compilation Check
   - `[x]` Run container compilation builds via Docker Compose
   - `[x]` Verify TypeScript compile safety and correct AST synchronization
+- `[x]` Phase 4: Optimistic Lock Leasing, Automated Snapshots & Jest Coverage
+  - `[x]` Build in-memory lease lock manager with Server-Sent Events lock event broadcasts
+  - `[x]` Integrate locks state hooks in Dashboard grid, sidebars, and Coordinate Floorplan Map
+  - `[x]` Construct dedicated `db-backup` cron service running Alpine crond + daily pg_dump schedules
+  - `[x]` Build Express admin REST controller for manual database backups, listings, deletes, and restores
+  - `[x]` Implement backend integration testing suite with Jest & supertest
+  - `[x]` Set up isolated schema namespace testing patterns on PostgreSQL to bypass write-locks
+

@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { Package, ArrowLeft, Disc, Edit2, Trash2, Plus, X, Cpu, Search } from 'lucide-react';
 import Breadcrumbs from '../components/Breadcrumbs';
 import Skeleton from '../components/Skeleton';
+import { useToast } from '../context/ToastContext';
 
 interface Die {
   id: string;
@@ -42,6 +43,7 @@ const SetDetails: React.FC = () => {
   const [dieError, setDieError] = useState('');
   const [assignSearchQuery, setAssignSearchQuery] = useState('');
   const { user } = useAuth();
+  const { addToast } = useToast();
   const navigate = useNavigate();
 
   const isAdmin = user?.role === 'ADMIN';
@@ -73,15 +75,40 @@ const SetDetails: React.FC = () => {
     }
   };
 
-  const openAssignModal = () => {
-    setAssignSearchQuery('');
-    setSelectedDieId('');
-    setShowAssignModal(true);
+  const openAssignModal = async () => {
+    try {
+      // Attempt to acquire lock on the set
+      await api.post('/locks/acquire', { entityId: id });
+      setAssignSearchQuery('');
+      setSelectedDieId('');
+      setShowAssignModal(true);
+    } catch (err: any) {
+      const errorMsg = err.response?.data?.error || 'This set is currently locked by another operator.';
+      const lockOwner = err.response?.data?.lock?.operatorName;
+      const customMsg = lockOwner 
+        ? `Locked by Operator: ${lockOwner}. Please try again later!` 
+        : errorMsg;
+      addToast('error', 'Resource Locked', customMsg);
+    }
+  };
+
+  const closeAssignModal = async () => {
+    setShowAssignModal(false);
+    try {
+      await api.post('/locks/release', { entityId: id });
+    } catch (releaseErr) {
+      console.error('Failed to release lock:', releaseErr);
+    }
   };
 
   useEffect(() => {
     fetchSet();
     fetchAvailableDies();
+    
+    // Cleanup: release lock if still held on unmount
+    return () => {
+      api.post('/locks/release', { entityId: id }).catch(() => {});
+    };
   }, [id]);
 
   const handleUpdate = async (e: React.FormEvent) => {
@@ -114,6 +141,12 @@ const SetDetails: React.FC = () => {
       setShowAssignModal(false);
       setSelectedDieId('');
       fetchSet();
+      // Release lock
+      try {
+        await api.post('/locks/release', { entityId: id });
+      } catch (releaseErr) {
+        console.error('Failed to release lock:', releaseErr);
+      }
     } catch (err: any) {
       setError(err.response?.data?.error || 'Failed to assign die');
     }
@@ -397,7 +430,7 @@ const SetDetails: React.FC = () => {
           <div className="modal-content">
             <div className="flex-between" style={{ marginBottom: '2rem' }}>
               <h2 className="section-title" style={{ margin: 0 }}>Assign Die to Set</h2>
-              <button onClick={() => setShowAssignModal(false)} className="btn btn-ghost" style={{ padding: '0.25rem' }}><X size={20} /></button>
+              <button type="button" onClick={closeAssignModal} className="btn btn-ghost" style={{ padding: '0.25rem' }}><X size={20} /></button>
             </div>
             <form onSubmit={handleAssignDie} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               <div className="input-group">
@@ -431,7 +464,7 @@ const SetDetails: React.FC = () => {
                 </select>
               </div>
               <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-                <button type="button" className="btn btn-secondary" onClick={() => setShowAssignModal(false)} style={{ flex: 1 }}>Cancel</button>
+                <button type="button" className="btn btn-secondary" onClick={closeAssignModal} style={{ flex: 1 }}>Cancel</button>
                 <button type="submit" className="btn btn-primary" style={{ flex: 1 }} disabled={!selectedDieId}>Assign Die</button>
               </div>
             </form>

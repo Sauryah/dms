@@ -67,19 +67,15 @@ docker compose up -d --build
 ```
 
 ### Manual Database Backup & Restore
-For safety, operators should periodically back up their database file:
+For safety, operators should periodically back up their database:
 
-*   **Export (Backup):** Copies the live database from the running container to the host computer:
+*   **Export (Backup):** Creates a compressed, native binary backup of the live PostgreSQL database from the container:
     ```bash
-    docker cp dms-backend:/app/data/prod.db ./prod_backup_$(date +%F).db
+    docker exec -t dms-postgres pg_dump -U dms_user -d dms_prod -F c > ./backup_$(date +%F).dump
     ```
-*   **Import (Restore):** Copies a saved backup file back into the container:
+*   **Import (Restore):** Restores a saved snapshot into the container, dropping existing tables cleanly beforehand:
     ```bash
-    # Restore the backup file
-    docker cp ./prod_backup.db dms-backend:/app/data/prod.db
-
-    # Restart the backend to load the restored database
-    docker compose restart backend
+    docker exec -i dms-postgres pg_restore -U dms_user -d dms_prod -c --if-exists -F c < ./backup_file.dump
     ```
 
 ## 4. UI/UX Standards
@@ -100,6 +96,19 @@ The DMS application database tier has been successfully upgraded to **PostgreSQL
 * **Prisma Schema Migrations:** SQLite migrations were safely archived in `backend/prisma/migrations_sqlite`, and a clean initial PostgreSQL schema migration was applied.
 * **Conditional Client Optimizations:** Wrapped SQLite WAL mode and busy timeout queries in `backend/src/lib/prisma.ts` so they only execute when SQLite databases are loaded.
 * **Zero-Data-Loss Migration Service:** Built an automated migration engine (`autoMigration.ts`) to seamlessly transition existing clients' SQLite data to PostgreSQL 18 on container start.
+
+### Real-Time Optimistic Tooling Lock System (Optimistic Leasing)
+* **Design Philosophy:** Optimistic, non-blocking locking of Machine and Set resources during allocations to prevent double-booking.
+* **Expiration Policy:** Locks automatically expire after 2 minutes of inactivity using native `NodeJS.Timeout` registries.
+* **Synchronization Channel:** Uses low-latency Server-Sent Events (SSE) `/api/audit-logs/stream` to instantly propagate lock additions/removals to concurrent operators, displaying visual interlocks and warning overlays on the Shop Floorplan Map and sidebars.
+
+### Native Database Snapshotting & Recovery (Admin Controls)
+* **Automated Cron Jobs:** Alpine `crond` executes daily compressed dump files at 2:00 AM inside `dms-db-backup`, keeping up to 14 days of snapshots.
+* **Programmatic REST Controller:** The dev routes (`backend/src/routes/devRoutes.ts`) expose endpoints for admins to trigger backups (`POST /api/database/backup`), view snapshots (`GET /api/database/backups`), prune files (`DELETE /api/database/backups/:filename`), and restore tables (`POST /api/database/restore`) with zero-downtime drop-and-rebuild safety checks.
+
+### Multi-Namespace Integration Testing Suite
+* **Testing Framework:** Jest + supertest executing complete integration tests in `backend/src/__tests__/features.test.ts`.
+* **Schema Isolation Pattern:** To prevent SQLite compilation locking on concurrent writes under Windows/CI servers, tests run against discrete schema namespaces on PostgreSQL (e.g., `DATABASE_URL="...&schema=test_features"`). This creates private tables in isolated database namespaces, executes test hooks, and destroys them afterward without touching production data.
 
 ## 6. Developer Experience (DX)
 

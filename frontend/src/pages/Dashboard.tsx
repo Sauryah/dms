@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
-import { AlertTriangle, Cpu, MapPin, X, Plus, Package, Disc, Search, Workflow, ExternalLink, Settings, ChevronLeft, ChevronRight, Orbit } from 'lucide-react';
+import { AlertTriangle, Cpu, MapPin, X, Plus, Package, Disc, Search, Workflow, ExternalLink, Settings, ChevronLeft, ChevronRight, Orbit, Lock } from 'lucide-react';
 import ActivityFeed from '../components/ActivityFeed';
 import SegmentedControl from '../components/SegmentedControl';
 import Skeleton from '../components/Skeleton';
@@ -55,6 +55,9 @@ const Dashboard: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [machineFilter, setMachineFilter] = useState('all');
   
+  // Real-time tooling operational locks
+  const [locks, setLocks] = useState<Record<string, { operatorId: string; operatorName: string; expiresAt: string }>>({});
+
   // Dynamic utilization timeline states
   const [timelineData, setTimelineData] = useState<{
     utilization: any[];
@@ -113,14 +116,27 @@ const Dashboard: React.FC = () => {
   const fetchData = async (isRefresh = false) => {
     try {
       if (!isRefresh) setLoading(true);
-      const [machinesRes, statsRes, timelineRes] = await Promise.all([
+      const [machinesRes, statsRes, timelineRes, locksRes] = await Promise.all([
         api.get('/machines'),
         api.get('/machines/stats'),
-        api.get('/machines/timeline')
+        api.get('/machines/timeline'),
+        api.get('/locks')
       ]);
       setMachines(machinesRes.data);
       setStats(statsRes.data);
       setTimelineData(timelineRes.data);
+      
+      const locksMap: Record<string, { operatorId: string; operatorName: string; expiresAt: string }> = {};
+      if (locksRes && locksRes.data) {
+        locksRes.data.forEach((l: any) => {
+          locksMap[l.entityId] = {
+            operatorId: l.operatorId,
+            operatorName: l.operatorName,
+            expiresAt: l.expiresAt
+          };
+        });
+      }
+      setLocks(locksMap);
       
       // Auto-select the first machine if nothing is selected yet
       if (machinesRes.data && machinesRes.data.length > 0) {
@@ -138,7 +154,7 @@ const Dashboard: React.FC = () => {
     fetchData();
   }, []);
 
-  // Server-Sent Events (SSE) subscriber loop for real-time Gantt timelines
+  // Server-Sent Events (SSE) subscriber loop for real-time Gantt timelines and locks
   useEffect(() => {
     const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
     const streamUrl = `${apiBase}/audit-logs/stream`;
@@ -159,19 +175,37 @@ const Dashboard: React.FC = () => {
       eventSource.onmessage = (event) => {
         try {
           if (!event.data) return; // Heartbeat ping
-          const logPayload = JSON.parse(event.data);
+          const envelope = JSON.parse(event.data);
           
-          if (logPayload && logPayload.id) {
-            const action = logPayload.action.toUpperCase();
-            // Automatically refresh utilization panels on assignment actions
-            if (
-              action.includes('MACHINE') || 
-              action.includes('SET') || 
-              action.includes('DIE') || 
-              action.includes('IMPORT')
-            ) {
-              console.log('Incoming equipment assignment, refreshing Gantt timelines...', action);
-              fetchData(true);
+          if (envelope && envelope.type === 'lock_change') {
+            const lockData = envelope.data;
+            setLocks((prev) => {
+              const updated = { ...prev };
+              if (lockData.isLocked) {
+                updated[lockData.entityId] = {
+                  operatorId: lockData.operatorId,
+                  operatorName: lockData.operatorName,
+                  expiresAt: lockData.expiresAt
+                };
+              } else {
+                delete updated[lockData.entityId];
+              }
+              return updated;
+            });
+          } else if (envelope && envelope.type === 'audit_log') {
+            const logPayload = envelope.data;
+            if (logPayload && logPayload.id) {
+              const action = logPayload.action.toUpperCase();
+              // Automatically refresh utilization panels on assignment actions
+              if (
+                action.includes('MACHINE') || 
+                action.includes('SET') || 
+                action.includes('DIE') || 
+                action.includes('IMPORT')
+              ) {
+                console.log('Incoming equipment assignment, refreshing Gantt timelines...', action);
+                fetchData(true);
+              }
             }
           }
         } catch (err) {
@@ -464,6 +498,7 @@ const Dashboard: React.FC = () => {
         setSelectedBulkMachine={setSelectedBulkMachine}
         setShowBulkModal={setShowBulkModal}
         canModify={canModify}
+        locks={locks}
       />
 
       {/* Dynamic utilization Gantt lanes & allocation timeline visualizer */}
@@ -517,6 +552,15 @@ const Dashboard: React.FC = () => {
                   const setNum = machine.sets?.length || 0;
                   const percent = Math.min(100, Math.round((setNum / 2) * 100)); // Sample capacity standard: 2 sets max per machine
                   const capColor = setNum > 0 ? 'var(--success)' : 'var(--danger)';
+                  const isMachineLocked = locks[machine.id];
+                  
+                  const handleNavigate = () => {
+                    if (isMachineLocked) {
+                      addToast('error', 'Resource Locked', `Machine is currently locked by ${isMachineLocked.operatorName} for configuration.`);
+                      return;
+                    }
+                    navigate(`/machines/${machine.id}`);
+                  };
 
                   return (
                     <tr key={machine.id} className="hover-row">
@@ -524,6 +568,14 @@ const Dashboard: React.FC = () => {
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontWeight: 700 }}>
                           <Cpu size={16} style={{ color: setNum > 0 ? 'var(--primary)' : 'var(--danger)' }} />
                           {machine.name}
+                          {isMachineLocked && (
+                            <span 
+                              style={{ color: 'hsl(0, 84%, 60%)', display: 'inline-flex', alignItems: 'center' }} 
+                              title={`Locked by ${isMachineLocked.operatorName}`}
+                            >
+                              <Lock size={12} style={{ marginLeft: '4px' }} />
+                            </span>
+                          )}
                         </div>
                       </td>
                       <td>
@@ -554,16 +606,16 @@ const Dashboard: React.FC = () => {
                         <div className="row-actions">
                           <button 
                             className="btn-icon" 
-                            onClick={() => navigate(`/machines/${machine.id}`)}
-                            title="View Details"
+                            onClick={handleNavigate}
+                            title={isMachineLocked ? `Locked by ${isMachineLocked.operatorName}` : "View Details"}
                           >
                             <ExternalLink size={14} />
                           </button>
                           {isAdmin && (
                             <button 
                               className="btn-icon" 
-                              onClick={() => navigate(`/machines/${machine.id}`)}
-                              title="Configure"
+                              onClick={handleNavigate}
+                              title={isMachineLocked ? `Locked by ${isMachineLocked.operatorName}` : "Configure"}
                             >
                               <Settings size={14} />
                             </button>

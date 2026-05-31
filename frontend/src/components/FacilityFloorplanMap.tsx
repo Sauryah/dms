@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Cpu, MapPin, ExternalLink, Plus } from 'lucide-react';
+import { Cpu, MapPin, ExternalLink, Plus, Lock } from 'lucide-react';
 import { ErrorBoundary } from './ErrorBoundary';
+import { useToast } from '../context/ToastContext';
 
 interface Machine {
   id: string;
@@ -19,6 +20,7 @@ interface FacilityFloorplanMapProps {
   setSelectedBulkMachine: (id: string) => void;
   setShowBulkModal: (show: boolean) => void;
   canModify: boolean;
+  locks?: Record<string, { operatorId: string; operatorName: string; expiresAt: string }>;
 }
 
 export const FacilityFloorplanMap: React.FC<FacilityFloorplanMapProps> = ({
@@ -30,8 +32,10 @@ export const FacilityFloorplanMap: React.FC<FacilityFloorplanMapProps> = ({
   setSelectedBulkMachine,
   setShowBulkModal,
   canModify,
+  locks,
 }) => {
   const navigate = useNavigate();
+  const { addToast } = useToast();
 
   return (
     <ErrorBoundary
@@ -169,6 +173,17 @@ export const FacilityFloorplanMap: React.FC<FacilityFloorplanMapProps> = ({
                         glowShadow = `0 0 20px ${statusColor}`;
                       }
 
+                      const isMachineLocked = locks && locks[machine.id];
+                      if (isMachineLocked) {
+                        borderStyle = '1px dashed hsl(0, 84%, 60%)';
+                        glowShadow = '0 0 12px hsla(0, 84%, 60%, 0.35)';
+                      }
+
+                      if (isSelected) {
+                        borderStyle = isMachineLocked ? `2px dashed hsl(0, 84%, 60%)` : `2px solid ${statusColor}`;
+                        glowShadow = isMachineLocked ? `0 0 20px hsla(0, 84%, 60%, 0.5)` : `0 0 20px ${statusColor}`;
+                      }
+
                       return (
                         <div 
                           key={machine.id}
@@ -188,7 +203,7 @@ export const FacilityFloorplanMap: React.FC<FacilityFloorplanMapProps> = ({
                             overflow: 'hidden'
                           }}
                           className="floorplan-cell"
-                          title={`Machine: ${machine.name} | Status: ${statusText}`}
+                          title={`Machine: ${machine.name} | Status: ${statusText}${isMachineLocked ? ' (LOCKED by ' + isMachineLocked.operatorName + ')' : ''}`}
                         >
                           {/* Pulsing state indicator dot in top-right */}
                           <div style={{
@@ -202,6 +217,20 @@ export const FacilityFloorplanMap: React.FC<FacilityFloorplanMapProps> = ({
                             boxShadow: `0 0 8px ${statusColor}`,
                             animation: isOperational ? 'pulse 2s infinite' : 'none'
                           }} />
+
+                          {isMachineLocked && (
+                            <div style={{
+                              position: 'absolute',
+                              top: '6px',
+                              right: '20px',
+                              color: 'hsl(0, 84%, 60%)',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }} title={`Locked by ${isMachineLocked.operatorName}`}>
+                              <Lock size={12} style={{ animation: 'pulse 2s infinite' }} />
+                            </div>
+                          )}
 
                           {/* Coordinate label background watermark */}
                           <div style={{
@@ -303,22 +332,31 @@ export const FacilityFloorplanMap: React.FC<FacilityFloorplanMapProps> = ({
                           else if (!hasSets) statusColor = 'hsl(0, 84%, 60%)';
                           else if (hasEmptySets) statusColor = 'hsl(38, 92%, 50%)';
 
+                          const isMachineLocked = locks && locks[m.id];
+                          let borderVal = isSelected ? `1.5px solid ${statusColor}` : '1px solid var(--border)';
+                          let shadowVal = isSelected ? `0 0 12px ${statusColor}` : 'none';
+                          if (isMachineLocked) {
+                            borderVal = isSelected ? `1.5px dashed hsl(0, 84%, 60%)` : '1px dashed rgba(239, 68, 68, 0.4)';
+                            shadowVal = isSelected ? `0 0 12px hsla(0, 84%, 60%, 0.4)` : 'none';
+                          }
+
                           return (
                             <div
                               key={m.id}
                               onClick={() => setSelectedMachineId(m.id)}
                               style={{
                                 background: isSelected ? 'rgba(2, 6, 23, 0.6)' : 'rgba(2, 6, 23, 0.25)',
-                                border: isSelected ? `1.5px solid ${statusColor}` : '1px solid var(--border)',
+                                border: borderVal,
                                 padding: '0.5rem 0.65rem',
                                 borderRadius: '6px',
                                 cursor: 'pointer',
                                 transition: 'all 0.2s',
-                                boxShadow: isSelected ? `0 0 12px ${statusColor}` : 'none'
+                                boxShadow: shadowVal
                               }}
                             >
-                              <div style={{ fontWeight: 700, fontSize: '0.75rem', color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                              <div style={{ fontWeight: 700, fontSize: '0.75rem', color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                                 {m.name}
+                                {isMachineLocked && <Lock size={10} style={{ color: 'hsl(0, 84%, 60%)' }} />}
                               </div>
                               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.25rem', fontSize: '0.625rem' }}>
                                 <span style={{ color: statusColor, fontWeight: 600 }}>{m.sets?.length || 0} Sets</span>
@@ -426,16 +464,26 @@ export const FacilityFloorplanMap: React.FC<FacilityFloorplanMapProps> = ({
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', maxHeight: '120px', overflowY: 'auto', paddingRight: '0.25rem' }}>
                           {selectedMachine.sets?.map((s: any) => {
                             const dieCount = s.dies?.length || 0;
+                            const isSetLocked = locks && locks[s.id];
+                            
+                            const handleSetClick = () => {
+                              if (isSetLocked) {
+                                addToast('error', 'Resource Locked', `Toolset is currently locked by ${isSetLocked.operatorName} for configuration.`);
+                                return;
+                              }
+                              navigate(`/sets/${s.id}`);
+                            };
+
                             return (
                               <div 
                                 key={s.id} 
-                                onClick={() => navigate(`/sets/${s.id}`)}
+                                onClick={handleSetClick}
                                 style={{ 
                                   display: 'flex', 
                                   justifyContent: 'space-between', 
                                   alignItems: 'center', 
                                   background: 'rgba(255, 255, 255, 0.02)', 
-                                  border: '1px solid var(--border)', 
+                                  border: isSetLocked ? '1px dashed rgba(239, 68, 68, 0.5)' : '1px solid var(--border)', 
                                   padding: '0.4rem 0.5rem', 
                                   borderRadius: '5px',
                                   cursor: 'pointer',
@@ -443,8 +491,12 @@ export const FacilityFloorplanMap: React.FC<FacilityFloorplanMapProps> = ({
                                   transition: 'background 0.2s'
                                 }}
                                 className="telemetry-set-row"
+                                title={isSetLocked ? `Locked by ${isSetLocked.operatorName}` : undefined}
                               >
-                                <span style={{ fontWeight: 600, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.name}</span>
+                                <span style={{ fontWeight: 600, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                                  {s.name}
+                                  {isSetLocked && <Lock size={10} style={{ color: 'hsl(0, 84%, 60%)' }} />}
+                                </span>
                                 <span className={`badge ${dieCount > 0 ? 'badge-neutral' : 'badge-red'}`} style={{ fontSize: '0.6rem', border: 'none', padding: '0.05rem 0.35rem', flexShrink: 0 }}>
                                   {dieCount} Dies
                                 </span>
@@ -464,7 +516,14 @@ export const FacilityFloorplanMap: React.FC<FacilityFloorplanMapProps> = ({
                   <div style={{ borderTop: '1px solid var(--border)', paddingTop: '0.75rem', display: 'flex', gap: '0.5rem' }}>
                     <button 
                       className="btn" 
-                      onClick={() => navigate(`/machines/${selectedMachine.id}`)}
+                      onClick={() => {
+                        const isMachineLocked = locks && locks[selectedMachine.id];
+                        if (isMachineLocked) {
+                          addToast('error', 'Resource Locked', `Machine is currently locked by ${isMachineLocked.operatorName} for configuration.`);
+                          return;
+                        }
+                        navigate(`/machines/${selectedMachine.id}`);
+                      }}
                       style={{ 
                         flex: 1, 
                         fontSize: '0.7rem', 

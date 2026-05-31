@@ -5,10 +5,8 @@ import { sseClients } from '../lib/auditLogger';
 
 const router = Router();
 
-// Audit logs include operational and client metadata, so keep them admin-only.
-router.use(authenticate, authorize(['ADMIN']));
-
-router.get('/stream', (req, res) => {
+// Stream is open to all authenticated users for real-time telemetry (locks, timeline, updates)
+router.get('/stream', authenticate, (req, res) => {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
@@ -26,6 +24,9 @@ router.get('/stream', (req, res) => {
     sseClients.delete(res);
   });
 });
+
+// Audit logs include operational and client metadata, so keep them admin-only.
+router.use(authenticate, authorize(['ADMIN']));
 
 router.get('/', getAuditLogs);
 router.get('/export', exportAuditLogs);

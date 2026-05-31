@@ -106,25 +106,28 @@ export const AuditTrailSettings: React.FC = () => {
       eventSource.onmessage = (event) => {
         try {
           if (!event.data) return; // Ignore pings/heartbeats
-          const logPayload = JSON.parse(event.data);
+          const envelope = JSON.parse(event.data);
           
-          if (logPayload && logPayload.id) {
-            setAuditLogs((prev) => {
-              if (prev.some((log) => log.id === logPayload.id)) return prev;
+          if (envelope && envelope.type === 'audit_log') {
+            const logPayload = envelope.data;
+            if (logPayload && logPayload.id) {
+              setAuditLogs((prev) => {
+                if (prev.some((log) => log.id === logPayload.id)) return prev;
 
-              // Filter check: only slide in if the incoming log matches active filters
-              if (actorFilter && !logPayload.actorName.toLowerCase().includes(actorFilter.toLowerCase())) return prev;
-              if (actionFilter && logPayload.action !== actionFilter) return prev;
-              if (logSearch && !Object.values(logPayload).some(v => String(v).toLowerCase().includes(logSearch.toLowerCase()))) return prev;
+                // Filter check: only slide in if the incoming log matches active filters
+                if (actorFilter && !logPayload.actorName.toLowerCase().includes(actorFilter.toLowerCase())) return prev;
+                if (actionFilter && logPayload.action !== actionFilter) return prev;
+                if (logSearch && !Object.values(logPayload).some(v => String(v).toLowerCase().includes(logSearch.toLowerCase()))) return prev;
 
-              // Only prepend to page 1 to preserve layout
-              if (logsPage === 1) {
-                const nextLogs = [logPayload, ...prev];
-                return nextLogs.slice(0, 15); // limit to current grid page size
-              }
-              return prev;
-            });
-            setLogsTotalCount((prev) => prev + 1);
+                // Only prepend to page 1 to preserve layout
+                if (logsPage === 1) {
+                  const nextLogs = [logPayload, ...prev];
+                  return nextLogs.slice(0, 15); // limit to current grid page size
+                }
+                return prev;
+              });
+              setLogsTotalCount((prev) => prev + 1);
+            }
           }
         } catch (err) {
           console.error('Failed parsing real-time SSE stream log payload:', err);
